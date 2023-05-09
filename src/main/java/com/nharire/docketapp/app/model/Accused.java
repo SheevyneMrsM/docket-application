@@ -40,7 +40,7 @@ public class Accused {
 
     @ManyToOne
     @JoinColumn(name = "crime_crime_id")
-    private CrimeRegister crime;
+    private List<CrimeRegister> crime;
 
 
 
