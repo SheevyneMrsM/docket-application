@@ -24,6 +24,7 @@ public class CrimeRegisterDTO  implements Serializable {
     private AccusedDTO accusedId;
     private ComplainantDTO complainer;
     private PoliceStationDTO policeStation;
+    private WitnessDTO witness;
 
 
 }

@@ -14,10 +14,11 @@ public class AccusedDTO implements Serializable  {
     private String nationalId;
     private String firstName;
     private String lastName;
+    private String phoneNumber;
     private String email;
-    private AddressDTO addressDTO;
-    private NextOfKinDTO nextOfKinDTO;
-    private List<CrimeRegisterDTO> crimeRegisterDTO;
+    private AddressDTO address;
+    private NextOfKinDTO nextOfKin;
+    private List<CrimeRegisterDTO> crime;
 
 
 }

@@ -1,14 +1,30 @@
 package com.nharire.docketapp.app.service;
 
+import com.nharire.docketapp.app.model.Address;
+import com.nharire.docketapp.app.model.dto.AddressDTO;
 import com.nharire.docketapp.app.repository.AddressRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class AddressService {
+public interface AddressService {
 
-    private final AddressRepo addressRepo;
+    AddressDTO saveAddressDetails(AddressDTO addressDTO);
 
-    public AddressService(AddressRepo addressRepo) {
-        this.addressRepo = addressRepo;
-    }
+
+    List<AddressDTO> getAddressDetails(Long id);
+
+    void deleteAddressById(Long Id);
+
+    AddressDTO updateAddressDetails(AddressDTO addressDTO);
+
+
+
+
+
+
+
+
 }

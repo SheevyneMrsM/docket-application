@@ -1,4 +1,4 @@
 package com.nharire.docketapp.app.service;
 
-public class UserService {
+public interface UserService {
 }

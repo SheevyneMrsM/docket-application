@@ -1,4 +1,4 @@
 package com.nharire.docketapp.app.service;
 
-public class ReportService {
+public interface ReportService {
 }
