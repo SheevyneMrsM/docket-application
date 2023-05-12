@@ -2,7 +2,7 @@ package com.nharire.docketapp.app.model.dto;
 
 import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.NextOfKin;
-import com.nharire.docketapp.app.model.Report;
+//import com.nharire.docketapp.app.model.Report;
 import lombok.Data;
 
 import java.io.Serializable;

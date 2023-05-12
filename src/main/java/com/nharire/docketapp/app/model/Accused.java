@@ -15,7 +15,6 @@ import java.util.List;
 public class Accused {
 
     @Id
-
     private String nationalId;
 
     @Column(name = "first_name")

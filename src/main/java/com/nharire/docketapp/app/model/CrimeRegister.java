@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "crime_register")
 @Data
@@ -31,9 +33,7 @@ public class CrimeRegister {
     @Column(name = "date_of_report")
     private Date  dateOfReport;
 
-
-    @ManyToOne
-    @JoinColumn(name = "officer_id_id")
+    @Column
     private String  caseStatus;
 
     @Column
@@ -54,7 +54,12 @@ public class CrimeRegister {
     @JoinColumn(name = "police_station_id")
     private PoliceStation  policeStation;
 
+    @OneToMany
+    @JoinColumn(name = "police_station_id")
+    private List<Report> reports;
 
+    @OneToMany
+    private List<Witness> witnesses;
 
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "witness")
@@ -39,7 +40,8 @@ public class Complainant {
     @JoinColumn(name = "crime_crime_id")
     private CrimeRegister crime;
 
+    @OneToMany
     @Column(name = "report")
-    private Report report;
+    private List<Report> report;
 
 }

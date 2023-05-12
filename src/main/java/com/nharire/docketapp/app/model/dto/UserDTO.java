@@ -1,6 +1,5 @@
 package com.nharire.docketapp.app.model.dto;
 
-import com.nharire.docketapp.app.model.Report;
 import lombok.Data;
 
 import java.io.Serializable;

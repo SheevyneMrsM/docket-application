@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccusedServiceImpl implements AccusedService {
 
-
     private final AccusedRepo accusedRepo;
 
     @Override
