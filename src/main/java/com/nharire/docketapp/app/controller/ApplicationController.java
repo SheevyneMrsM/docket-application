@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Component
@@ -49,13 +49,13 @@ public class ApplicationController {
         return  new ResponseEntity(address, HttpStatus.OK);
 
     }
-      @PostMapping("/save/crime_register")
+    @PostMapping("/save/crime_register")
     public ResponseEntity<CrimeRegister> saveCrimeRegisterDetails(@RequestBody CrimeRegisterDTO crimeRegisterDTO){
         log.info("SAVE CRIME REGISTER DETAILS: {} ",crimeRegisterDTO.toString());
         CrimeRegister crimeRegister = crimeRegisterService.saveCrimeRegisterDetails(crimeRegisterDTO);
         log.info("crime register details: {} ", crimeRegister.toString());
-        return new ResponseEntity(crimeRegister, HttpStatus.OK);
-     }
+       return new ResponseEntity(crimeRegister, HttpStatus.OK);
+    }
       @PostMapping("/save/complainant")
      public ResponseEntity<Complainant> saveComplainantDetails(@RequestBody ComplainantDTO complainantDTO){
         log.info("SAVE COMPLAINANT DETAILS: {}" ,complainantDTO.toString());
@@ -100,6 +100,28 @@ public class ApplicationController {
         log.info("Saving reviews: {}", review.toString());
         return new ResponseEntity(review, HttpStatus.OK);
     }
+    @GetMapping("/get/accused")
+    public ResponseEntity<List<Accused>>  getAllAccusedDetails(){
+        List<Accused> accusedList = accusedService.getAllAccusedDetails();
+        return new ResponseEntity(accusedList, HttpStatus.OK);
+    }
+    @GetMapping("/get/accused/{national_id}")
+    public ResponseEntity<Accused> getAccusedDetails(@PathVariable String nationalId){
+        log.info("SEARCHING ACCUSED USING NATIONAL ID: {}", nationalId);
+        Optional<Accused> accused = accusedService.getAccusedDetails(nationalId);
+        Accused accused1;
+        if (accused.isPresent()){
+            accused1 = accused.get();
+        }else{
+            throw new RuntimeException("The given national id was not found");
+        }
+        return new ResponseEntity(accused1, HttpStatus.OK);
+    }
+
+
+
+
+
 
 
 
