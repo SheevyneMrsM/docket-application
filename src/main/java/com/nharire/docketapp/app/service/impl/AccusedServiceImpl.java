@@ -59,7 +59,9 @@ public class AccusedServiceImpl implements AccusedService {
     }
 
     @Override
-    public AccusedDTO addNextOfKin(NextOfKin nextOfKin) {
-        return null;
+    public Accused addNextOfKin(NextOfKin nextOfKin) {
+        Accused accused = accusedRepo.getById(nextOfKin.getAccused().getNationalId());
+        accused.getNextOfKin().add(nextOfKin);
+        return accusedRepo.save(accused);
     }
 }

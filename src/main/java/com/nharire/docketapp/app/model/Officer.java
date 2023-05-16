@@ -45,6 +45,12 @@ public class Officer {
     @JoinColumn(name = "police_station_id")
     private PoliceStation policeStation;
 
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+
+
 
 
 

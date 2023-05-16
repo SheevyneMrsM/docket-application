@@ -15,7 +15,6 @@ import java.util.List;
 public class Accused {
 
     @Id
-
     private String nationalId;
 
     @Column(name = "first_name")
@@ -34,13 +33,13 @@ public class Accused {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "next_of_kin_phone_number")
-    private NextOfKin nextOfKin;
+    private List<NextOfKin> nextOfKin;
 
     @ManyToOne
     @JoinColumn(name = "crime_crime_id")
-    private List<CrimeRegister> crime;
+    private CrimeRegister crime;
 
 
 

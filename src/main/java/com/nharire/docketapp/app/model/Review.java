@@ -22,6 +22,7 @@ public class Review {
 
     //private String reply;
 
-    @Column(name = "police_station")
-    private String policeStation;
+    @ManyToOne
+    @JoinColumn(name = "police_station")
+    private PoliceStation policeStation;
 }

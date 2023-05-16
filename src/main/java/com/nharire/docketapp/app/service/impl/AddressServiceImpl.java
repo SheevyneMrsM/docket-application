@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,20 +19,20 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepo addressRepo;
 
     @Override
-    public AddressDTO saveAddressDetails(AddressDTO addressDTO) {
+    public Address saveAddressDetails(AddressDTO addressDTO) {
         log.info("ADDRESS DETAILS: {}", addressDTO.toString());
         Address address = new Address();
         BeanUtils.copyProperties(addressDTO,address);
         log.info("Saving address details: {}",address);
         address =addressRepo.save(address);
         BeanUtils.copyProperties(address,addressDTO);
-        return addressDTO;
+        return address;
 
     }
 
     @Override
-    public List<AddressDTO> getAddressDetails(Long id) {
-        return addressRepo.findAllById(id);
+    public Optional<Address> getAddressDetails(Long id) {
+        return addressRepo.findById(id);
 
     }
 
@@ -44,6 +44,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO updateAddressDetails(AddressDTO addressDTO) {
+
         return null;
     }
 }

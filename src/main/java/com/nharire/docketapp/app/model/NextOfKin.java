@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "next_of_kin")
@@ -34,4 +35,10 @@ public class NextOfKin {
 
     @Column(name = "relationship")
     private String relationship;
+
+    @ManyToOne
+    @JoinColumn(name = "accused_national_id")
+    private Accused accused;
+
+
 }

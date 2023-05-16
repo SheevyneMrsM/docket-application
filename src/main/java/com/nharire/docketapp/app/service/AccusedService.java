@@ -24,13 +24,7 @@ public interface AccusedService {
 
     AccusedDTO updateAccusedDetails(AccusedDTO accusedDTO);
 
-    AccusedDTO addNextOfKin(NextOfKin nextOfKin);
-
-
-
-
-
-
+    Accused addNextOfKin(NextOfKin nextOfKin);
 
 
 

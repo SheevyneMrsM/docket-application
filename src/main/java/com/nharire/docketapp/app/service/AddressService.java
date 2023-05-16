@@ -11,12 +11,12 @@ import java.util.Optional;
 @Service
 public interface AddressService {
 
-    AddressDTO saveAddressDetails(AddressDTO addressDTO);
+    Address saveAddressDetails(AddressDTO addressDTO);
 
 
-    List<AddressDTO> getAddressDetails(Long id);
+    Optional<Address> getAddressDetails(Long id);
 
-    void deleteAddressById(Long Id);
+    void deleteAddressById(Long id);
 
     AddressDTO updateAddressDetails(AddressDTO addressDTO);
 

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccusedRepo extends JpaRepository<Accused,String> {
+
+    Accused getById(String nationalId);
 }

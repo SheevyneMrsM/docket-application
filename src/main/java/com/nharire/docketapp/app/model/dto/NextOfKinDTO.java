@@ -1,5 +1,6 @@
 package com.nharire.docketapp.app.model.dto;
 
+import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Address;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class NextOfKinDTO implements Serializable {
     private String email;
     private AddressDTO address;
     private String relationship;
+    private Accused accused;
 
 
 

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -28,11 +29,27 @@ public class User {
     @Column(name = "email")
     private String email;
 
-
+    @Column(name = "password")
     private String password;
 
     @ManyToOne
     @JoinColumn(name = "report_id")
-    private Report  report;
+    private Report report;
+
+    @OneToMany
+    @JoinColumn( name = "review_id")
+    private List<Review> reviews;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @OneToMany
+    @JoinColumn( name = "review_id")
+    private List<Review> reviews;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 }
