@@ -44,12 +44,5 @@ public class User {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany
-    @JoinColumn( name = "review_id")
-    private List<Review> reviews;
-
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
 
 }

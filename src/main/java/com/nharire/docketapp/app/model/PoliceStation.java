@@ -34,6 +34,7 @@ public class PoliceStation {
     @JoinColumn(name = "officer_in_charge_id")
     private Officer officerInCharge;
 
+    @OneToMany
     @Column(name = "reviews")
     private List<Review> reviews;
 
