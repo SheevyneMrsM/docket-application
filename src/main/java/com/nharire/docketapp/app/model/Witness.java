@@ -31,12 +31,7 @@ public class Witness {
     private Address address;
 
     @ManyToOne
-    @JoinColumn(name = "next_of_kin_phone_number")
-    private NextOfKin nextOfKin;
-
-    @ManyToOne
     @JoinColumn(name = "crime_crime_id")
     private CrimeRegister crime;
-
 
 }

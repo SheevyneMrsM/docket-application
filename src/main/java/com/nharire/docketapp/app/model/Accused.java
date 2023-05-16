@@ -3,6 +3,7 @@ package com.nharire.docketapp.app.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,8 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "accused")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Accused {
 
     @Id

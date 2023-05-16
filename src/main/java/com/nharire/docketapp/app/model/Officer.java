@@ -3,14 +3,14 @@ package com.nharire.docketapp.app.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "officer")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Officer {
 
     @Id
@@ -45,9 +45,7 @@ public class Officer {
     @JoinColumn(name = "police_station_id")
     private PoliceStation policeStation;
 
-
-
-
-
-
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 }
