@@ -34,13 +34,13 @@ public class CrimeRegister {
     private Date  dateOfReport;
 
 
-
+    @Column(name = "case_status")
     private String  caseStatus;
 
-    @Column
+    @Column(name = "time_of_offense")
     private Time  timeOfOffense;
 
-    @Column
+    @Column(name = "description")
     private String  description;
 
     @ManyToOne
@@ -60,8 +60,8 @@ public class CrimeRegister {
     private List<Report> reports;
 
     @OneToMany
-    @JoinColumn(name = "witness_national_id")
-    private List<Witness> witnesses;
+    @JoinColumn(name = "witness")
+    private List<Witness> witness;
 
 
 

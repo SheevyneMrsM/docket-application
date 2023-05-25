@@ -30,12 +30,12 @@ public class PoliceStation {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "officer_in_charge_id")
     private Officer officerInCharge;
 
     @OneToMany
-    @Column(name = "reviews")
+    @JoinColumn(name = "reviews")
     private List<Review> reviews;
 
 

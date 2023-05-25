@@ -42,7 +42,7 @@ public class Complainant {
     private CrimeRegister crime;
 
     @OneToMany
-    @Column(name = "report")
+    @JoinColumn(name = "report")
     private List<Report> reports;
 
 }
