@@ -4,6 +4,7 @@ import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Complainant;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
+import com.nharire.docketapp.app.repository.AccusedRepo;
 import com.nharire.docketapp.app.repository.CrimeRegisterRepo;
 import com.nharire.docketapp.app.service.CrimeRegisterService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -18,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CrimeRegisterImpl implements CrimeRegisterService {
     private final CrimeRegisterRepo crimeRegisterRepo;
+    private final AccusedRepo accusedRepo;
     @Override
     public CrimeRegister saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
         log.info("SAVE CRIME REGISTER DETAILS: {}", crimeRegisterDTO);
@@ -48,8 +51,10 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     }
 
     @Override
-    public CrimeRegisterDTO addAccused(Accused accused) {
-        return null;
+    public CrimeRegister addAccused(Accused accused) {
+        CrimeRegister crimeRegister= crimeRegisterRepo.getById(accused.getCrime().getCrimeId());
+        crimeRegister.getAccusedList().add(accused);
+        return crimeRegisterRepo.save(crimeRegister);
     }
 
     @Override
@@ -58,12 +63,17 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     }
 
     @Override
-    public List<CrimeRegisterDTO> getAllCrimeRegisterDetails() {
+    public List<CrimeRegister> getAllCrimeRegisterDetails() {
         return null;
     }
 
     @Override
-    public Optional<CrimeRegisterDTO> getCrimeRegisterDetails(Long crimeId) {
+    public Optional<CrimeRegister> getCrimeRegisterDetails(Long crimeId) {
         return Optional.empty();
+    }
+
+    @Override
+    public List<CrimeRegister> getAllByDateOfReport(Date dateOfReport) {
+        return crimeRegisterRepo.getAllByDateOfReport(dateOfReport);
     }
 }

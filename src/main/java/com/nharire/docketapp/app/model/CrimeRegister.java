@@ -43,9 +43,9 @@ public class CrimeRegister {
     @Column(name = "description")
     private String  description;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "accused_id_national_id")
-    private Accused accusedId;
+    private List<Accused> accusedList;
 
     @ManyToOne
     @JoinColumn(name = "complainer_national_id")

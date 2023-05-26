@@ -45,12 +45,12 @@ public class ComplainantServiceImpl implements ComplainantService {
     }
 
     @Override
-    public Optional<ComplainantDTO> getComplainantDetails(String nationalId) {
+    public Optional<Complainant> getComplainantDetails(String nationalId) {
         return Optional.empty();
     }
 
     @Override
-    public List<ComplainantDTO> getAllComplainantDetails() {
+    public List<Complainant> getAllComplainantDetails() {
         return null;
     }
 

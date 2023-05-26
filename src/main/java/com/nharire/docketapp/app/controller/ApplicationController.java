@@ -38,6 +38,7 @@ public class ApplicationController {
         log.info("SAVING ACCUSED DETAILS: {}", accusedDTO.toString());
         Accused accused = accusedService.saveAccusedDetails(accusedDTO);
         log.info("accused details: {}", accused.toString());
+        crimeRegisterService.addAccused(accused);
         return new ResponseEntity(accused, HttpStatus.OK);
 
     }
@@ -117,6 +118,45 @@ public class ApplicationController {
         }
         return new ResponseEntity(accused1, HttpStatus.OK);
     }
+       @GetMapping("/get/address/{id}")
+    public ResponseEntity<Address> getAddressDetails(@PathVariable Long id){
+        log.info("SEARCHING ADDRESS USING ID: {}",id);
+        Optional<Address> address = addressService.getAddressDetails(id);
+        Address address1;
+        if (address.isPresent()){
+            address1 = address.get();
+        }else{
+            throw new RuntimeException("The given address id was not found");
+        }
+        return new ResponseEntity(address1, HttpStatus.OK);
+    }
+    @GetMapping("/get/complainant/{national_id}")
+    public ResponseEntity<Complainant> getComplainantDetails(@PathVariable String nationalId){
+        log.info("SEARCHING COMPLAINANT USING NATIONAL ID: {}", nationalId);
+        Optional<Complainant> complainant = complainantService.getComplainantDetails(nationalId);
+        Complainant complainant1;
+        if (complainant.isPresent()){
+            complainant1 = complainant.get();
+        }else {
+            throw new RuntimeException("The given national id was not found!!!");
+        }
+        return new ResponseEntity(complainant1,HttpStatus.OK);
+    }
+    @GetMapping("/get/complainant")
+    public ResponseEntity<List<Complainant>> getAllComplainantDetails(){
+        List<Complainant> complainantList = complainantService.getAllComplainantDetails();
+        return new ResponseEntity(complainantList,HttpStatus.OK);
+    }
+     @GetMapping("/get/crime_register")
+    public ResponseEntity<?> getAllCrimeRegisterDetails(){
+        List<CrimeRegister> crimeRegisterList= crimeRegisterService.getAllCrimeRegisterDetails();
+        return new ResponseEntity(crimeRegisterList,HttpStatus.OK);
+    }
+
+
+
+//    public ResponseEntity<?> update
+
 
 
 

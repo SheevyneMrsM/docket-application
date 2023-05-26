@@ -6,6 +6,7 @@ import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +23,15 @@ public interface CrimeRegisterService {
 
     void deleteComplainantDetailsById(String nationalId);
 
-    CrimeRegisterDTO addAccused(Accused accused);
+    CrimeRegister addAccused(Accused accused);
 
     CrimeRegisterDTO addComplainant(Complainant complainant);
 
-    List<CrimeRegisterDTO> getAllCrimeRegisterDetails();
+    List<CrimeRegister> getAllCrimeRegisterDetails();
 
-    Optional<CrimeRegisterDTO> getCrimeRegisterDetails(Long crimeId);
+    Optional<CrimeRegister> getCrimeRegisterDetails(Long crimeId);
+
+    List<CrimeRegister> getAllByDateOfReport(Date dateOfReport);
 
 
 }

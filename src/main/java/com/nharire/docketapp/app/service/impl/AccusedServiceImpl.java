@@ -44,6 +44,7 @@ public class AccusedServiceImpl implements AccusedService {
 
     @Override
     public List<AccusedDTO> getAccusedByDateReported(String dateReported) {
+
         return null;
     }
 
@@ -55,7 +56,17 @@ public class AccusedServiceImpl implements AccusedService {
 
     @Override
     public AccusedDTO updateAccusedDetails(AccusedDTO accusedDTO) {
-        return null;
+        Optional<Accused> accused = accusedRepo.findById(accusedDTO.getNationalId());
+        Accused accused1;
+        if (accused.isPresent()){
+            accused1 = accused.get();
+            BeanUtils.copyProperties(accusedDTO,accused1);
+            accusedRepo.save(accused1);
+        }else{
+            throw new RuntimeException("No details found, Cant update!!! ");
+        }
+        BeanUtils.copyProperties(accused1,accusedDTO);
+        return accusedDTO;
     }
 
     @Override

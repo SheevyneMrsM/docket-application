@@ -19,10 +19,10 @@ public interface ComplainantService {
 
     void deleteComplainantById(String nationalId);
 
-    Optional<ComplainantDTO> getComplainantDetails(String nationalId);
+    Optional<Complainant> getComplainantDetails(String nationalId);
 
 
-    List<ComplainantDTO> getAllComplainantDetails();
+    List<Complainant> getAllComplainantDetails();
 
     List<ComplainantDTO> getDateOfComplaint(String dateReported);
 
