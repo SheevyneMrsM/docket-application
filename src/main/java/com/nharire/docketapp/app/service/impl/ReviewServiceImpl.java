@@ -43,12 +43,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewDTO> getAllReviews() {
+    public List<Review> getAllReviews() {
         return null;
     }
 
     @Override
-    public Optional<ReviewDTO> getReviews(String body) {
+    public Optional<Review> getReviews(String body) {
         return Optional.empty();
     }
 }

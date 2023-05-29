@@ -52,12 +52,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<ReportDTO> getAllReportDetails() {
+    public List<Report> getAllReports() {
         return null;
     }
 
     @Override
-    public Optional<ReportDTO> getReportDetails(Long id) {
+    public Optional<Report> getReportDetails(Long id) {
         return Optional.empty();
     }
 

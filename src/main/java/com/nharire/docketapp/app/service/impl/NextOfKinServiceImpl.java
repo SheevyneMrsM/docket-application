@@ -60,12 +60,12 @@ public class NextOfKinServiceImpl implements NextOfKinService {
     }
 
     @Override
-    public List<NextOfKinDTO> getAllNextOfKinDetails() {
+    public List<NextOfKin> getAllNextOfKinDetails() {
         return null;
     }
 
     @Override
-    public Optional<NextOfKinDTO> getNextOfKinDetails(String nationalId) {
+    public Optional<NextOfKin> getNextOfKinDetails(String nationalId) {
         return Optional.empty();
     }
 

@@ -18,9 +18,9 @@ public interface NextOfKinService {
 
     void deleteAddressDetails(Long id );
 
-    List<NextOfKinDTO> getAllNextOfKinDetails();
+    List<NextOfKin> getAllNextOfKinDetails();
 
-    Optional<NextOfKinDTO> getNextOfKinDetails(String nationalId);
+    Optional<NextOfKin> getNextOfKinDetails(String nationalId);
 
     NextOfKinDTO addNextOfKinDetails(NextOfKin nextOfKin);
 

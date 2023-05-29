@@ -66,12 +66,12 @@ public class PoliceStationServiceImpl implements PoliceStationService {
     }
 
     @Override
-    public Optional<PoliceStationDTO> getPoliceStation(Long id) {
+    public Optional<PoliceStation> getPoliceStation(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public List<PoliceStationDTO> getAllPoliceStations() {
+    public List<PoliceStation> getAllPoliceStations() {
         return null;
     }
 }

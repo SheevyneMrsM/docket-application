@@ -21,9 +21,9 @@ public interface ReportService {
 
     ReportDTO addCrimeRegister (CrimeRegister crimeRegister);
 
-    List<ReportDTO> getAllReportDetails();
+    List<Report> getAllReports();
 
-    Optional<ReportDTO> getReportDetails(Long id);
+    Optional<Report> getReportDetails(Long id);
 
     ReportDTO addReportDetails(Report report);
 

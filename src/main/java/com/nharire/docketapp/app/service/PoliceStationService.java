@@ -27,8 +27,8 @@ public interface PoliceStationService {
 
      List<PoliceStationDTO> addReview(PoliceStation policeStation);
 
-    Optional<PoliceStationDTO> getPoliceStation(Long id);
+    Optional<PoliceStation> getPoliceStation(Long id);
 
-    List<PoliceStationDTO> getAllPoliceStations();
+    List<PoliceStation> getAllPoliceStations();
 
 }

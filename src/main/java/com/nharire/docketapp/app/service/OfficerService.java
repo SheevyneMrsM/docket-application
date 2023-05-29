@@ -16,9 +16,9 @@ public interface OfficerService {
 
     void deleteOfficerById(Long id);
 
-    List<OfficerDTO> getAllOfficers();
+    List<Officer> getAllOfficers();
 
-    Optional<OfficerDTO> getOfficerDetails(Long id);
+    Optional<Officer> getOfficerDetails(Long id);
 
     OfficerDTO addOfficerDetails(Officer officer);
 

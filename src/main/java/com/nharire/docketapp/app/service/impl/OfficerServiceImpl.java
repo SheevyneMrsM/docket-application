@@ -38,12 +38,12 @@ public class OfficerServiceImpl implements OfficerService {
     }
 
     @Override
-    public List<OfficerDTO> getAllOfficers() {
+    public List<Officer> getAllOfficers() {
         return null;
     }
 
     @Override
-    public Optional<OfficerDTO> getOfficerDetails(Long id) {
+    public Optional<Officer> getOfficerDetails(Long id) {
         return Optional.empty();
     }
 

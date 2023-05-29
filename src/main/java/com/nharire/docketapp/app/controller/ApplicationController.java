@@ -148,10 +148,97 @@ public class ApplicationController {
         return new ResponseEntity(complainantList,HttpStatus.OK);
     }
      @GetMapping("/get/crime_register")
-    public ResponseEntity<?> getAllCrimeRegisterDetails(){
+    public ResponseEntity<List<CrimeRegister>> getAllCrimeRegisterDetails(){
         List<CrimeRegister> crimeRegisterList= crimeRegisterService.getAllCrimeRegisterDetails();
         return new ResponseEntity(crimeRegisterList,HttpStatus.OK);
     }
+      @GetMapping("/get/crime_register/{crime_Id}")
+       public ResponseEntity<CrimeRegister> getCrimeRegisterDetails(Long crimeId){
+        log.info("SEARCHING CRIME REGISTER DETAILS USING CRIME ID: {}", crimeId);
+        Optional<CrimeRegister> crimeRegister = crimeRegisterService.getCrimeRegisterDetails(crimeId);
+        CrimeRegister crimeRegister1;
+        if (crimeRegister.isPresent()){
+            crimeRegister1 = crimeRegister.get();
+        }else {
+            throw new RuntimeException("The given crimeId was not found!!!");
+        }
+        return new ResponseEntity(crimeRegister1,HttpStatus.OK);
+    }
+    @GetMapping("/get/next_of_kin")
+    public ResponseEntity <List<NextOfKin>> getAllNextOfKinDetails(){
+        List<NextOfKin> nextOfKinList=nextOfKinService.getAllNextOfKinDetails();
+        return new ResponseEntity(nextOfKinList,HttpStatus.OK);
+    }
+    @GetMapping("/get/next_of_kin/{national_Id}")
+    public ResponseEntity<NextOfKin> getNextOfKinDetails(String nationalId){
+        log.info("SEARCHING NEXT OF KIN DETAILS USING NATIONAL ID: {}", nationalId);
+        Optional<NextOfKin> nextOfKin = nextOfKinService.getNextOfKinDetails(nationalId);
+        NextOfKin nextOfKin1;
+        if (nextOfKin.isPresent()){
+            nextOfKin1 = nextOfKin.get();
+        }else {
+            throw new RuntimeException("The given national id is not found!!!");
+        }
+        return new ResponseEntity(nextOfKin1,HttpStatus.OK);
+    }
+       @GetMapping("/get/officer/{id}")
+        public ResponseEntity<Officer> getOfficerDetails(Long id){
+        log.info("SEARCHING OFFICER DETAILS USING ID: {}", id);
+        Optional<Officer> officer = officerService.getOfficerDetails(id);
+        Officer officer1;
+        if (officer.isPresent()){
+            officer1 = officer.get();
+        }else{
+            throw new RuntimeException("The given id was not found!!!");
+        }
+        return new ResponseEntity(officer1, HttpStatus.OK);
+    }
+    @GetMapping("/get/officer")
+    public ResponseEntity <List<Officer>> getAllOfficers(){
+        List<Officer> officerList = officerService.getAllOfficers();
+        return new ResponseEntity(officerList, HttpStatus.OK);
+    }
+    @GetMapping("/get/police_station")
+    public ResponseEntity <List<PoliceStation>> getAllPoliceStationDetails(){
+        List<PoliceStation> policeStationList = policeStationService.getAllPoliceStations();
+        return new ResponseEntity(policeStationList,HttpStatus.OK);
+    }
+    @GetMapping("/get/police_station/{id}")
+    public ResponseEntity<PoliceStation> getPoliceStation(Long id){
+        log.info("SEARCHING POLICE STATION DETAILS USING ID: {}",id);
+        Optional<PoliceStation> policeStation= policeStationService.getPoliceStation(id);
+        PoliceStation policeStation1;
+        if (policeStation.isPresent()){
+            policeStation1 = policeStation.get();
+        }else {
+            throw new RuntimeException("The given id was not found!!!");
+        }
+        return new ResponseEntity(policeStation1, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/report")
+    public ResponseEntity <List<Report>> getAllReports(){
+        List<Report> reportList = reportService.getAllReports();
+        return new ResponseEntity(reportList,HttpStatus.OK);
+    }
+   @GetMapping("/get/report/{id}")
+    public ResponseEntity<Report> getReportDetails(Long id){
+        log.info("SEARCHING REPORT DETAILS USING ID: {}", id);
+        Optional<Report> report = reportService.getReportDetails(id);
+        Report report1;
+        if(report.isPresent()){
+            report1 = report.get();
+        }else {
+            throw new RuntimeException("The given id was not found!!!");
+        }
+        return new ResponseEntity(report1, HttpStatus.OK);
+    }
+    @GetMapping("/get/reviews")
+    public ResponseEntity<Review> getAllReviews(){
+        List<Review> reviewList = reviewService.getAllReviews();
+        return new ResponseEntity(reviewList,HttpStatus.OK);
+    }
+
 
 
 

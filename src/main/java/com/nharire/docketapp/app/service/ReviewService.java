@@ -18,9 +18,9 @@ public interface ReviewService {
 
     List<ReviewDTO> addReviews(Review review);
 
-    List<ReviewDTO> getAllReviews();
+    List<Review> getAllReviews();
 
-    Optional<ReviewDTO> getReviews(String body);
+    Optional<Review> getReviews(String body);
 
 
 
