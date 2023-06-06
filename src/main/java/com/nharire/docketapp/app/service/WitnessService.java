@@ -18,7 +18,7 @@ public interface WitnessService {
 
     WitnessDTO addWitness(Witness witness);
 
-    List<WitnessDTO> getAllWitnessDetails();
+    List<Witness> getAllWitnessDetails();
 
-    Optional<WitnessDTO> getWitness(String nationalId);
+    Optional<Witness> getWitness(String nationalId);
 }

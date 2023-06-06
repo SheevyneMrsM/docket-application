@@ -89,7 +89,7 @@ public class ApplicationController {
     }
     @PostMapping("/save/report")
     public ResponseEntity<Report> saveReportDetails(@RequestBody ReportDTO reportDTO){
-        log.info("SAVE REPORT DETAILS: {}", reportDTO);
+        log.info("SAVE REPORT DETAILS: {}", reportDTO.toString());
         Report report = reportService.saveReportDetails(reportDTO);
         log.info("Saving report details: {}",report.toString());
         return new ResponseEntity(report, HttpStatus.OK);
@@ -101,6 +101,21 @@ public class ApplicationController {
         log.info("Saving reviews: {}", review.toString());
         return new ResponseEntity(review, HttpStatus.OK);
     }
+    @PostMapping("/save/user")
+    public ResponseEntity<User> saveUserDetails(@RequestBody UserDTO userDTO){
+        log.info("SAVE USER DETAILS: {}", userDTO.toString());
+        User user = userService.saveUserDetails(userDTO);
+        log.info("Saving user details: {}", user.toString());
+        return new ResponseEntity(user, HttpStatus.OK);
+    }
+    @PostMapping("/save/witness")
+    public ResponseEntity<Witness> saveWitnessDetails(@RequestBody WitnessDTO witnessDTO){
+        log.info("SAVE WITNESS DETAILS: {}", witnessDTO.toString());
+        Witness witness = witnessService.saveWitnessDetails(witnessDTO);
+        log.info("Saving witness details: {}", witness.toString());
+        return new ResponseEntity(witness, HttpStatus.OK);
+    }
+
     @GetMapping("/get/accused")
     public ResponseEntity<List<Accused>>  getAllAccusedDetails(){
         List<Accused> accusedList = accusedService.getAllAccusedDetails();
@@ -239,10 +254,59 @@ public class ApplicationController {
         return new ResponseEntity(reviewList,HttpStatus.OK);
     }
 
+   @GetMapping("/get/review/{body}")
+    public ResponseEntity<Review> getReviews(String body){
+        log.info("SEARCHING REVIEWS USING BODY: {}", body);
+        Optional<Review> review =reviewService.getReviews(body);
+        Review review1;
+        if (review.isPresent()){
+            review1= review.get();
+        }else {
+            throw new RuntimeException("The given body id not valid!!!");
+        }
+        return new ResponseEntity(review1,HttpStatus.OK);
+
+    }
+   @GetMapping("/get/user")
+    public ResponseEntity<User>  getAllUser(){
+        List<User> userList = userService.getAllUsers();
+        return new ResponseEntity(userList,HttpStatus.OK);
+    }
+    @GetMapping("/get/user/{nationalId}")
+    public ResponseEntity<User> getUser( String nationalId){
+        log.info("SEARCHING USER USING NATIONAL ID: {}", nationalId);
+        Optional<User> user = userService.getUser(nationalId);
+        User user1;
+        if (user.isPresent()){
+            user1= user.get();
+        }else {
+            throw new RuntimeException("The given national id is not valid!!!");
+        }
+        return new ResponseEntity(user1, HttpStatus.OK);
+    }
+    @GetMapping("/get/witness")
+    public ResponseEntity<Witness> getAllWitnessDetails(){
+        List<Witness> witnessList = witnessService.getAllWitnessDetails();
+        return new ResponseEntity(witnessList, HttpStatus.OK);
+    }
+    @GetMapping("/get/witness/{nationalId}")
+    public ResponseEntity<Witness>  getWitnessDetails(String nationalId){
+        log.info("SEARCHING WITNESS USING NATIONAL ID: {}", nationalId);
+        Optional<Witness>  witness = witnessService.getWitness(nationalId);
+        Witness witness1;
+        if (witness.isPresent()){
+            witness1=witness.get();
+        }else {
+            throw new RuntimeException("The given national id is not valid!!!");
+        }
+        return new ResponseEntity(witness1,HttpStatus.OK);
+    }
 
 
 
-//    public ResponseEntity<?> update
+
+
+
 
 
 

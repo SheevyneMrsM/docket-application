@@ -18,9 +18,9 @@ public interface UserService {
 
      void deleteReport(Long id);
 
-     List<UserDTO> getAllUsers();
+     List<User> getAllUsers();
 
-     Optional<UserDTO> getUser(String nationalId);
+     Optional<User> getUser(String nationalId);
 
      UserDTO addUser(User user);
 

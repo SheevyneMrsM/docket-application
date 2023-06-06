@@ -43,12 +43,12 @@ public class WitnessServiceImpl implements WitnessService {
     }
 
     @Override
-    public List<WitnessDTO> getAllWitnessDetails() {
+    public List<Witness> getAllWitnessDetails() {
         return null;
     }
 
     @Override
-    public Optional<WitnessDTO> getWitness(String nationalId) {
+    public Optional<Witness> getWitness(String nationalId) {
         return Optional.empty();
     }
 }

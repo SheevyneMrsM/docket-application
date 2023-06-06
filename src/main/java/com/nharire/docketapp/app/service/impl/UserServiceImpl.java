@@ -43,12 +43,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<User> getAllUsers() {
         return null;
     }
 
     @Override
-    public Optional<UserDTO> getUser(String nationalId) {
+    public Optional<User> getUser(String nationalId) {
         return Optional.empty();
     }
 
