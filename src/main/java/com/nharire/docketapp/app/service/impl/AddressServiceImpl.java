@@ -1,5 +1,6 @@
 package com.nharire.docketapp.app.service.impl;
 
+import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.dto.AddressDTO;
 import com.nharire.docketapp.app.repository.AddressRepo;
@@ -44,7 +45,18 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO updateAddressDetails(AddressDTO addressDTO) {
-
-        return null;
+        Optional<Address> address = addressRepo.findById(addressDTO.getId());
+        Address address1;
+        if (address.isPresent()){
+            address1 = address.get();
+            BeanUtils.copyProperties(addressDTO,address1);
+            addressRepo.save(address1);
+        }else{
+            throw new RuntimeException("No details found, Cant update!!! ");
+        }
+        BeanUtils.copyProperties(address1,addressDTO);
+        return addressDTO;
     }
+
+
 }
