@@ -44,8 +44,7 @@ public class AccusedServiceImpl implements AccusedService {
 
     @Override
     public List<AccusedDTO> getAccusedByDateReported(String dateReported) {
-
-        return null;
+        return accusedRepo.getAccusedByDateReported(dateReported);
     }
 
     @Override

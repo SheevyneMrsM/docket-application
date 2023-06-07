@@ -40,5 +40,7 @@ public class Witness {
     @JoinColumn(name = "crime_crime_id")
     private CrimeRegister crime;
 
-
+    @ManyToOne
+    @JoinColumn(name = "complainant_id")
+    private Complainant complainant;
 }

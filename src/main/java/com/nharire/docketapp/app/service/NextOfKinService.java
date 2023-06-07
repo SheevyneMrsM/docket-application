@@ -1,5 +1,6 @@
 package com.nharire.docketapp.app.service;
 
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.dto.NextOfKinDTO;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,7 @@ public interface NextOfKinService {
 
     Optional<NextOfKin> getNextOfKinDetails(String nationalId);
 
-    NextOfKinDTO addNextOfKinDetails(NextOfKin nextOfKin);
-
-    NextOfKinDTO addAddressDetails(NextOfKin nextOfKin);
+    NextOfKin addAddressDetails(Address address);
 
 
 

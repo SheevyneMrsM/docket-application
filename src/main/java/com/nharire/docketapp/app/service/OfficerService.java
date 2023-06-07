@@ -20,7 +20,7 @@ public interface OfficerService {
 
     Optional<Officer> getOfficerDetails(Long id);
 
-    OfficerDTO addOfficerDetails(Officer officer);
+
 
 
 }

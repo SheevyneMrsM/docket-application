@@ -25,7 +25,7 @@ public interface CrimeRegisterService {
 
     CrimeRegister addAccused(Accused accused);
 
-    CrimeRegisterDTO addComplainant(Complainant complainant);
+    CrimeRegister addComplainant(Complainant complainant);
 
     List<CrimeRegister> getAllCrimeRegisterDetails();
 

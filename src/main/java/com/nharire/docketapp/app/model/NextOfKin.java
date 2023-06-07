@@ -40,5 +40,9 @@ public class NextOfKin {
     @JoinColumn(name = "accused_national_id")
     private Accused accused;
 
+    @OneToMany
+    @JoinColumn(name = "complainant_national_id")
+    private List<Complainant> complainant;
+
 
 }

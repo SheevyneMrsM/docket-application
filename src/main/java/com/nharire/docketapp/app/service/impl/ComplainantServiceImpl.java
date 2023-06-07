@@ -31,36 +31,51 @@ public class ComplainantServiceImpl implements ComplainantService {
 
     @Override
     public ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO) {
-        return null;
+        Optional<Complainant> complainant = complainantRepo.findById(complainantDTO.getNationalId());
+        Complainant complainant1;
+        if (complainant.isPresent()){
+            complainant1= complainant.get();
+            BeanUtils.copyProperties(complainantDTO,complainant1);
+        }else {
+            throw new RuntimeException("Oops No details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(complainant1,complainantDTO);
+
+        return complainantDTO;
     }
 
     @Override
-    public ComplainantDTO addNextOfKin(NextOfKin nextOfKin) {
-        return null;
+    public Complainant addNextOfKin(NextOfKin nextOfKin) {
+        Complainant complainant = complainantRepo.getById(nextOfKin.getComplainant());
+        complainant.getNextOfKin().getNationalId();
+        return complainantRepo.save(complainant);
     }
 
     @Override
     public void deleteComplainantById(String nationalId) {
+        complainantRepo.deleteById(nationalId);
 
     }
 
     @Override
     public Optional<Complainant> getComplainantDetails(String nationalId) {
-        return Optional.empty();
+       return complainantRepo.findById(nationalId);
     }
 
     @Override
     public List<Complainant> getAllComplainantDetails() {
-        return null;
+        return complainantRepo.findAll();
     }
 
     @Override
-    public List<ComplainantDTO> getDateOfComplaint(String dateReported) {
-        return null;
+    public List<Complainant> getDateOfComplaint(String dateReported) {
+        return complainantRepo.getDateOfComplaint(dateReported);
     }
 
     @Override
-    public ComplainantDTO addWitnessDetails(Witness witness) {
-        return null;
+    public Complainant addWitnessDetails(Witness witness) {
+        Complainant complainant = complainantRepo.getById(witness.getComplainant().getNationalId());
+        complainant.getWitness().add(witness);
+        return complainantRepo.save(complainant);
     }
 }

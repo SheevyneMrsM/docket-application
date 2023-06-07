@@ -22,33 +22,41 @@ public class OfficerServiceImpl implements OfficerService {
     public Officer saveOfficerDetails(OfficerDTO officerDTO) {
         log.info("SAVE OFFICER DETAILS: {}", officerDTO.toString());
         Officer officer = new Officer();
-        BeanUtils.copyProperties(officerDTO,officer);
+        BeanUtils.copyProperties(officerDTO, officer);
         log.info("Saving officer details: {}", officer);
         return officerRepo.save(officer);
     }
 
     @Override
     public OfficerDTO updateOfficerDetails(OfficerDTO officerDTO) {
-        return null;
+        Optional<Officer> officer = officerRepo.findById(officerDTO.getId());
+        Officer officer1;
+        if (officer.isPresent()) {
+            officer1 = officer.get();
+            BeanUtils.copyProperties(officerDTO, officer1);
+        } else {
+            throw new RuntimeException("No details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(officer1, officerDTO);
+        return officerDTO;
     }
 
     @Override
     public void deleteOfficerById(Long id) {
+        officerRepo.deleteById(id);
 
     }
 
     @Override
     public List<Officer> getAllOfficers() {
-        return null;
+
+        return officerRepo.findAll();
     }
 
     @Override
     public Optional<Officer> getOfficerDetails(Long id) {
-        return Optional.empty();
+
+        return officerRepo.findById(id);
     }
 
-    @Override
-    public OfficerDTO addOfficerDetails(Officer officer) {
-        return null;
-    }
 }

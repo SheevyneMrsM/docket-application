@@ -45,4 +45,8 @@ public class Complainant {
     @JoinColumn(name = "report")
     private List<Report> reports;
 
+    @OneToMany
+    @JoinColumn(name = "witness_id")
+    private List<Witness> witness;
+
 }

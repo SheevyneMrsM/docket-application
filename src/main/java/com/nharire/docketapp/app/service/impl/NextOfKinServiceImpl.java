@@ -1,6 +1,8 @@
 package com.nharire.docketapp.app.service.impl;
 
 import com.nharire.docketapp.app.model.Accused;
+import com.nharire.docketapp.app.model.Address;
+import com.nharire.docketapp.app.model.Complainant;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.dto.NextOfKinDTO;
 import com.nharire.docketapp.app.repository.AccusedRepo;
@@ -10,6 +12,7 @@ import com.nharire.docketapp.app.service.NextOfKinService;
 import com.nharire.docketapp.exceptions.AccusedNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,36 +49,48 @@ public class NextOfKinServiceImpl implements NextOfKinService {
 
     @Override
     public NextOfKinDTO updateNextOfKinDetails(NextOfKinDTO nextOfKinDTO) {
-        return null;
+        Optional<NextOfKin> nextOfKin = nextOfKinRepo.findById(nextOfKinDTO.getNationalId());
+        NextOfKin nextOfKin1;
+        if (nextOfKin.isPresent()){
+            nextOfKin1= nextOfKin.get();
+            BeanUtils.copyProperties(nextOfKinDTO,nextOfKin1);
+        }else {
+            throw new RuntimeException("Oops No details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(nextOfKin1,nextOfKinDTO);
+
+        return nextOfKinDTO;
     }
 
     @Override
     public void deleteNextOfKinById(String nationalId) {
+        nextOfKinRepo.deleteById(nationalId);
 
     }
 
     @Override
     public void deleteAddressDetails(Long id) {
+        nextOfKinRepo.deleteById(String.valueOf(id));
 
     }
 
     @Override
     public List<NextOfKin> getAllNextOfKinDetails() {
-        return null;
+
+        return nextOfKinRepo.findAll();
     }
 
     @Override
     public Optional<NextOfKin> getNextOfKinDetails(String nationalId) {
-        return Optional.empty();
+
+        return nextOfKinRepo.findById(nationalId);
     }
 
-    @Override
-    public NextOfKinDTO addNextOfKinDetails(NextOfKin nextOfKin) {
-        return null;
-    }
+
 
     @Override
-    public NextOfKinDTO addAddressDetails(NextOfKin nextOfKin) {
-        return null;
+    public NextOfKin addAddressDetails(Address address) {
+
+        return nextOfKinRepo.addAddressDetails(address);
     }
 }

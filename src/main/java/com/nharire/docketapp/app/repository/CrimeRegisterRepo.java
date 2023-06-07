@@ -12,4 +12,6 @@ public interface CrimeRegisterRepo extends JpaRepository<CrimeRegister,Long> {
     List<CrimeRegister> getAllByDateOfReport(Date dateOfReport);
 
     CrimeRegister getById(Long id);
+
+    void deleteById(String nationalId);
 }

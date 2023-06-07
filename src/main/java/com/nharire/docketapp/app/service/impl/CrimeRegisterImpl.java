@@ -32,21 +32,33 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
 
     @Override
     public CrimeRegisterDTO updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
-        return null;
+        Optional<CrimeRegister> crimeRegister =crimeRegisterRepo.findById(crimeRegisterDTO.getCrimeId());
+        CrimeRegister crimeRegister1;
+        if (crimeRegister.isPresent()){
+            crimeRegister1 =crimeRegister.get();
+            BeanUtils.copyProperties(crimeRegisterDTO, crimeRegister1);
+        }else {
+            throw new RuntimeException("No details found ,cant update!!!");
+        }
+        BeanUtils.copyProperties(crimeRegister1,crimeRegisterDTO);
+        return crimeRegisterDTO;
     }
 
     @Override
     public void deleteCrimeRegisterById(Long crimeId) {
+        crimeRegisterRepo.deleteById(crimeId);
 
     }
 
     @Override
     public void deleteAccusedDetailsById(String nationalId) {
+        crimeRegisterRepo.deleteById(nationalId);
 
     }
 
     @Override
     public void deleteComplainantDetailsById(String nationalId) {
+        crimeRegisterRepo.deleteById(nationalId);
 
     }
 
@@ -58,18 +70,20 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     }
 
     @Override
-    public CrimeRegisterDTO addComplainant(Complainant complainant) {
-        return null;
+    public CrimeRegister addComplainant(Complainant complainant) {
+     CrimeRegister crimeRegister = crimeRegisterRepo.getById(complainant.getCrime().getCrimeId());
+     crimeRegister.getComplainer().getCrime();
+        return crimeRegisterRepo.save(crimeRegister);
     }
 
     @Override
     public List<CrimeRegister> getAllCrimeRegisterDetails() {
-        return null;
+        return crimeRegisterRepo.findAll();
     }
 
     @Override
     public Optional<CrimeRegister> getCrimeRegisterDetails(Long crimeId) {
-        return Optional.empty();
+        return crimeRegisterRepo.findById(crimeId);
     }
 
     @Override

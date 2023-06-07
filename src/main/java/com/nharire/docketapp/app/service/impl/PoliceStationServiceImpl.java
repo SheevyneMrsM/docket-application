@@ -32,29 +32,35 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
     @Override
     public PoliceStationDTO updatePoliceStationDetails(PoliceStationDTO policeStationDTO) {
-        return null;
+        Optional<PoliceStation> policeStation = policeStationRepo.findById(policeStationDTO.getId());
+        PoliceStation policeStation1;
+        if (policeStation.isPresent()){
+            policeStation1 = policeStation.get();
+            BeanUtils.copyProperties(policeStationDTO, policeStation1);
+        }else {
+            throw new RuntimeException("No details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(policeStation1,policeStationDTO);
+        return policeStationDTO;
     }
 
     @Override
     public void deletePoliceStationDetailsById(Long id) {
+        policeStationRepo.deleteById(id);
 
     }
 
     @Override
     public void deleteOfficer(Long id) {
+        policeStationRepo.deleteById(id);
 
     }
 
     @Override
     public void deleteReview(Long id) {
+        policeStationRepo.deleteById(id);
 
     }
-
-    @Override
-    public PoliceStationDTO addPoliceStation(PoliceStation policeStation) {
-        return null;
-    }
-
     @Override
     public PoliceStationDTO addAddress(Address address) {
         return null;
@@ -67,11 +73,12 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
     @Override
     public Optional<PoliceStation> getPoliceStation(Long id) {
-        return Optional.empty();
+
+        return policeStationRepo.findById(id);
     }
 
     @Override
     public List<PoliceStation> getAllPoliceStations() {
-        return null;
+        return policeStationRepo.findAll();
     }
 }

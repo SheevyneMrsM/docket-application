@@ -15,7 +15,7 @@ public interface ComplainantService {
 
     ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO);
 
-    ComplainantDTO addNextOfKin(NextOfKin nextOfKin);
+    Complainant addNextOfKin(NextOfKin nextOfKin);
 
     void deleteComplainantById(String nationalId);
 
@@ -24,8 +24,8 @@ public interface ComplainantService {
 
     List<Complainant> getAllComplainantDetails();
 
-    List<ComplainantDTO> getDateOfComplaint(String dateReported);
+    List<Complainant> getDateOfComplaint(String dateReported);
 
-    ComplainantDTO addWitnessDetails(Witness witness);
+    Complainant addWitnessDetails(Witness witness);
 
 }
