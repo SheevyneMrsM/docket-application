@@ -21,7 +21,7 @@ public interface PoliceStationService {
 
     void deleteReview(Long id);
 
-    PoliceStationDTO addAddress(Address address);
+    PoliceStation addAddress(Address address);
 
      List<PoliceStationDTO> addReview(PoliceStation policeStation);
 

@@ -62,13 +62,15 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
     }
     @Override
-    public PoliceStationDTO addAddress(Address address) {
-        return null;
+    public PoliceStation addAddress(Address address) {
+        PoliceStation policeStation = policeStationRepo.getById(address.getId());
+        policeStation.getAddress().getId();
+        return policeStationRepo.save(policeStation);
     }
 
     @Override
     public List<PoliceStationDTO> addReview(PoliceStation policeStation) {
-        return null;
+        return policeStationRepo.addReview(policeStation);
     }
 
     @Override

@@ -19,13 +19,12 @@ public interface ReportService {
 
     void deleteCrimeRegister(Long crimeId);
 
-    ReportDTO addCrimeRegister (CrimeRegister crimeRegister);
+    Report addCrimeRegister (CrimeRegister crimeRegister);
 
     List<Report> getAllReports();
 
     Optional<Report> getReportDetails(Long id);
 
-    ReportDTO addReportDetails(Report report);
 
 
 }

@@ -16,11 +16,9 @@ public interface ReviewService {
 
     void deleteReviews(Long id);
 
-    List<ReviewDTO> addReviews(Review review);
-
     List<Review> getAllReviews();
 
-    Optional<Review> getReviews(String body);
+    Optional<Review> getReviews(Long id);
 
 
 

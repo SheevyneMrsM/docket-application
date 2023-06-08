@@ -33,36 +33,46 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportDTO updateReportDetails(ReportDTO reportDTO) {
-        return null;
+        Optional<Report> report = reportRepo.findById(reportDTO.getId());
+        Report report1;
+        if (report.isPresent()){
+            report1 = report.get();
+            BeanUtils.copyProperties(reportDTO,report1);
+        }else{
+            throw new RuntimeException("No details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(report1,reportDTO);
+        return reportDTO;
     }
 
     @Override
     public void deleteReportById(Long id) {
+        reportRepo.deleteById(id);
 
     }
 
     @Override
     public void deleteCrimeRegister(Long crimeId) {
+        reportRepo.deleteById(crimeId);
 
     }
 
     @Override
-    public ReportDTO addCrimeRegister(CrimeRegister crimeRegister) {
-        return null;
+    public Report addCrimeRegister(CrimeRegister crimeRegister) {
+        Report report =reportRepo.getById(crimeRegister.getDateOfReport().getTime());
+        report.getCrime().getCrimeId();
+        return reportRepo.save(report);
     }
 
     @Override
     public List<Report> getAllReports() {
-        return null;
+        return reportRepo.findAll();
     }
 
     @Override
     public Optional<Report> getReportDetails(Long id) {
-        return Optional.empty();
+        return reportRepo.findById(id);
     }
 
-    @Override
-    public ReportDTO addReportDetails(Report report) {
-        return null;
-    }
+
 }

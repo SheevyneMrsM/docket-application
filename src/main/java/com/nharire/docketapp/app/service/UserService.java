@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserService {
      User saveUserDetails(UserDTO userDTO);
 
-     UserDTO updateUserService(UserDTO UserDTO);
+     UserDTO updateUserService(UserDTO userDTO);
 
      void deleteUser(String nationalId);
 
@@ -22,7 +22,7 @@ public interface UserService {
 
      Optional<User> getUser(String nationalId);
 
-     UserDTO addUser(User user);
+
 
 
 

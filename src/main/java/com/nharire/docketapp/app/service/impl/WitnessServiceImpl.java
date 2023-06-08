@@ -29,26 +29,33 @@ public class WitnessServiceImpl implements WitnessService {
 
     @Override
     public WitnessDTO updateWitnessDetails(WitnessDTO witnessDTO) {
-        return null;
+      Optional <Witness> witness = witnessRepo.findById(witnessDTO.getNationalId());
+      Witness witness1;
+      if (witness.isPresent()){
+          witness1 = witness.get();
+          BeanUtils.copyProperties(witnessDTO,witness1);
+      }else{
+          throw new RuntimeException("No derails found, cant update!!");
+      }
+        BeanUtils.copyProperties(witness1,witnessDTO);
+        return witnessDTO;
     }
 
     @Override
     public void deleteWitnessById(String id) {
+        witnessRepo.deleteById(id);
 
     }
 
-    @Override
-    public WitnessDTO addWitness(Witness witness) {
-        return null;
-    }
 
     @Override
     public List<Witness> getAllWitnessDetails() {
-        return null;
+        return witnessRepo.findAll();
     }
 
     @Override
     public Optional<Witness> getWitness(String nationalId) {
-        return Optional.empty();
+
+        return witnessRepo.findById(nationalId);
     }
 }

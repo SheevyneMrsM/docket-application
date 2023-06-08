@@ -29,26 +29,30 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDTO updateReviews(ReviewDTO reviewDTO) {
-        return null;
+        Optional<Review> review = reviewRepo.findById(reviewDTO.getId());
+        Review  review1;
+        if (review.isPresent()){
+            review1 = review.get();
+            BeanUtils.copyProperties(reviewDTO,review1);
+        }else {
+            throw new RuntimeException("No details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(review1,reviewDTO);
+        return reviewDTO;
     }
 
     @Override
     public void deleteReviews(Long id) {
+        reviewRepo.deleteById(id);
 
     }
-
-    @Override
-    public List<ReviewDTO> addReviews(Review review) {
-        return null;
-    }
-
     @Override
     public List<Review> getAllReviews() {
-        return null;
+        return reviewRepo.findAll();
     }
 
     @Override
-    public Optional<Review> getReviews(String body) {
-        return Optional.empty();
+    public Optional<Review> getReviews(Long id) {
+        return reviewRepo.findById(id);
     }
 }

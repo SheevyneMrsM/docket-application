@@ -255,9 +255,9 @@ public class ApplicationController {
     }
 
    @GetMapping("/get/review/{body}")
-    public ResponseEntity<Review> getReviews(String body){
-        log.info("SEARCHING REVIEWS USING BODY: {}", body);
-        Optional<Review> review =reviewService.getReviews(body);
+    public ResponseEntity<Review> getReviews(Long id){
+        log.info("SEARCHING REVIEWS USING BODY: {}", id);
+        Optional<Review> review =reviewService.getReviews(id);
         Review review1;
         if (review.isPresent()){
             review1= review.get();

@@ -28,32 +28,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUserService(UserDTO UserDTO) {
-        return null;
+    public UserDTO updateUserService(UserDTO userDTO){
+        Optional<User> user = userRepo.findById(userDTO.getNationalId());
+        User user1;
+        if (user.isPresent()){
+            user1 = user.get();
+            BeanUtils.copyProperties(userDTO,user1);
+        }else {
+            throw new RuntimeException("No user details found, cant update!!!");
+        }
+        BeanUtils.copyProperties(user1,userDTO);
+        return userDTO;
     }
 
     @Override
     public void deleteUser(String nationalId) {
+        userRepo.deleteById(nationalId);
 
     }
 
     @Override
     public void deleteReport(Long id) {
+        userRepo.deleteById(String.valueOf(id));
 
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        return userRepo.findAll();
     }
 
     @Override
     public Optional<User> getUser(String nationalId) {
-        return Optional.empty();
+        return userRepo.findById(nationalId);
     }
 
-    @Override
-    public UserDTO addUser(User user) {
-        return null;
-    }
+
 }

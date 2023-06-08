@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReportRepo extends JpaRepository<Report,Long> {
+    Report getById(Long id);
 
 }
