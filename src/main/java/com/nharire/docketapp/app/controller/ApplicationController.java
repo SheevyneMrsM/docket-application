@@ -302,7 +302,7 @@ public class ApplicationController {
         }
         return new ResponseEntity(witness1,HttpStatus.OK);
     }
-    @PutMapping("/put/accused/{nationalId}")
+    @PutMapping("/put/accused")
     public ResponseEntity<Accused> updateAccusedDetails(@RequestBody AccusedDTO accusedDTO){
         log.info("UPDATE ACCUSED DETAILS : {}", accusedDTO.toString());
         AccusedDTO accused = accusedService.updateAccusedDetails(accusedDTO);
