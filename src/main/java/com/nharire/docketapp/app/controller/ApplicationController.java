@@ -5,6 +5,7 @@ import com.nharire.docketapp.app.model.dto.*;
 import com.nharire.docketapp.app.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -168,7 +169,7 @@ public class ApplicationController {
         return new ResponseEntity(crimeRegisterList,HttpStatus.OK);
     }
       @GetMapping("/get/crime_register/{crime_Id}")
-       public ResponseEntity<CrimeRegister> getCrimeRegisterDetails(Long crimeId){
+       public ResponseEntity<CrimeRegister> getCrimeRegisterDetails(@PathVariable Long crimeId){
         log.info("SEARCHING CRIME REGISTER DETAILS USING CRIME ID: {}", crimeId);
         Optional<CrimeRegister> crimeRegister = crimeRegisterService.getCrimeRegisterDetails(crimeId);
         CrimeRegister crimeRegister1;
@@ -185,7 +186,7 @@ public class ApplicationController {
         return new ResponseEntity(nextOfKinList,HttpStatus.OK);
     }
     @GetMapping("/get/next_of_kin/{national_Id}")
-    public ResponseEntity<NextOfKin> getNextOfKinDetails(String nationalId){
+    public ResponseEntity<NextOfKin> getNextOfKinDetails(@PathVariable  String nationalId){
         log.info("SEARCHING NEXT OF KIN DETAILS USING NATIONAL ID: {}", nationalId);
         Optional<NextOfKin> nextOfKin = nextOfKinService.getNextOfKinDetails(nationalId);
         NextOfKin nextOfKin1;
@@ -197,7 +198,7 @@ public class ApplicationController {
         return new ResponseEntity(nextOfKin1,HttpStatus.OK);
     }
        @GetMapping("/get/officer/{id}")
-        public ResponseEntity<Officer> getOfficerDetails(Long id){
+        public ResponseEntity<Officer> getOfficerDetails(@PathVariable Long id){
         log.info("SEARCHING OFFICER DETAILS USING ID: {}", id);
         Optional<Officer> officer = officerService.getOfficerDetails(id);
         Officer officer1;
@@ -219,7 +220,7 @@ public class ApplicationController {
         return new ResponseEntity(policeStationList,HttpStatus.OK);
     }
     @GetMapping("/get/police_station/{id}")
-    public ResponseEntity<PoliceStation> getPoliceStation(Long id){
+    public ResponseEntity<PoliceStation> getPoliceStation(@PathVariable Long id){
         log.info("SEARCHING POLICE STATION DETAILS USING ID: {}",id);
         Optional<PoliceStation> policeStation= policeStationService.getPoliceStation(id);
         PoliceStation policeStation1;
@@ -237,7 +238,7 @@ public class ApplicationController {
         return new ResponseEntity(reportList,HttpStatus.OK);
     }
    @GetMapping("/get/report/{id}")
-    public ResponseEntity<Report> getReportDetails(Long id){
+    public ResponseEntity<Report> getReportDetails(@PathVariable Long id){
         log.info("SEARCHING REPORT DETAILS USING ID: {}", id);
         Optional<Report> report = reportService.getReportDetails(id);
         Report report1;
@@ -255,7 +256,7 @@ public class ApplicationController {
     }
 
    @GetMapping("/get/review/{body}")
-    public ResponseEntity<Review> getReviews(Long id){
+    public ResponseEntity<Review> getReviews(@PathVariable Long id){
         log.info("SEARCHING REVIEWS USING BODY: {}", id);
         Optional<Review> review =reviewService.getReviews(id);
         Review review1;
@@ -273,7 +274,7 @@ public class ApplicationController {
         return new ResponseEntity(userList,HttpStatus.OK);
     }
     @GetMapping("/get/user/{nationalId}")
-    public ResponseEntity<User> getUser( String nationalId){
+    public ResponseEntity<User> getUser(@PathVariable String nationalId){
         log.info("SEARCHING USER USING NATIONAL ID: {}", nationalId);
         Optional<User> user = userService.getUser(nationalId);
         User user1;
@@ -290,7 +291,7 @@ public class ApplicationController {
         return new ResponseEntity(witnessList, HttpStatus.OK);
     }
     @GetMapping("/get/witness/{nationalId}")
-    public ResponseEntity<Witness>  getWitnessDetails(String nationalId){
+    public ResponseEntity<Witness>  getWitnessDetails(@PathVariable String nationalId){
         log.info("SEARCHING WITNESS USING NATIONAL ID: {}", nationalId);
         Optional<Witness>  witness = witnessService.getWitness(nationalId);
         Witness witness1;
@@ -301,7 +302,15 @@ public class ApplicationController {
         }
         return new ResponseEntity(witness1,HttpStatus.OK);
     }
+    @PutMapping("/put/accused/{nationalId}")
+    public ResponseEntity<Accused> updateAccusedDetails(@RequestBody AccusedDTO accusedDTO){
+        log.info("UPDATE ACCUSED DETAILS : {}", accusedDTO.toString());
+        AccusedDTO accused = accusedService.updateAccusedDetails(accusedDTO);
+        log.info("UPDATING ACCUSED DETAILS: {}", accused.toString());
+        return new ResponseEntity(accused,HttpStatus.OK);
 
+
+    }
 
 
 

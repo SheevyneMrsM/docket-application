@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,7 @@ public class ReportServiceImpl implements ReportService {
     public List<Report> getAllReports() {
         return reportRepo.findAll();
     }
+
 
     @Override
     public Optional<Report> getReportDetails(Long id) {
