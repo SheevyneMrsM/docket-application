@@ -11,7 +11,7 @@ public interface ComplainantRepo extends JpaRepository<Complainant,String> {
 
 
 
-    Complainant getById(List<Complainant> complainant);
+
     Complainant getById(String nationalId);
 
     List<Complainant> getDateOfComplaint(String dateReported);

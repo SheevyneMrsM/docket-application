@@ -1,9 +1,12 @@
 package com.nharire.docketapp.app.service.impl;
 
 import com.nharire.docketapp.app.model.Address;
+import com.nharire.docketapp.app.model.Officer;
 import com.nharire.docketapp.app.model.PoliceStation;
+import com.nharire.docketapp.app.model.dto.OfficerDTO;
 import com.nharire.docketapp.app.model.dto.PoliceStationDTO;
 import com.nharire.docketapp.app.repository.AddressRepo;
+import com.nharire.docketapp.app.repository.OfficerRepo;
 import com.nharire.docketapp.app.repository.PoliceStationRepo;
 import com.nharire.docketapp.app.service.PoliceStationService;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +23,40 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
     private final PoliceStationRepo policeStationRepo;
     private final AddressRepo addressRepo;
+    private final OfficerRepo officerRepo;
 
     @Override
     public PoliceStation savePoliceStationDetails(PoliceStationDTO policeStationDTO) {
         log.info("SAVE POLICE STATION DETAILS: {}", policeStationDTO.toString());
-        PoliceStation policeStation = new PoliceStation();
-        BeanUtils.copyProperties(policeStationDTO,policeStation);
-        log.info("Saving police station details: {}", policeStation);
-        return policeStationRepo.save(policeStation);
+        try {
+            PoliceStation policeStation = new PoliceStation();
+            //get officer in charge details
+            OfficerDTO officerDTO = policeStationDTO.getOfficerInCharge();
+
+            //create officer in charge obj
+            Officer officer = new Officer();
+            Address address = new Address();
+            BeanUtils.copyProperties(policeStationDTO.getAddress(), address);
+
+            //save Address details
+            addressRepo.save(address);
+
+            officer.setAddress(address);
+            BeanUtils.copyProperties(officerDTO, officer);
+
+            //save officer in charge to db
+            Officer officer1 = officerRepo.save(officer);
+            policeStation.setOfficerInCharge(officer1);
+            policeStation.setAddress(address);
+
+            BeanUtils.copyProperties(policeStationDTO, policeStation);
+            log.info("Saving police station details: {}", policeStation);
+            return policeStationRepo.save(policeStation);
+
+        }catch(Exception  exception){
+            log.info( " Failed TO SAVE DATA "+exception.getMessage());
+        }
+        return  new PoliceStation();
     }
 
     @Override
@@ -70,7 +99,8 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
     @Override
     public List<PoliceStationDTO> addReview(PoliceStation policeStation) {
-        return policeStationRepo.addReview(policeStation);
+        return
+                policeStationRepo.addReview(policeStation);
     }
 
     @Override

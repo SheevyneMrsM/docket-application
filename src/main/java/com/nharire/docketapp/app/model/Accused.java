@@ -41,6 +41,7 @@ public class Accused {
     @JoinColumn(name = "crime_crime_id")
     private CrimeRegister crime;
 
+    private String dateReported;
 
 
 }

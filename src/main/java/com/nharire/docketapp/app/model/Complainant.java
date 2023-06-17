@@ -49,4 +49,6 @@ public class Complainant {
     @JoinColumn(name = "witness_id")
     private List<Witness> witness;
 
+    private String getDateOfComplaint;
+
 }

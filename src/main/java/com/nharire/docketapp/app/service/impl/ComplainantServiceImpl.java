@@ -46,7 +46,7 @@ public class ComplainantServiceImpl implements ComplainantService {
 
     @Override
     public Complainant addNextOfKin(NextOfKin nextOfKin) {
-        Complainant complainant = complainantRepo.getById(nextOfKin.getComplainant());
+        Complainant complainant = complainantRepo.getById(nextOfKin.getNationalId());
         complainant.getNextOfKin().getNationalId();
         return complainantRepo.save(complainant);
     }

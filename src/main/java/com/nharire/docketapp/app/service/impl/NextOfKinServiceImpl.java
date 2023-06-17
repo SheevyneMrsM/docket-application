@@ -22,7 +22,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NextOfKinServiceImpl implements NextOfKinService {
     private  final NextOfKinRepo nextOfKinRepo;
-    private final AddressRepo addressRepo;
     private final AccusedRepo accusedRepo;
     @Override
     public NextOfKin saveNextOfKinDetails(NextOfKinDTO nextOfKinDTO) {

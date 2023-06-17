@@ -19,9 +19,9 @@ public interface CrimeRegisterService {
 
     void deleteCrimeRegisterById(Long crimeId);
 
-    void deleteAccusedDetailsById(String nationalId);
+    void deleteAccusedDetailsById(Long id);
 
-    void deleteComplainantDetailsById(String nationalId);
+    void deleteComplainantDetailsById(Long id);
 
     CrimeRegister addAccused(Accused accused);
 

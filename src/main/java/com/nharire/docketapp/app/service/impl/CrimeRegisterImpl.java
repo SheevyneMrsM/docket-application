@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CrimeRegisterImpl implements CrimeRegisterService {
     private final CrimeRegisterRepo crimeRegisterRepo;
-    private final AccusedRepo accusedRepo;
+
     @Override
     public CrimeRegister saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
         log.info("SAVE CRIME REGISTER DETAILS: {}", crimeRegisterDTO);
@@ -51,14 +51,14 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     }
 
     @Override
-    public void deleteAccusedDetailsById(String nationalId) {
-        crimeRegisterRepo.deleteById(nationalId);
+    public void deleteAccusedDetailsById(Long id) {
+        crimeRegisterRepo.deleteById(id);
 
     }
 
     @Override
-    public void deleteComplainantDetailsById(String nationalId) {
-        crimeRegisterRepo.deleteById(nationalId);
+    public void deleteComplainantDetailsById(Long id) {
+        crimeRegisterRepo.deleteById(id);
 
     }
 

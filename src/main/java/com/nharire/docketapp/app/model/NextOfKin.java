@@ -44,5 +44,6 @@ public class NextOfKin {
     @JoinColumn(name = "complainant_national_id")
     private List<Complainant> complainant;
 
+    private String addAddressDetails;
 
 }

@@ -16,7 +16,7 @@ public class OfficerDTO implements Serializable {
     private String officeLandLine;
     private String nationalId;
     private String description;
-    private PoliceStationDTO policeStation;
+    private String policeStationId;
 
 
 

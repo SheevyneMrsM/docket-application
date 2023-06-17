@@ -11,7 +11,7 @@ import java.util.List;
 public interface CrimeRegisterRepo extends JpaRepository<CrimeRegister,Long> {
     List<CrimeRegister> getAllByDateOfReport(Date dateOfReport);
 
-    CrimeRegister getById(Long id);
+    CrimeRegister getById(Long crimeId);
 
-    void deleteById(String nationalId);
+    void deleteById(Long crimeId);
 }

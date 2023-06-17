@@ -36,7 +36,9 @@ public class PoliceStation {
 
     @OneToMany
     @JoinColumn(name = "reviews")
-    private List<Review> reviews;
+    private List<Review> addReview;
+
+
 
 
 }

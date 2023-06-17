@@ -74,14 +74,14 @@ public class ApplicationController {
         accusedService.addNextOfKin(nextOfKin);
         return new ResponseEntity(accusedService.addNextOfKin(nextOfKin),HttpStatus.OK);
      }
-     @PostMapping("/save/officer")
+     @PostMapping("/save/police/officer")
      public  ResponseEntity<Officer> saveOfficerDetails(@RequestBody OfficerDTO officerDTO ){
         log.info("SAVE OFFICER DETAILS: {}", officerDTO.toString());
         Officer officer = officerService.saveOfficerDetails(officerDTO);
         log.info("Saving officer details: {}", officer.toString());
         return new ResponseEntity(officer, HttpStatus.OK);
      }
-     @PostMapping("/save/police station")
+     @PostMapping("save/police/station")
      public ResponseEntity<PoliceStation> savePoliceStationDetails(@RequestBody PoliceStationDTO policeStationDTO){
         log.info("SAVE POLICE STATION DETAILS: {}", policeStationDTO.toString());
         PoliceStation policeStation = policeStationService.savePoliceStationDetails(policeStationDTO);
