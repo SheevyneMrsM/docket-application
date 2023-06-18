@@ -2,6 +2,7 @@ package com.nharire.docketapp.app.controller;
 
 import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.*;
+import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import com.nharire.docketapp.app.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,10 +52,11 @@ public class ApplicationController {
         return  new ResponseEntity(address, HttpStatus.OK);
 
     }
-    @PostMapping("/save/crime_register")
-    public ResponseEntity<CrimeRegister> saveCrimeRegisterDetails(@RequestBody CrimeRegisterDTO crimeRegisterDTO){
+    @PostMapping("save/crime/register")
+    public ResponseEntity<CrimeRegisterResponse> saveCrimeRegisterDetails(@RequestBody CrimeRegisterDTO crimeRegisterDTO){
+        //
         log.info("SAVE CRIME REGISTER DETAILS: {} ",crimeRegisterDTO.toString());
-        CrimeRegister crimeRegister = crimeRegisterService.saveCrimeRegisterDetails(crimeRegisterDTO);
+        CrimeRegisterResponse crimeRegister = crimeRegisterService.saveCrimeRegisterDetails(crimeRegisterDTO);
         log.info("crime register details: {} ", crimeRegister.toString());
        return new ResponseEntity(crimeRegister, HttpStatus.OK);
     }

@@ -15,11 +15,11 @@ public class CrimeRegisterDTO  implements Serializable {
 
     private  Long crimeId;
     private Officer headId;
-    private Date dateOfOffense;
+    private String dateOfOffense;
     private String underSection;
-    private Date  dateOfReport;
+    private String  dateOfReport;
     private String  caseStatus;
-    private Time timeOfOffense;
+    private String timeOfOffense;
     private String  description;
     private AccusedDTO accusedId;
     private ComplainantDTO complainer;

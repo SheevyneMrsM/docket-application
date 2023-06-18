@@ -60,7 +60,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Report addCrimeRegister(CrimeRegister crimeRegister) {
-        Report report =reportRepo.getById(crimeRegister.getDateOfReport().getTime());
+
+      Report  report = reportRepo.getById(crimeRegister.getCrimeId());
         report.getCrime().getCrimeId();
         return reportRepo.save(report);
     }

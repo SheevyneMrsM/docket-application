@@ -4,6 +4,7 @@ import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Complainant;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
+import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 public interface CrimeRegisterService {
 
-    CrimeRegister saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO);
+    CrimeRegisterResponse saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO);
 
     CrimeRegisterDTO updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO);
 

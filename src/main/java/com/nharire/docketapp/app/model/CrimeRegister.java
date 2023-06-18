@@ -1,5 +1,6 @@
 package com.nharire.docketapp.app.model;
 
+import com.nharire.docketapp.app.common.Response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,38 +15,38 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CrimeRegister {
+public class CrimeRegister  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Long crimeId;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "head_id_id")
     private Officer headId;
 
     @Column(name ="date_of_offense")
-    private Date  dateOfOffense;
+    private String dateOfOffense;
 
     @Column(name = "under_section")
     private String underSection;
 
     @Column(name = "date_of_report")
-    private Date  dateOfReport;
+    private String dateOfReport;
 
 
     @Column(name = "case_status")
     private String  caseStatus;
 
     @Column(name = "time_of_offense")
-    private Time  timeOfOffense;
+    private Time timeOfOffense;
 
     @Column(name = "description")
-    private String  description;
+    private String  descriptions;
 
     @OneToMany
-    @JoinColumn(name = "accused_id_national_id")
-    private List<Accused> accusedList;
+    @JoinColumn(name = "accused_national_id")
+    private List<Accused> accused;
 
     @ManyToOne
     @JoinColumn(name = "complainer_national_id")
@@ -53,7 +54,7 @@ public class CrimeRegister {
 
     @ManyToOne
     @JoinColumn(name = "police_station_id")
-    private PoliceStation  policeStation;
+    private PoliceStation  policeStations;
 
     @OneToMany
     @JoinColumn(name = "report_id")
