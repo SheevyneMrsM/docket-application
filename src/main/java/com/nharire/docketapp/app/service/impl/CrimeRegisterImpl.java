@@ -43,6 +43,8 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
                     if (crimeRegisterDTO.getHeadId().getAddress() != null) {
                         // get address details from dto
                         BeanUtils.copyProperties(crimeRegisterDTO.getHeadId().getAddress(), address);
+                        //save details in the db
+                        address = addressRepo.saveAndFlush(address);
                     }else{
                         crimeRegisterResponse.setResponseCode(400);
                         crimeRegisterResponse.setDescription(" Please Add Address Details ");
@@ -61,12 +63,10 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
                 }
             }
 
-            //save details in the db
-            Address address1 = addressRepo.saveAndFlush(address);
             // create new object and
             Officer officer = new Officer();
             //set address to officer
-            officer.setAddress(address1);
+            officer.setAddress(address);
             if (crimeRegisterDTO != null) {
                 if (crimeRegisterDTO.getHeadId() != null) {
                     // get details from dto
@@ -101,7 +101,7 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
             log.info("FAILED TO SAVE DOCKET, DATABASE ERROR " + exception);
             crimeRegisterResponse.setResponseCode(400);
             crimeRegisterResponse.setMessage("Failed to Save Information to Database");
-            crimeRegisterResponse.setCode("DM-001");
+            crimeRegisterResponse.setCode("DM-DB-001");
             crimeRegisterResponse.setDescription(exception.getMessage());
         }
         return crimeRegisterResponse;
