@@ -2,7 +2,10 @@ package com.nharire.docketapp.app.controller;
 
 import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.*;
+import com.nharire.docketapp.app.model.dto.response.ComplainantResponse;
 import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
+import com.nharire.docketapp.app.model.dto.response.NextOfKinResponse;
+import com.nharire.docketapp.app.model.dto.response.ReportResponse;
 import com.nharire.docketapp.app.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +47,7 @@ public class ApplicationController {
         return new ResponseEntity(accused, HttpStatus.OK);
 
     }
-     @PostMapping("/save/address")
+     @PostMapping("save/address")
     public ResponseEntity<Address> saveAddressDetails(@RequestBody AddressDTO addressDTO){
         log.info("SAVING ADDRESS DETAILS: {}",addressDTO.toString());
         Address address = addressService.saveAddressDetails(addressDTO);
@@ -60,21 +63,20 @@ public class ApplicationController {
         log.info("crime register details: {} ", crimeRegister.toString());
        return new ResponseEntity(crimeRegister, HttpStatus.OK);
     }
-      @PostMapping("/save/complainant")
-     public ResponseEntity<Complainant> saveComplainantDetails(@RequestBody ComplainantDTO complainantDTO){
+      @PostMapping("save/complainant")
+     public ResponseEntity<ComplainantResponse> saveComplainantDetails(@RequestBody ComplainantDTO complainantDTO){
         log.info("SAVE COMPLAINANT DETAILS: {}" ,complainantDTO.toString());
-        Complainant complainant = complainantService.saveComplainantDetails(complainantDTO);
+        ComplainantResponse complainant = complainantService.saveComplainantDetails(complainantDTO);
         log.info("complainant details: {}", complainant.toString());
         return new ResponseEntity(complainant,HttpStatus.OK);
 
      }
-     @PostMapping("/save/NextOfKin")
-     public ResponseEntity<NextOfKin> saveNextOfKinDetails(@RequestBody @Validated NextOfKinDTO nextOfKinDTO){
+     @PostMapping("save/Next/Of/Kin")
+     public ResponseEntity<NextOfKinResponse> saveNextOfKinDetails(@RequestBody @Validated NextOfKinDTO nextOfKinDTO){
         log.info("SAVE NEXT OF KIN DETAILS: {}", nextOfKinDTO.toString());
-        NextOfKin nextOfKin = nextOfKinService.saveNextOfKinDetails(nextOfKinDTO);
+        NextOfKinResponse nextOfKin = nextOfKinService.saveNextOfKinDetails(nextOfKinDTO);
         log.info("saving next of kin details: {}", nextOfKin.toString());
-        accusedService.addNextOfKin(nextOfKin);
-        return new ResponseEntity(accusedService.addNextOfKin(nextOfKin),HttpStatus.OK);
+        return new ResponseEntity(nextOfKin,HttpStatus.OK);
      }
      @PostMapping("/save/police/officer")
      public  ResponseEntity<Officer> saveOfficerDetails(@RequestBody OfficerDTO officerDTO ){
@@ -90,10 +92,10 @@ public class ApplicationController {
         log.info("Saving Police station details: {}",policeStation.toString());
         return new ResponseEntity(policeStation,HttpStatus.OK);
     }
-    @PostMapping("/save/report")
-    public ResponseEntity<Report> saveReportDetails(@RequestBody ReportDTO reportDTO){
+    @PostMapping("save/report")
+    public ResponseEntity<ReportResponse> saveReportDetails(@RequestBody ReportDTO reportDTO){
         log.info("SAVE REPORT DETAILS: {}", reportDTO.toString());
-        Report report = reportService.saveReportDetails(reportDTO);
+        ReportResponse report = reportService.saveReportDetails(reportDTO);
         log.info("Saving report details: {}",report.toString());
         return new ResponseEntity(report, HttpStatus.OK);
     }

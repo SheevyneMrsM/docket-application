@@ -1,9 +1,12 @@
 package com.nharire.docketapp.app.service.impl;
 
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.Report;
 import com.nharire.docketapp.app.model.dto.ReportDTO;
+import com.nharire.docketapp.app.model.dto.response.ReportResponse;
 import com.nharire.docketapp.app.repository.CrimeRegisterRepo;
+import com.nharire.docketapp.app.repository.OfficerRepo;
 import com.nharire.docketapp.app.repository.ReportRepo;
 import com.nharire.docketapp.app.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +25,44 @@ public class ReportServiceImpl implements ReportService {
     private final ReportRepo reportRepo;
 
     private final CrimeRegisterRepo crimeRegisterRepo;
+    private final OfficerRepo officerRepo;
 
     @Override
-    public Report saveReportDetails(ReportDTO reportDTO) {
-        log.info("SAVE REPORT DETAILS: {}",reportDTO.toString());
-        Report report = new Report();
-        BeanUtils.copyProperties(reportDTO, report);
-        log.info("Saving report details: {}", report);
-        return reportRepo.save(report);
+    public ReportResponse saveReportDetails(ReportDTO reportDTO) {
+        ReportResponse reportResponse = new ReportResponse();
+        try {
+
+
+            log.info("SAVE REPORT DETAILS: {}", reportDTO.toString());
+            CrimeRegister crimeRegister = new CrimeRegister();
+            if (reportDTO != null) {
+                if (reportDTO.getCrime() != null) {
+                    BeanUtils.copyProperties(reportDTO.getCrime(), crimeRegister);
+                }
+            }
+            CrimeRegister crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister);
+            Report report = new Report();
+            report.setCrime(crimeRegister1);
+            BeanUtils.copyProperties(reportDTO, report);
+            log.info("Saving report details: {}", report);
+            try {
+                report = reportRepo.saveAndFlush(report);
+            } catch (Exception exception) {
+                reportResponse.getResponseCode();
+                reportResponse.getMessage();
+            }
+            BeanUtils.copyProperties(report, reportResponse);
+            reportResponse.setResponseCode(200);
+            reportResponse.setMessage("SUCCESS");
+        }catch (Exception e){
+            log.info("FAILED TO SAVE REPORT, DATABASE ERROR " + e);
+            reportResponse.setResponseCode(400);
+            reportResponse.setMessage("Failed to Save Information to Database");
+            reportResponse.setCode("DM-DB-001");
+            reportResponse.setDescription(e.getMessage());
+        }
+
+        return reportResponse;
     }
 
     @Override

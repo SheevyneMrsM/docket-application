@@ -14,7 +14,7 @@ public class ComplainantDTO implements Serializable {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private AddressDTO addressDTO;
+    private Address address;
     private NextOfKinDTO nextOfKinDTO;
     private ReportDTO reportDTO;
 

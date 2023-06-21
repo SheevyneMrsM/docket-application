@@ -3,6 +3,7 @@ package com.nharire.docketapp.app.service;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.Report;
 import com.nharire.docketapp.app.model.dto.ReportDTO;
+import com.nharire.docketapp.app.model.dto.response.ReportResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Service
 public interface ReportService {
 
-    Report saveReportDetails(ReportDTO reportDTO);
+    ReportResponse saveReportDetails(ReportDTO reportDTO);
 
     ReportDTO updateReportDetails(ReportDTO reportDTO);
 

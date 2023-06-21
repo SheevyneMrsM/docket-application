@@ -3,6 +3,7 @@ package com.nharire.docketapp.app.service;
 import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.dto.NextOfKinDTO;
+import com.nharire.docketapp.app.model.dto.response.NextOfKinResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Service
 public interface NextOfKinService {
 
-    NextOfKin saveNextOfKinDetails(NextOfKinDTO nextOfKinDTO);
+    NextOfKinResponse saveNextOfKinDetails(NextOfKinDTO nextOfKinDTO);
 
     NextOfKinDTO updateNextOfKinDetails(NextOfKinDTO nextOfKinDTO);
 

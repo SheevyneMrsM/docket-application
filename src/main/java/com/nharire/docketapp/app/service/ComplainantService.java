@@ -4,6 +4,7 @@ import com.nharire.docketapp.app.model.Complainant;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.Witness;
 import com.nharire.docketapp.app.model.dto.ComplainantDTO;
+import com.nharire.docketapp.app.model.dto.response.ComplainantResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Service
 public interface ComplainantService {
 
-    Complainant saveComplainantDetails(ComplainantDTO complainantDTO);
+    ComplainantResponse saveComplainantDetails(ComplainantDTO complainantDTO);
 
     ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO);
 

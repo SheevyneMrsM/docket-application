@@ -1,9 +1,13 @@
 package com.nharire.docketapp.app.service.impl;
 
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.Complainant;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.Witness;
 import com.nharire.docketapp.app.model.dto.ComplainantDTO;
+import com.nharire.docketapp.app.model.dto.response.ComplainantResponse;
+import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
+import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.ComplainantRepo;
 import com.nharire.docketapp.app.service.ComplainantService;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +23,64 @@ import java.util.Optional;
 public class ComplainantServiceImpl implements ComplainantService {
 
     private final ComplainantRepo complainantRepo;
-    @Override
-    public Complainant saveComplainantDetails(ComplainantDTO complainantDTO) {
-        log.info("SAVE COMPLAINANT DETAILS: {}",complainantDTO.toString());
-        Complainant complainant = new Complainant();
-        BeanUtils.copyProperties(complainantDTO,complainant);
-        log.info("Saving complainant details: {}", complainant);
-        return complainantRepo.save(complainant);
 
+    private final AddressRepo addressRepo;
+    @Override
+    public ComplainantResponse saveComplainantDetails(ComplainantDTO complainantDTO) {
+
+        ComplainantResponse complainantResponse = new ComplainantResponse();
+
+        try {
+            log.info("SAVE COMPLAINANT DETAILS: {}", complainantDTO.toString());
+            //create new address object
+            Address address = new Address();
+            if (complainantDTO != null) {
+                if (complainantDTO.getAddress() != null) {
+                    //get address details from dto
+                    BeanUtils.copyProperties(complainantDTO.getAddress(),address);
+
+                } else {
+                    complainantResponse.setResponseCode(400);
+                    complainantResponse.setDescription("No Address Details Found!!!");
+                    complainantResponse.setMessage("Please kindly add Address details");
+                    complainantResponse.setCode("DM-ADD-001");
+                    return complainantResponse;
+                }
+            }
+            //save address to db
+            Address address1 = addressRepo.saveAndFlush(address);
+            //create new complainant object
+            Complainant complainant = new Complainant();
+            //set address into complainant
+            complainant.setAddress(address1);
+            //copy complainant details from dto to complainant
+            BeanUtils.copyProperties(complainantDTO, complainant);
+            //print complainant details to the console
+            log.info("Saving complainant details: {}", complainant);
+           try {
+               complainant = complainantRepo.saveAndFlush(complainant);
+           }catch (Exception e){
+               complainantResponse.setResponseCode(500);
+               complainantResponse.setDescription("FAILED TO SAVE COMPLAINANT");
+               complainantResponse.setMessage("failed to save complainant");
+               complainantResponse.setCode("DM-COMP-001");
+           }
+           //copy complainant into response
+            BeanUtils.copyProperties(complainant,complainantResponse);
+            complainantResponse.setResponseCode(200);
+            complainantResponse.setMessage("SUCCESS");
+        }catch (Exception exception){
+            log.info("FAILED TO SAVE COMPLAINANT, DATABASE ERROR " + exception);
+            complainantResponse.setResponseCode(400);
+            complainantResponse.setMessage("Failed to Save Information to Database");
+            complainantResponse.setCode("DM-DB-001");
+            complainantResponse.setDescription(exception.getMessage());
+        }
+        return complainantResponse;
     }
+
+
+
 
     @Override
     public ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO) {

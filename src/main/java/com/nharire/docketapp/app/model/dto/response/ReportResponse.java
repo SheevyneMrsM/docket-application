@@ -1,0 +1,14 @@
+package com.nharire.docketapp.app.model.dto.response;
+
+import com.nharire.docketapp.app.common.Response;
+import com.nharire.docketapp.app.model.CrimeRegister;
+import lombok.Data;
+
+import javax.persistence.*;
+@Data
+public class ReportResponse extends Response {
+
+    private Long id;
+    private CrimeRegister crime;
+
+}
