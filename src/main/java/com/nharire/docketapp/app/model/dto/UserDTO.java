@@ -1,5 +1,6 @@
 package com.nharire.docketapp.app.model.dto;
 
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.Report;
 import lombok.Data;
 
@@ -16,5 +17,5 @@ public class UserDTO implements Serializable {
     private String email;
     private ReportDTO report;
     private List<ReviewDTO> review;
-
+    private Address address;
 }

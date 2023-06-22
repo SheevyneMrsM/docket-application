@@ -1,7 +1,10 @@
 package com.nharire.docketapp.app.service.impl;
 
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.User;
 import com.nharire.docketapp.app.model.dto.UserDTO;
+import com.nharire.docketapp.app.model.dto.response.UserResponse;
+import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.UserRepo;
 import com.nharire.docketapp.app.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +20,51 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
+    private final AddressRepo addressRepo;
 
     @Override
-    public User saveUserDetails(UserDTO userDTO) {
-        log.info("SAVE USER DETAILS: {}", userDTO.toString());
-        User user = new User();
-        BeanUtils.copyProperties(userDTO,user);
-        log.info("Saving user details: {}",user);
-        return userRepo.save(user);
+    public UserResponse saveUserDetails(UserDTO userDTO) {
+        //created a new user response object
+        UserResponse userResponse = new UserResponse();
+        try {
+            //print user details to the console
+            log.info("SAVE USER DETAILS: {}", userDTO.toString());
+            Address address = new Address();
+            if (userDTO != null) {
+                if (userDTO.getAddress() != null) {
+                    BeanUtils.copyProperties(userDTO.getAddress(), address);
+                } else {
+                    userResponse.setResponseCode(400);
+                    userResponse.setDescription(" Please Add Address Details ");
+                    userResponse.setMessage("Please kindly add Address Details");
+                    userResponse.setCode("DM-ADD-001");
+                    return userResponse;
+                }
+            }
+            Address address1 = addressRepo.saveAndFlush(address);
+            User user = new User();
+            user.setAddress(address1);
+            BeanUtils.copyProperties(userDTO, user);
+            log.info("Saving user details: {}", user);
+            try {
+                user = userRepo.saveAndFlush(user);
+            } catch (Exception exception) {
+                userResponse.setDescription("FAILED TO SAVE USER DETAILS");
+                userResponse.setResponseCode(500);
+                userResponse.setMessage("failed to save user details");
+            }
+            BeanUtils.copyProperties(user,userResponse);
+            userResponse.setMessage("SUCCESS");
+            userResponse.setResponseCode(200);
+        }catch (Exception e){
+            log.info("FAILED TO SAVE USER TO DB, DATABASE ERROR " + e);
+            userResponse.setResponseCode(400);
+            userResponse.setMessage("Failed to Save Information to Db");
+            userResponse.setCode("DM-DB-001");
+            userResponse.setDescription(e.getMessage());
+        }
+
+        return userResponse;
     }
 
     @Override

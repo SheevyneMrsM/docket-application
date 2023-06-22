@@ -2,10 +2,7 @@ package com.nharire.docketapp.app.controller;
 
 import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.*;
-import com.nharire.docketapp.app.model.dto.response.ComplainantResponse;
-import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
-import com.nharire.docketapp.app.model.dto.response.NextOfKinResponse;
-import com.nharire.docketapp.app.model.dto.response.ReportResponse;
+import com.nharire.docketapp.app.model.dto.response.*;
 import com.nharire.docketapp.app.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,34 +96,34 @@ public class ApplicationController {
         log.info("Saving report details: {}",report.toString());
         return new ResponseEntity(report, HttpStatus.OK);
     }
-    @PostMapping("/save/reviews")
+    @PostMapping("save/reviews")
     public ResponseEntity<Review>  saveReviewDetails(@RequestBody ReviewDTO reviewDTO){
         log.info("SAVE REVIEWS: {}", reviewDTO.toString());
         Review review = reviewService.saveReviews(reviewDTO);
         log.info("Saving reviews: {}", review.toString());
         return new ResponseEntity(review, HttpStatus.OK);
     }
-    @PostMapping("/save/user")
-    public ResponseEntity<User> saveUserDetails(@RequestBody UserDTO userDTO){
+    @PostMapping("save/user")
+    public ResponseEntity<UserResponse> saveUserDetails(@RequestBody UserDTO userDTO){
         log.info("SAVE USER DETAILS: {}", userDTO.toString());
-        User user = userService.saveUserDetails(userDTO);
+        UserResponse user = userService.saveUserDetails(userDTO);
         log.info("Saving user details: {}", user.toString());
         return new ResponseEntity(user, HttpStatus.OK);
     }
-    @PostMapping("/save/witness")
-    public ResponseEntity<Witness> saveWitnessDetails(@RequestBody WitnessDTO witnessDTO){
+    @PostMapping("save/witness")
+    public ResponseEntity<WitnessResponse> saveWitnessDetails(@RequestBody WitnessDTO witnessDTO){
         log.info("SAVE WITNESS DETAILS: {}", witnessDTO.toString());
-        Witness witness = witnessService.saveWitnessDetails(witnessDTO);
+        WitnessResponse witness = witnessService.saveWitnessDetails(witnessDTO);
         log.info("Saving witness details: {}", witness.toString());
         return new ResponseEntity(witness, HttpStatus.OK);
     }
 
-    @GetMapping("/get/accused")
+    @GetMapping("get/accused")
     public ResponseEntity<List<Accused>>  getAllAccusedDetails(){
         List<Accused> accusedList = accusedService.getAllAccusedDetails();
         return new ResponseEntity(accusedList, HttpStatus.OK);
     }
-    @GetMapping("/get/accused/{national_id}")
+    @GetMapping("get/accused/{national_id}")
     public ResponseEntity<Accused> getAccusedDetails(@PathVariable String nationalId){
         log.info("SEARCHING ACCUSED USING NATIONAL ID: {}", nationalId);
         Optional<Accused> accused = accusedService.getAccusedDetails(nationalId);

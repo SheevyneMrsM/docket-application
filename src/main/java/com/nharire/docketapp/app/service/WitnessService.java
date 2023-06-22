@@ -2,6 +2,7 @@ package com.nharire.docketapp.app.service;
 
 import com.nharire.docketapp.app.model.Witness;
 import com.nharire.docketapp.app.model.dto.WitnessDTO;
+import com.nharire.docketapp.app.model.dto.response.WitnessResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Optional;
 @Service
 public interface WitnessService {
 
-    Witness saveWitnessDetails(WitnessDTO witnessDTO);
+    WitnessResponse saveWitnessDetails(WitnessDTO witnessDTO);
 
     WitnessDTO updateWitnessDetails(WitnessDTO witnessDTO);
 
