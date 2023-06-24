@@ -1,8 +1,8 @@
 package com.nharire.docketapp.app.service.impl;
 
-import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.dto.AddressDTO;
+import com.nharire.docketapp.app.model.dto.response.AddressResponse;
 import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.service.AddressService;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +32,19 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Optional<Address> getAddressDetails(Long id) {
-        return addressRepo.findById(id);
+    public Optional<AddressResponse> getAddressDetails(Long id) {
+        AddressResponse addressResponse = new AddressResponse();
+        Address address = new Address();
+       if (address.getId() != null){
+          Optional<Address> address1 =addressRepo.findById(id);
+           BeanUtils.copyProperties(address1,addressResponse);
+       }else {
+           addressResponse.setDescription("failed to get address by id");
+           addressResponse.setResponseCode(400);
+           addressResponse.setMessage("FAILED TO GET ADDRESS BY ID, ENTER ADDRESS DETAILS");
+       }
+
+        return Optional.empty();
 
     }
 

@@ -3,6 +3,7 @@ package com.nharire.docketapp.app.service;
 import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.dto.AccusedDTO;
+import com.nharire.docketapp.app.model.dto.response.AccusedResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface AccusedService {
 
      void deleteById(String nationalId);
 
-    AccusedDTO updateAccusedDetails(AccusedDTO accusedDTO);
+    AccusedResponse updateAccusedDetails(AccusedDTO accusedDTO);
 
     Accused addNextOfKin(NextOfKin nextOfKin);
 

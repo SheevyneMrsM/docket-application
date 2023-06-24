@@ -135,11 +135,11 @@ public class ApplicationController {
         }
         return new ResponseEntity(accused1, HttpStatus.OK);
     }
-       @GetMapping("/get/address/{id}")
-    public ResponseEntity<Address> getAddressDetails(@PathVariable Long id){
+       @GetMapping("get/address/{id}")
+    public ResponseEntity<AddressResponse> getAddressDetails(@PathVariable Long id){
         log.info("SEARCHING ADDRESS USING ID: {}",id);
-        Optional<Address> address = addressService.getAddressDetails(id);
-        Address address1;
+       Optional<AddressResponse> address = addressService.getAddressDetails(id);
+        AddressResponse address1;
         if (address.isPresent()){
             address1 = address.get();
         }else{
@@ -303,15 +303,16 @@ public class ApplicationController {
         }
         return new ResponseEntity(witness1,HttpStatus.OK);
     }
-    @PutMapping("/put/accused")
-    public ResponseEntity<Accused> updateAccusedDetails(@RequestBody AccusedDTO accusedDTO){
+    @PutMapping("put/accused")
+    public ResponseEntity<AccusedResponse> updateAccusedDetails(@RequestBody @Validated AccusedDTO accusedDTO){
         log.info("UPDATE ACCUSED DETAILS : {}", accusedDTO.toString());
-        AccusedDTO accused = accusedService.updateAccusedDetails(accusedDTO);
+        AccusedResponse accused = accusedService.updateAccusedDetails(accusedDTO);
         log.info("UPDATING ACCUSED DETAILS: {}", accused.toString());
         return new ResponseEntity(accused,HttpStatus.OK);
 
 
     }
+
 
 
 

@@ -2,7 +2,6 @@ package com.nharire.docketapp.app.service.impl;
 
 import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
-import com.nharire.docketapp.app.model.dto.OfficerDTO;
 import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import com.nharire.docketapp.app.repository.AccusedRepo;
 import com.nharire.docketapp.app.repository.AddressRepo;
@@ -27,6 +26,7 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     private final OfficerRepo officerRepo;
 
     private final AddressRepo addressRepo;
+    private final AccusedRepo accusedRepo;
 
     @Override
     public CrimeRegisterResponse saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
@@ -73,13 +73,32 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
                     BeanUtils.copyProperties(crimeRegisterDTO.getHeadId(), officer);
                 }
             }
+            //creating new accused object
+            Accused accused = new Accused();
+
+            // check if crime register is not equal to null
+            if (crimeRegisterDTO != null){
+                if (crimeRegisterDTO.getAccused() != null){
+                    //get details from dto
+                    BeanUtils.copyProperties(crimeRegisterDTO.getAccused(),accused);
+                    accused = accusedRepo.saveAndFlush(accused);
+                }
+            }
+            //create an accused list
+            List<Accused> accusedList = new ArrayList<>();
+            //adding accused to accused list
+            accusedList.add(accused);
 
             //save details in the db
             Officer officer1 = officerRepo.saveAndFlush(officer);
+
             //create new crime register object
             CrimeRegister crimeRegister = new CrimeRegister();
             //set officer to crime register
             crimeRegister.setHeadId(officer1);
+            //set accused list to crime register
+            crimeRegister.setAccused(accusedList);
+
             // copy properties from dto to crime register
             BeanUtils.copyProperties(crimeRegisterDTO, crimeRegister);
             //print crime register details to the console
