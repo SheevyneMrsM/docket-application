@@ -312,6 +312,14 @@ public class ApplicationController {
 
 
     }
+    @PutMapping("put/address")
+    public ResponseEntity<AddressResponse> updateAddressDetails(@RequestBody @Validated AddressDTO addressDTO) {
+        log.info("UPDATE ADDRESS DETAILS : {}", addressDTO.toString());
+        AddressResponse address = addressService.updateAddressDetails(addressDTO);
+        log.info("UPDATING ACCUSED DETAILS: {}", address.toString());
+        return new ResponseEntity(address, HttpStatus.OK);
+
+    }
 
 
 
@@ -334,4 +342,5 @@ public class ApplicationController {
 
 
 
-}
+
+    }

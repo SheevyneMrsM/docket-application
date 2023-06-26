@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Data
 public class AddressDTO implements Serializable {
 
-
+    private String nationalId;
     private Long id;
     private String streetAddress;
     private String suburb;

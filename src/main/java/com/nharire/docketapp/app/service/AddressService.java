@@ -17,7 +17,7 @@ public interface AddressService {
 
     void deleteAddressById(Long id);
 
-    AddressDTO updateAddressDetails(AddressDTO addressDTO);
+    AddressResponse updateAddressDetails(AddressDTO addressDTO);
 
 
 

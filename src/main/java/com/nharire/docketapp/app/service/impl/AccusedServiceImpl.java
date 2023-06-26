@@ -80,10 +80,11 @@ public class AccusedServiceImpl implements AccusedService {
         }
 
         //check if crime register is present
+
         Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(Long.valueOf(accusedDTO.getCrimeId()));
 
         // if crime is there the add accused to accusedList
-        if (crimeRegister.isPresent()) {
+        if(crimeRegister.isPresent()) {
             //get crime register since it is present
             CrimeRegister crimeRegister1 = crimeRegister.get();
 
@@ -107,7 +108,7 @@ public class AccusedServiceImpl implements AccusedService {
                 accusedResponse.setMessage("Failed to Save Crime e=Register database issues");
             }
 
-            //return successfull response
+            //return successful response
             accusedResponse.setCrimeRegister(crimeRegister1);
             //copy properties from accused to response
             BeanUtils.copyProperties(accused1, accusedResponse);

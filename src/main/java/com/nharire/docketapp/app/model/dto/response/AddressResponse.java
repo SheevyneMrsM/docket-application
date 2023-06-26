@@ -1,6 +1,7 @@
 package com.nharire.docketapp.app.model.dto.response;
 
 import com.nharire.docketapp.app.common.Response;
+import com.nharire.docketapp.app.model.Complainant;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ public class AddressResponse extends Response {
     private String latitude;
 
     private String longitude;
+
+    private Complainant complainant;
 
 }
 

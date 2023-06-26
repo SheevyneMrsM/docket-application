@@ -38,6 +38,9 @@ public class ComplainantServiceImpl implements ComplainantService {
                 if (complainantDTO.getAddress() != null) {
                     //get address details from dto
                     BeanUtils.copyProperties(complainantDTO.getAddress(),address);
+                    //save address to db
+                    address = addressRepo.saveAndFlush(address);
+
 
                 } else {
                     complainantResponse.setResponseCode(400);
@@ -47,28 +50,30 @@ public class ComplainantServiceImpl implements ComplainantService {
                     return complainantResponse;
                 }
             }
-            //save address to db
-            Address address1 = addressRepo.saveAndFlush(address);
+
             //create new complainant object
             Complainant complainant = new Complainant();
             //set address into complainant
-            complainant.setAddress(address1);
+            complainant.setAddress(address);
             //copy complainant details from dto to complainant
             BeanUtils.copyProperties(complainantDTO, complainant);
             //print complainant details to the console
             log.info("Saving complainant details: {}", complainant);
            try {
                complainant = complainantRepo.saveAndFlush(complainant);
+               //copy complainant into response
+               BeanUtils.copyProperties(complainant,complainantResponse);
+               complainantResponse.setResponseCode(200);
+               complainantResponse.setMessage("SUCCESS");
+               return complainantResponse;
+
            }catch (Exception e){
                complainantResponse.setResponseCode(500);
                complainantResponse.setDescription("FAILED TO SAVE COMPLAINANT");
                complainantResponse.setMessage("failed to save complainant");
                complainantResponse.setCode("DM-COMP-001");
            }
-           //copy complainant into response
-            BeanUtils.copyProperties(complainant,complainantResponse);
-            complainantResponse.setResponseCode(200);
-            complainantResponse.setMessage("SUCCESS");
+
         }catch (Exception exception){
             log.info("FAILED TO SAVE COMPLAINANT, DATABASE ERROR " + exception);
             complainantResponse.setResponseCode(400);
