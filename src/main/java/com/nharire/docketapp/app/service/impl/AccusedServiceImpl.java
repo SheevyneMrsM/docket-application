@@ -1,11 +1,13 @@
 package com.nharire.docketapp.app.service.impl;
 
 import com.nharire.docketapp.app.model.Accused;
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.NextOfKin;
 import com.nharire.docketapp.app.model.dto.AccusedDTO;
 import com.nharire.docketapp.app.model.dto.response.AccusedResponse;
 import com.nharire.docketapp.app.repository.AccusedRepo;
+import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.CrimeRegisterRepo;
 import com.nharire.docketapp.app.service.AccusedService;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +29,59 @@ public class AccusedServiceImpl implements AccusedService {
 
     private final CrimeRegisterRepo crimeRegisterRepo;
 
+    private final AddressRepo addressRepo;
+
     @Override
-    public Accused saveAccusedDetails(AccusedDTO accusedDTO) {
-        log.info("ACCUSED DETAILS: {}", accusedDTO.toString());
-        Accused accused = new Accused();
-        BeanUtils.copyProperties(accusedDTO,accused);
-        log.info("Saving new accused details: {}", accused);
-        return accusedRepo.save(accused);
+    public AccusedResponse saveAccusedDetails(AccusedDTO accusedDTO) {
+        AccusedResponse accusedResponse = new AccusedResponse();
+        try {
+            log.info("ACCUSED DETAILS: {}", accusedDTO.toString());
+            Address address = new Address();
+            if (accusedDTO != null) {
+                if (accusedDTO.getAddress() != null) {
+                    BeanUtils.copyProperties(accusedDTO.getAddress(), address);
+                    address = addressRepo.saveAndFlush(address);
+                } else {
+                    accusedResponse.setResponseCode(400);
+                    accusedResponse.setDescription("No Address Details Found!!!");
+                    accusedResponse.setMessage("Please kindly add Address details");
+                    accusedResponse.setCode("DM-ADD-001");
+                    return accusedResponse;
+                }
+            }
+            Accused accused = new Accused();
+            accused.setAddress(address);
+            BeanUtils.copyProperties(accusedDTO, accused);
+            //print accused details to the console
+            log.info("Saving accused details: {}", accused);
+            try {
+                accused = accusedRepo.saveAndFlush(accused);
+                //copy accused into response
+                BeanUtils.copyProperties(accused, accusedResponse);
+                accusedResponse.setResponseCode(200);
+                accusedResponse.setMessage("SUCCESS");
+                return accusedResponse;
+
+            } catch (Exception e) {
+                accusedResponse.setResponseCode(500);
+                accusedResponse.setDescription("FAILED TO SAVE ACCUSED");
+                accusedResponse.setMessage("failed to save ACCUSED");
+                accusedResponse.setCode("DM-ACC-001");
+            }
+
+        } catch (Exception exception) {
+            log.info("FAILED TO SAVE ACCUSED, DATABASE ERROR " + exception);
+            accusedResponse.setResponseCode(400);
+            accusedResponse.setMessage("Failed to Save Information to Database");
+            accusedResponse.setCode("DM-DB-001");
+            accusedResponse.setDescription(exception.getMessage());
+        }
+        return accusedResponse;
     }
+
+
+
+
 
 
     @Override
@@ -81,7 +128,7 @@ public class AccusedServiceImpl implements AccusedService {
 
         //check if crime register is present
 
-        Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(Long.valueOf(accusedDTO.getCrimeId()));
+        Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(accusedDTO.getCrimeId());
 
         // if crime is there the add accused to accusedList
         if(crimeRegister.isPresent()) {

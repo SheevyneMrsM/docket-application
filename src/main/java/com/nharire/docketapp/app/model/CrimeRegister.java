@@ -18,7 +18,7 @@ import java.util.List;
 public class CrimeRegister  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long crimeId;
 
     @ManyToOne(cascade = {CascadeType.ALL})

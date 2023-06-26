@@ -14,7 +14,7 @@ import java.util.List;
 public class PoliceStation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "police_station_name")

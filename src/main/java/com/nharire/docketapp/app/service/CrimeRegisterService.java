@@ -4,6 +4,7 @@ import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Complainant;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
+import com.nharire.docketapp.app.model.dto.response.AccusedResponse;
 import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import org.springframework.stereotype.Service;
 

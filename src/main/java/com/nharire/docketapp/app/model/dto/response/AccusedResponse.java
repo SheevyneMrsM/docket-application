@@ -1,6 +1,7 @@
 package com.nharire.docketapp.app.model.dto.response;
 
 import com.nharire.docketapp.app.common.Response;
+import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.dto.AddressDTO;
 import com.nharire.docketapp.app.model.dto.NextOfKinDTO;
@@ -9,7 +10,7 @@ import lombok.Data;
 @Data
 public class AccusedResponse extends Response {
 
-    private String crimeId;
+    private Long crimeId;
 
     private String nationalId;
 
@@ -21,7 +22,7 @@ public class AccusedResponse extends Response {
 
     private String email;
 
-    private AddressDTO address;
+    private Address address;
 
     private NextOfKinDTO nextOfKin;
 

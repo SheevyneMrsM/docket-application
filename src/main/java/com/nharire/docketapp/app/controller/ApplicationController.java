@@ -36,11 +36,10 @@ public class ApplicationController {
     private final WitnessService witnessService;
 
     @PostMapping("/save/accused")
-    public ResponseEntity<Accused> saveAccusedDetails(@RequestBody AccusedDTO accusedDTO){
+    public ResponseEntity<AccusedResponse> saveAccusedDetails(@RequestBody AccusedDTO accusedDTO){
         log.info("SAVING ACCUSED DETAILS: {}", accusedDTO.toString());
-        Accused accused = accusedService.saveAccusedDetails(accusedDTO);
+        AccusedResponse accused = accusedService.saveAccusedDetails(accusedDTO);
         log.info("accused details: {}", accused.toString());
-        crimeRegisterService.addAccused(accused);
         return new ResponseEntity(accused, HttpStatus.OK);
 
     }
@@ -318,6 +317,14 @@ public class ApplicationController {
         AddressResponse address = addressService.updateAddressDetails(addressDTO);
         log.info("UPDATING ACCUSED DETAILS: {}", address.toString());
         return new ResponseEntity(address, HttpStatus.OK);
+
+    }
+    @PutMapping("put/complainant")
+    public ResponseEntity<ComplainantDTO> updateComplainantDetails(@RequestBody @Validated ComplainantDTO complainantDTO){
+        log.info("UPDATE COMPLAINANT DETAILS : {}",complainantDTO.toString());
+        ComplainantDTO complainant = complainantService.updateComplainantDetails(complainantDTO);
+        log.info("UPDATING COMPLAINANT DETAILS: {}",complainant.toString());
+        return new ResponseEntity(complainant,HttpStatus.OK);
 
     }
 

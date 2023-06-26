@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class PoliceStationDTO implements Serializable {
 
-    private Long id;
+
     private String policeStationName;
     private AddressDTO address;
     private String phoneNumber;

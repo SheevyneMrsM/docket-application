@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public interface AccusedService {
 
-     Accused saveAccusedDetails(AccusedDTO accusedDTO);
+     AccusedResponse saveAccusedDetails(AccusedDTO accusedDTO);
      Optional<Accused> getAccusedDetails(String nationalId);
 
      List<Accused> getAllAccusedDetails();

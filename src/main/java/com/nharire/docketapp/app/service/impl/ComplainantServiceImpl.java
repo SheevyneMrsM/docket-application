@@ -1,14 +1,12 @@
 package com.nharire.docketapp.app.service.impl;
 
-import com.nharire.docketapp.app.model.Address;
-import com.nharire.docketapp.app.model.Complainant;
-import com.nharire.docketapp.app.model.NextOfKin;
-import com.nharire.docketapp.app.model.Witness;
+import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.ComplainantDTO;
 import com.nharire.docketapp.app.model.dto.response.ComplainantResponse;
 import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.ComplainantRepo;
+import com.nharire.docketapp.app.repository.CrimeRegisterRepo;
 import com.nharire.docketapp.app.service.ComplainantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +23,7 @@ public class ComplainantServiceImpl implements ComplainantService {
     private final ComplainantRepo complainantRepo;
 
     private final AddressRepo addressRepo;
+    private final CrimeRegisterRepo crimeRegisterRepo;
     @Override
     public ComplainantResponse saveComplainantDetails(ComplainantDTO complainantDTO) {
 
@@ -89,15 +88,26 @@ public class ComplainantServiceImpl implements ComplainantService {
 
     @Override
     public ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO) {
-        Optional<Complainant> complainant = complainantRepo.findById(complainantDTO.getNationalId());
-        Complainant complainant1;
+        //
+        Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(complainantDTO.getNationalId());
+        Complainant complainant1 ;
+        //check if complainant is present
         if (complainant.isPresent()){
+            //get complainant
             complainant1= complainant.get();
+            //copy dto properties to complainant1
             BeanUtils.copyProperties(complainantDTO,complainant1);
-        }else {
-            throw new RuntimeException("Oops No details found, cant update!!!");
+
+            Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(Long.valueOf(complainantDTO.getCrimeId()));
+            if (crimeRegister.isPresent()){
+               CrimeRegister crimeRegister1= crimeRegister.get();
+
+               if (crimeRegister1.getComplainer()!= null){
+                   BeanUtils.copyProperties(crimeRegister1.getComplainer(),crimeRegister);
+               }
+            }
         }
-        BeanUtils.copyProperties(complainant1,complainantDTO);
+
 
         return complainantDTO;
     }

@@ -94,12 +94,8 @@ public class NextOfKinServiceImpl implements NextOfKinService {
                                address= addressRepo.saveAndFlush(address3);
 
                         }
-
-                }
-                {
-
-                }
-            }
+                        }
+                    }
 
             }
 

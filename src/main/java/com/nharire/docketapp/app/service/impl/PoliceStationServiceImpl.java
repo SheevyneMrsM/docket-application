@@ -61,7 +61,7 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
     @Override
     public PoliceStationDTO updatePoliceStationDetails(PoliceStationDTO policeStationDTO) {
-        Optional<PoliceStation> policeStation = policeStationRepo.findById(policeStationDTO.getId());
+        Optional<PoliceStation> policeStation = policeStationRepo.findByPoliceStationNameEqualsIgnoreCase(policeStationDTO.getPoliceStationName());
         PoliceStation policeStation1;
         if (policeStation.isPresent()){
             policeStation1 = policeStation.get();

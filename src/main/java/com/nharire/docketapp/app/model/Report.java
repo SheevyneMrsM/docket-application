@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Report {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

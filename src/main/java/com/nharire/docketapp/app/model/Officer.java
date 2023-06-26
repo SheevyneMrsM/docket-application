@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Officer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(name = "first_name")
