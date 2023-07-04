@@ -35,34 +35,50 @@ public class AccusedServiceImpl implements AccusedService {
     public AccusedResponse saveAccusedDetails(AccusedDTO accusedDTO) {
         AccusedResponse accusedResponse = new AccusedResponse();
         try {
+            // printing accused details to the console
             log.info("ACCUSED DETAILS: {}", accusedDTO.toString());
+            //create new address object
             Address address = new Address();
+            //check if accused is not equal to null
             if (accusedDTO != null) {
+                //check if we get address from accused is not equal to null
                 if (accusedDTO.getAddress() != null) {
+                    //now copy properties from dto to address
                     BeanUtils.copyProperties(accusedDTO.getAddress(), address);
+                    //save address to database
                     address = addressRepo.saveAndFlush(address);
                 } else {
+                    //if address is null get a response message that no details are found, & they must be added
                     accusedResponse.setResponseCode(400);
                     accusedResponse.setDescription("No Address Details Found!!!");
                     accusedResponse.setMessage("Please kindly add Address details");
                     accusedResponse.setCode("DM-ADD-001");
+                    //adding return because address should be saved in accused no matter what
                     return accusedResponse;
                 }
             }
+            //creating new accused object
             Accused accused = new Accused();
+            // now set address in accused ***nb (the address we saved above )
             accused.setAddress(address);
+            //now copy properties from dto to accused
             BeanUtils.copyProperties(accusedDTO, accused);
             //print accused details to the console
             log.info("Saving accused details: {}", accused);
             try {
+                /*
+                * wraping this in a try because it might throw an exception
+                * saving accused to database*/
                 accused = accusedRepo.saveAndFlush(accused);
                 //copy accused into response
                 BeanUtils.copyProperties(accused, accusedResponse);
+                //if we successfully copied accused to response then it should print 200 meaning success
                 accusedResponse.setResponseCode(200);
                 accusedResponse.setMessage("SUCCESS");
                 return accusedResponse;
 
             } catch (Exception e) {
+                //if say an exception is thrown then a response message saying failed to save accused should be printed
                 accusedResponse.setResponseCode(500);
                 accusedResponse.setDescription("FAILED TO SAVE ACCUSED");
                 accusedResponse.setMessage("failed to save ACCUSED");
@@ -70,6 +86,7 @@ public class AccusedServiceImpl implements AccusedService {
             }
 
         } catch (Exception exception) {
+            //also if we fail to save both accused and save address into accused then it should give us messages below
             log.info("FAILED TO SAVE ACCUSED, DATABASE ERROR " + exception);
             accusedResponse.setResponseCode(400);
             accusedResponse.setMessage("Failed to Save Information to Database");
@@ -109,8 +126,9 @@ public class AccusedServiceImpl implements AccusedService {
     @Override
     public AccusedResponse updateAccusedDetails(AccusedDTO accusedDTO) {
         AccusedResponse accusedResponse = new AccusedResponse();
-
+        //printing to the console
         log.info("ADDING ACCUSED TO CRIME " + accusedDTO.toString());
+        //check if accused is present
         Optional<Accused> accused = accusedRepo.findById(accusedDTO.getNationalId());
         //create new accused object
         Accused accused1 = new Accused();
@@ -152,7 +170,7 @@ public class AccusedServiceImpl implements AccusedService {
                 crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister1);
             }catch (Exception exception){
                 //send response
-                accusedResponse.setMessage("Failed to Save Crime e=Register database issues");
+                accusedResponse.setMessage("Failed to Save Crime register database issues");
             }
 
             //return successful response

@@ -327,9 +327,15 @@ public class ApplicationController {
         return new ResponseEntity(complainant,HttpStatus.OK);
 
     }
+    @PutMapping("put/crime/register")
+    public ResponseEntity<CrimeRegisterDTO> updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
+        log.info("UPDATE CRIME REGISTER DETAILS : {}", crimeRegisterDTO.toString());
+        CrimeRegisterDTO crimeRegister = crimeRegisterService.updateCrimeRegisterDetails(crimeRegisterDTO);
+        log.info("UPDATING CRIME REGISTER DETAILS: {} ", crimeRegister.toString());
+        return new ResponseEntity(crimeRegister, HttpStatus.OK);
 
 
-
+    }
 
 
 
