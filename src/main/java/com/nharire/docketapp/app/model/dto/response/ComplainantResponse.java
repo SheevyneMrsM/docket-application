@@ -23,7 +23,7 @@ public class ComplainantResponse extends Response {
 
     private NextOfKin nextOfKin;
 
-    private CrimeRegister crime;
+    private CrimeRegister crimeRegister;
 
     private List<Report> reports;
 

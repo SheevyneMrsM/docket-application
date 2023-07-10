@@ -9,6 +9,9 @@ import javax.persistence.*;
 public class ReportResponse extends Response {
 
     private Long id;
-    private CrimeRegister crime;
+
+    private CrimeRegister crimeRegister;
+
+    private String reportDescription;
 
 }

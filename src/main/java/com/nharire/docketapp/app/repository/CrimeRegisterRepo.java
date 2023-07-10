@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CrimeRegisterRepo extends JpaRepository<CrimeRegister,Long> {
     List<CrimeRegister> getAllByDateOfReport(Date dateOfReport);
 
-    CrimeRegister getById(Long crimeId);
+    Optional<CrimeRegister> findByCrimeIdEquals(Long crimeId);
+
 
     void deleteById(Long crimeId);
 }

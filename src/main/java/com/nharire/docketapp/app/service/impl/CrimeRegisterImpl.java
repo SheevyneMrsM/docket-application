@@ -4,10 +4,7 @@ import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
 import com.nharire.docketapp.app.model.dto.response.AccusedResponse;
 import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
-import com.nharire.docketapp.app.repository.AccusedRepo;
-import com.nharire.docketapp.app.repository.AddressRepo;
-import com.nharire.docketapp.app.repository.CrimeRegisterRepo;
-import com.nharire.docketapp.app.repository.OfficerRepo;
+import com.nharire.docketapp.app.repository.*;
 import com.nharire.docketapp.app.service.CrimeRegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +25,7 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
 
     private final AddressRepo addressRepo;
     private final AccusedRepo accusedRepo;
-
+    private final ReportRepo reportRepo;
     @Override
     public CrimeRegisterResponse saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
 
@@ -129,18 +126,28 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     }
 
     @Override
-    public CrimeRegisterDTO updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
+    public CrimeRegisterResponse updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
+        CrimeRegisterResponse crimeRegisterResponse = new CrimeRegisterResponse();
+        log.info("ADDING CRIME TO REPORT : {}", crimeRegisterDTO.toString());
         Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(crimeRegisterDTO.getCrimeId());
-        CrimeRegister crimeRegister1;
-        if (crimeRegister.isPresent()) {
-            crimeRegister1 = crimeRegister.get();
-            BeanUtils.copyProperties(crimeRegisterDTO, crimeRegister1);
-        } else {
-            throw new RuntimeException("No details found ,cant update!!!");
+        CrimeRegister crimeRegister1 = new CrimeRegister();
+        if (crimeRegister.isEmpty()){
+            BeanUtils.copyProperties(crimeRegisterDTO,crimeRegister1);
+            crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister1);
         }
-        BeanUtils.copyProperties(crimeRegister1, crimeRegisterDTO);
-        return crimeRegisterDTO;
-    }
+        else {
+            crimeRegister1 = crimeRegister.get();
+        }
+        List<Report> report = reportRepo.findByCrimeIdEquals(crimeRegister1.getCrimeId());
+        if (!report.isEmpty()) {
+            crimeRegister1.setReports(report);
+
+        }
+            BeanUtils.copyProperties(crimeRegister1, crimeRegisterResponse);
+            crimeRegisterResponse.setMessage("SUCCESS");
+            crimeRegisterResponse.setResponseCode(200);
+            return crimeRegisterResponse;
+        }
 
     @Override
     public void deleteCrimeRegisterById(Long crimeId) {

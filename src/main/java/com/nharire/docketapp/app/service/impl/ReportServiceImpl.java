@@ -1,6 +1,5 @@
 package com.nharire.docketapp.app.service.impl;
 
-import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.CrimeRegister;
 import com.nharire.docketapp.app.model.Report;
 import com.nharire.docketapp.app.model.dto.ReportDTO;
@@ -13,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -29,31 +28,55 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportResponse saveReportDetails(ReportDTO reportDTO) {
+        //create new response object
         ReportResponse reportResponse = new ReportResponse();
         try {
 
-
+            //print report details to the console
             log.info("SAVE REPORT DETAILS: {}", reportDTO.toString());
+            //create new crime register object
             CrimeRegister crimeRegister = new CrimeRegister();
-            if (reportDTO != null) {
-                if (reportDTO.getCrime() != null) {
-                    BeanUtils.copyProperties(reportDTO.getCrime(), crimeRegister);
-                }
-            }
-            CrimeRegister crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister);
+            //create new report object
             Report report = new Report();
-            report.setCrime(crimeRegister1);
-            BeanUtils.copyProperties(reportDTO, report);
-            log.info("Saving report details: {}", report);
-            try {
-                report = reportRepo.saveAndFlush(report);
-            } catch (Exception exception) {
-                reportResponse.getResponseCode();
-                reportResponse.getMessage();
+            //check if dto is not null
+            if (reportDTO != null) {
+                if (reportDTO.getCrimeId() != null) {
+                    Optional<CrimeRegister> crimeRegister1 = crimeRegisterRepo.findById(reportDTO.getCrimeId());
+
+                    if (crimeRegister1.isPresent()) {
+
+                        report.setCrimeId(crimeRegister.getCrimeId());
+                        report.setReported(LocalDateTime.now());
+                        //
+                        BeanUtils.copyProperties(reportDTO, report);
+                        log.info("Saving report details: {}", report);
+                        try {
+                            report = reportRepo.saveAndFlush(report);
+
+                        } catch (Exception exception) {
+                            reportResponse.setResponseCode(500);
+                            reportResponse.setMessage("Could not save report");
+                            return reportResponse;
+                        }
+                        crimeRegister = crimeRegister1.get();
+                        BeanUtils.copyProperties(reportDTO.getCrimeId(), crimeRegister);
+                        crimeRegister = crimeRegisterRepo.saveAndFlush(crimeRegister);
+
+
+                    } else {
+                        reportResponse.setResponseCode(404);
+                        reportResponse.setMessage("Crime register is not present! please get details!!!");
+                    }
+
+                }
+
+                BeanUtils.copyProperties(report, reportResponse);
+                reportResponse.setCrimeRegister(crimeRegister);
+                reportResponse.setResponseCode(200);
+                reportResponse.setMessage("SUCCESS");
+                return reportResponse;
             }
-            BeanUtils.copyProperties(report, reportResponse);
-            reportResponse.setResponseCode(200);
-            reportResponse.setMessage("SUCCESS");
+
         }catch (Exception e){
             log.info("FAILED TO SAVE REPORT, DATABASE ERROR " + e);
             reportResponse.setResponseCode(400);
@@ -94,8 +117,8 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Report addCrimeRegister(CrimeRegister crimeRegister) {
 
-      Report  report = reportRepo.getById(crimeRegister.getCrimeId());
-        report.getCrime().getCrimeId();
+        Report  report = reportRepo.getById(crimeRegister.getCrimeId());
+        report.getCrimeId();
         return reportRepo.save(report);
     }
 

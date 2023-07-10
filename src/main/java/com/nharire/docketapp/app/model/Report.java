@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,13 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "crime_crime_id")
-    private CrimeRegister crime;
+    @Column(name = "crime_id", nullable = false)
+    private Long crimeId;
 
+    @Column(name = "report_Description")
+    private String reportDescription;
+
+    @Column(name = "reported")
+    private LocalDateTime reported;
 
 }

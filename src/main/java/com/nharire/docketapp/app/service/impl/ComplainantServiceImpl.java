@@ -87,29 +87,56 @@ public class ComplainantServiceImpl implements ComplainantService {
 
 
     @Override
-    public ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO) {
-        //
+    public ComplainantResponse updateComplainantDetails(ComplainantDTO complainantDTO) {
+        //create new response object
+        ComplainantResponse complainantResponse = new ComplainantResponse();
+        //check if complainant is in the db
         Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(complainantDTO.getNationalId());
-        Complainant complainant1 ;
+        //create new complainant object
+        Complainant complainant1 = new Complainant() ;
         //check if complainant is present
-        if (complainant.isPresent()){
+        if (complainant.isPresent()) {
             //get complainant
-            complainant1= complainant.get();
+            complainant1 = complainant.get();
             //copy dto properties to complainant1
-            BeanUtils.copyProperties(complainantDTO,complainant1);
-
+            BeanUtils.copyProperties(complainantDTO, complainant1);
+        }
             Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(Long.valueOf(complainantDTO.getCrimeId()));
             if (crimeRegister.isPresent()){
                CrimeRegister crimeRegister1= crimeRegister.get();
 
                if (crimeRegister1.getComplainer()!= null){
-                   BeanUtils.copyProperties(crimeRegister1.getComplainer(),crimeRegister);
+                   BeanUtils.copyProperties(crimeRegister1.getComplainer(),crimeRegister1);
                }
-            }
+               crimeRegister1.setComplainer(complainant1);
+                try {
+                    //save crime register in db
+                    crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister1);
+                }catch (Exception exception){
+                    //send response
+                    complainantResponse.setMessage("Failed to Save Crime register database issues");
+                }
+
+                //return successful response
+                complainantResponse.setCrimeRegister(crimeRegister1);
+                //copy properties from accused to response
+                BeanUtils.copyProperties(complainant1, complainantResponse);
+                complainantResponse.setMessage("SUCCESS");
+                complainantResponse.setResponseCode(200);
+                return complainantResponse;
+
+            }else {
+            complainantResponse.setResponseCode(400);
+            complainantResponse.setMessage("No complainant with this Id is registered");
+            complainantResponse.setCode("DB-COMP-002");
+            complainantResponse.setDescription("Failed to update complainant to crime register");
+            BeanUtils.copyProperties(complainant1, complainantResponse);
+            return complainantResponse;
+
         }
 
 
-        return complainantDTO;
+
     }
 
     @Override

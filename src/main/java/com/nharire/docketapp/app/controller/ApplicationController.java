@@ -322,20 +322,22 @@ public class ApplicationController {
     @PutMapping("put/complainant")
     public ResponseEntity<ComplainantDTO> updateComplainantDetails(@RequestBody @Validated ComplainantDTO complainantDTO){
         log.info("UPDATE COMPLAINANT DETAILS : {}",complainantDTO.toString());
-        ComplainantDTO complainant = complainantService.updateComplainantDetails(complainantDTO);
+        ComplainantResponse complainant = complainantService.updateComplainantDetails(complainantDTO);
         log.info("UPDATING COMPLAINANT DETAILS: {}",complainant.toString());
         return new ResponseEntity(complainant,HttpStatus.OK);
 
     }
     @PutMapping("put/crime/register")
-    public ResponseEntity<CrimeRegisterDTO> updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
+    public ResponseEntity<CrimeRegisterDTO> updateCrimeRegisterDetails(@RequestBody @Validated CrimeRegisterDTO crimeRegisterDTO) {
         log.info("UPDATE CRIME REGISTER DETAILS : {}", crimeRegisterDTO.toString());
-        CrimeRegisterDTO crimeRegister = crimeRegisterService.updateCrimeRegisterDetails(crimeRegisterDTO);
+        CrimeRegisterResponse crimeRegister = crimeRegisterService.updateCrimeRegisterDetails(crimeRegisterDTO);
         log.info("UPDATING CRIME REGISTER DETAILS: {} ", crimeRegister.toString());
         return new ResponseEntity(crimeRegister, HttpStatus.OK);
 
 
     }
+
+
 
 
 

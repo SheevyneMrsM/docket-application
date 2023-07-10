@@ -14,7 +14,7 @@ public interface ComplainantService {
 
     ComplainantResponse saveComplainantDetails(ComplainantDTO complainantDTO);
 
-    ComplainantDTO updateComplainantDetails(ComplainantDTO complainantDTO);
+    ComplainantResponse updateComplainantDetails(ComplainantDTO complainantDTO);
 
     Complainant addNextOfKin(NextOfKin nextOfKin);
 

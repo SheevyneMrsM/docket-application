@@ -17,7 +17,7 @@ public interface CrimeRegisterService {
 
     CrimeRegisterResponse saveCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO);
 
-    CrimeRegisterDTO updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO);
+    CrimeRegisterResponse updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO);
 
     void deleteCrimeRegisterById(Long crimeId);
 

@@ -9,6 +9,11 @@ import java.util.List;
 @Data
 public class ReportDTO implements Serializable {
     private Long id;
-    private List<CrimeRegisterDTO> crime;
+
+    private Long crimeId;
+
+    private String reportDescription;
+
+
 
 }
