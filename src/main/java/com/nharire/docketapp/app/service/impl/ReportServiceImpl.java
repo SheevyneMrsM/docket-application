@@ -40,26 +40,35 @@ public class ReportServiceImpl implements ReportService {
             Report report = new Report();
             //check if dto is not null
             if (reportDTO != null) {
+                //check if crime id in report dto is not null
                 if (reportDTO.getCrimeId() != null) {
+                    //then get details from db for crime register using crime id
                     Optional<CrimeRegister> crimeRegister1 = crimeRegisterRepo.findById(reportDTO.getCrimeId());
-
+                   //check if crime register is present
                     if (crimeRegister1.isPresent()) {
-
+                        //set crime id from crime register to report
                         report.setCrimeId(crimeRegister.getCrimeId());
+                        //also sate date and time of report in report
                         report.setReported(LocalDateTime.now());
-                        //
+                        //now copy properties from dto to report
                         BeanUtils.copyProperties(reportDTO, report);
+                        //print report details on the console
                         log.info("Saving report details: {}", report);
                         try {
+                            //save report to the db
                             report = reportRepo.saveAndFlush(report);
 
                         } catch (Exception exception) {
+
                             reportResponse.setResponseCode(500);
                             reportResponse.setMessage("Could not save report");
                             return reportResponse;
                         }
+                        //now get  details from db or crime register and assign it to crime register
                         crimeRegister = crimeRegister1.get();
+                        //now copy properties from crime id in dto to crime register
                         BeanUtils.copyProperties(reportDTO.getCrimeId(), crimeRegister);
+                        //now save crime register in db
                         crimeRegister = crimeRegisterRepo.saveAndFlush(crimeRegister);
 
 

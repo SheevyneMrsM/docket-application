@@ -127,22 +127,34 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
 
     @Override
     public CrimeRegisterResponse updateCrimeRegisterDetails(CrimeRegisterDTO crimeRegisterDTO) {
+        //create crime register response object
         CrimeRegisterResponse crimeRegisterResponse = new CrimeRegisterResponse();
+        //print crime register details to the console
         log.info("ADDING CRIME TO REPORT : {}", crimeRegisterDTO.toString());
+        //find crime register details by crime id in db
         Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(crimeRegisterDTO.getCrimeId());
+        //create new crime register object
         CrimeRegister crimeRegister1 = new CrimeRegister();
+        //check if crime register is empty
         if (crimeRegister.isEmpty()){
+            //copy properties from dto to crime register
             BeanUtils.copyProperties(crimeRegisterDTO,crimeRegister1);
+            //then save crime register details in db
             crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister1);
         }
         else {
+            //otherwise get crime register details
             crimeRegister1 = crimeRegister.get();
         }
+        //find crime id in report list in the db
         List<Report> report = reportRepo.findByCrimeIdEquals(crimeRegister1.getCrimeId());
+        //if report is present
         if (!report.isEmpty()) {
+            //now set report to crime register
             crimeRegister1.setReports(report);
 
         }
+        //now copy properties from crime register to response
             BeanUtils.copyProperties(crimeRegister1, crimeRegisterResponse);
             crimeRegisterResponse.setMessage("SUCCESS");
             crimeRegisterResponse.setResponseCode(200);
@@ -204,8 +216,8 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
 
     @Override
     public CrimeRegister addComplainant(Complainant complainant) {
-        CrimeRegister crimeRegister = crimeRegisterRepo.getById(complainant.getCrime().getCrimeId());
-        crimeRegister.getComplainer().getCrime();
+        CrimeRegister crimeRegister = crimeRegisterRepo.getById(complainant.getCrimeId());
+        crimeRegister.getComplainantNationalId();
         return crimeRegisterRepo.save(crimeRegister);
     }
 

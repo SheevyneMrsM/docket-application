@@ -328,14 +328,21 @@ public class ApplicationController {
 
     }
     @PutMapping("put/crime/register")
-    public ResponseEntity<CrimeRegisterDTO> updateCrimeRegisterDetails(@RequestBody @Validated CrimeRegisterDTO crimeRegisterDTO) {
+    public ResponseEntity<CrimeRegisterResponse> updateCrimeRegisterDetails(@RequestBody @Validated CrimeRegisterDTO crimeRegisterDTO) {
         log.info("UPDATE CRIME REGISTER DETAILS : {}", crimeRegisterDTO.toString());
         CrimeRegisterResponse crimeRegister = crimeRegisterService.updateCrimeRegisterDetails(crimeRegisterDTO);
         log.info("UPDATING CRIME REGISTER DETAILS: {} ", crimeRegister.toString());
         return new ResponseEntity(crimeRegister, HttpStatus.OK);
 
-
     }
+    @PutMapping("put/next/of/kin")
+    public ResponseEntity<NextOfKinResponse> updateNextOfKinDetails(@RequestBody @Validated NextOfKinDTO nextOfKinDTO){
+        log.info("UPDATE NEXT OF KIN DETAILS : {}", nextOfKinDTO.toString());
+        NextOfKinResponse nextOfKin = nextOfKinService.updateNextOfKinDetails(nextOfKinDTO);
+        log.info("UPDATING NEXT OF KIN DETAILS : {}", nextOfKin.toString());
+        return new ResponseEntity(nextOfKin, HttpStatus.OK);
+    }
+
 
 
 

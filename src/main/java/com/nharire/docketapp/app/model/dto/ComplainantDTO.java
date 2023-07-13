@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 public class ComplainantDTO implements Serializable {
 
-    private String crimeId;
+    private Long crimeId;
     private String nationalId;
     private String firstName;
     private String lastName;

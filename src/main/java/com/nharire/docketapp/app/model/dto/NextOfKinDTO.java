@@ -13,7 +13,7 @@ public class NextOfKinDTO implements Serializable {
     private String surname;
     private String phoneNumber;
     private String email;
-    private AddressDTO address;
+    private Address address;
     private String relationship;
     private Accused accused;
 

@@ -13,35 +13,36 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NextOfKin {
+    @Id
+    @Column(name = "national_id", nullable = false)
+    private String nationalId ;
 
-    @Column(name = "national_id")
-    private String nationalId;
+    @Column(name = "first_name", nullable = false)
+    private String firstName ;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String surname;
 
-    @Id
+
+    @Column(name = "phone_number",nullable = false)
     private String phoneNumber;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @Column(name = "relationship")
+    @Column(name = "relationship", nullable = false)
     private String relationship;
 
     @ManyToOne
-    @JoinColumn(name = "accused_national_id")
+    @JoinColumn(name = "accused_national_id", nullable = false)
     private Accused accused;
 
     @OneToMany
-    @JoinColumn(name = "complainant_national_id")
+    @JoinColumn(name = "complainant_national_id", nullable = false)
     private List<Complainant> complainant;
 
     private String addAddressDetails;

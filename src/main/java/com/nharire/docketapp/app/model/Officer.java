@@ -17,36 +17,36 @@ public class Officer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "rank")
+    @Column(name = "rank", nullable = false)
     private String rank;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name ="office_land_line")
+    @Column(name ="office_land_line", nullable = false)
     private String officeLandLine;
 
-    @Column(name = "national_id")
+    @Column(name = "national_id", nullable = false)
     private String nationalId;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "police_station_id")
+    @JoinColumn(name = "police_station_id", nullable = false)
     private PoliceStation policeStation;
 
     @OneToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
 

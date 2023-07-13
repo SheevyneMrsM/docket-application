@@ -48,16 +48,15 @@ public class CrimeRegister  {
     @JoinColumn(name = "accused_national_id")
     private List<Accused> accused;
 
-    @ManyToOne
-    @JoinColumn(name = "complainer_national_id")
-    private Complainant  complainer;
+    @Column (name = "complainer_national_id")
+    private String  complainantNationalId;
 
     @ManyToOne
     @JoinColumn(name = "police_station_id")
     private PoliceStation  policeStations;
 
     @OneToMany
-    @JoinColumn(name = "report_id")
+    @JoinColumn (name = "report_id")
     private List<Report> reports;
 
     @OneToMany

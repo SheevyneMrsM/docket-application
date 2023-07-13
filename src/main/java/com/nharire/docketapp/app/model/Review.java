@@ -17,12 +17,12 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "body")
+    @Column(name = "body", nullable = false)
     private String body;
 
     //private String reply;
 
     @ManyToOne
-    @JoinColumn(name = "police_station")
+    @JoinColumn(name = "police_station", nullable = false)
     private PoliceStation policeStation;
 }
