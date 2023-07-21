@@ -82,9 +82,9 @@ public class ApplicationController {
         return new ResponseEntity(officer, HttpStatus.OK);
      }
      @PostMapping("save/police/station")
-     public ResponseEntity<PoliceStation> savePoliceStationDetails(@RequestBody PoliceStationDTO policeStationDTO){
+     public ResponseEntity<PoliceStationResponse> savePoliceStationDetails(@RequestBody PoliceStationDTO policeStationDTO){
         log.info("SAVE POLICE STATION DETAILS: {}", policeStationDTO.toString());
-        PoliceStation policeStation = policeStationService.savePoliceStationDetails(policeStationDTO);
+        PoliceStationResponse policeStation = policeStationService.savePoliceStationDetails(policeStationDTO);
         log.info("Saving Police station details: {}",policeStation.toString());
         return new ResponseEntity(policeStation,HttpStatus.OK);
     }

@@ -5,6 +5,7 @@ import com.nharire.docketapp.app.model.Officer;
 import com.nharire.docketapp.app.model.PoliceStation;
 import com.nharire.docketapp.app.model.dto.OfficerDTO;
 import com.nharire.docketapp.app.model.dto.PoliceStationDTO;
+import com.nharire.docketapp.app.model.dto.response.PoliceStationResponse;
 import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.OfficerRepo;
 import com.nharire.docketapp.app.repository.PoliceStationRepo;
@@ -26,38 +27,93 @@ public class PoliceStationServiceImpl implements PoliceStationService {
     private final OfficerRepo officerRepo;
 
     @Override
-    public PoliceStation savePoliceStationDetails(PoliceStationDTO policeStationDTO) {
-        log.info("SAVE POLICE STATION DETAILS: {}", policeStationDTO.toString());
+    public PoliceStationResponse savePoliceStationDetails(PoliceStationDTO policeStationDTO) {
+
+        PoliceStationResponse policeStationResponse = new PoliceStationResponse();
         try {
-            PoliceStation policeStation = new PoliceStation();
-            //get officer in charge details
-            OfficerDTO officerDTO = policeStationDTO.getOfficerInCharge();
+            log.info("SAVE POLICE STATION DETAILS: {}", policeStationDTO.toString());
 
-            //create officer in charge obj
-            Officer officer = new Officer();
             Address address = new Address();
-            BeanUtils.copyProperties(policeStationDTO.getAddress(), address);
 
-            //save Address details
-            addressRepo.save(address);
+            if (policeStationDTO != null) {
+                if (policeStationDTO.getAddress() != null) {
+                    BeanUtils.copyProperties(policeStationDTO.getAddress(), address);
+                    //save Address details
+                    address = addressRepo.save(address);
+                } else {
+                    //if address is null get a response message that no details are found, & they must be added
+                    policeStationResponse.setResponseCode(400);
+                    policeStationResponse.setDescription("No Address Details Found!!!");
+                    policeStationResponse.setMessage("Please kindly add Address details");
+                    policeStationResponse.setCode("DM-ADD-001");
+                    //adding return because address should be saved in accused no matter what
+                    return policeStationResponse;
+                }
+            }
 
-            officer.setAddress(address);
-            BeanUtils.copyProperties(officerDTO, officer);
+            Address address1 = new Address();
+            if (policeStationDTO != null) {
+                if (policeStationDTO.getOfficerInCharge() != null) {
+                    if (policeStationDTO.getOfficerInCharge().getAddress() != null) {
+                        BeanUtils.copyProperties(policeStationDTO.getOfficerInCharge().getAddress(), address1);
+                        address1 = addressRepo.saveAndFlush(address1);
+                    } else {
+                        policeStationResponse.setResponseCode(400);
+                        policeStationResponse.setDescription(" Please Add Address Details ");
+                        policeStationResponse.setMessage("Please kindly add Address Details");
+                        policeStationResponse.setCode("DM-ADD-001");
+                        return policeStationResponse;
+                    }
+                } else {
+                    policeStationResponse.setResponseCode(400);
+                    policeStationResponse.setDescription("Request Failed on Officer Details Missing ");
+                    policeStationResponse.setMessage(" Please kindly include Officer details");
+                    policeStationResponse.setCode("DM-OFF-001");
+                    return policeStationResponse;
+                }
 
-            //save officer in charge to db
-            Officer officer1 = officerRepo.save(officer);
-            policeStation.setOfficerInCharge(officer1);
-            policeStation.setAddress(address);
 
-            BeanUtils.copyProperties(policeStationDTO, policeStation);
-            log.info("Saving police station details: {}", policeStation);
-            return policeStationRepo.save(policeStation);
+                //create officer in charge obj
+                Officer officer = new Officer();
 
-        }catch(Exception  exception){
-            log.info( " Failed TO SAVE DATA "+exception.getMessage());
-        }
-        return  new PoliceStation();
+                officer.setAddress(address1);
+                if (policeStationDTO!= null){
+                    if (policeStationDTO.getOfficerInCharge()!= null){
+                        BeanUtils.copyProperties(policeStationDTO.getOfficerInCharge(),officer);
+                        officer = officerRepo.saveAndFlush(officer);
+                    }
+                }
+                PoliceStation policeStation = new PoliceStation();
+
+                policeStation.setOfficerInCharge(officer);
+                policeStation.setAddress(address);
+                BeanUtils.copyProperties(policeStationDTO, policeStation);
+
+                log.info("Saving police station details: {}", policeStation);
+           try {
+               policeStationRepo.saveAndFlush(policeStation);
+           }
+           catch (Exception ex) {
+                   policeStationResponse.setDescription("FAILED TO SAVE POLICE STATION");
+                   policeStationResponse.setResponseCode(500);
+                   policeStationResponse.setMessage("failed to Police station details");
+                   policeStationResponse.setCode("DM-POLICE-001");
+               }
+                BeanUtils.copyProperties(policeStation,policeStationResponse);
+                policeStationResponse.setResponseCode(200);
+                policeStationResponse.setMessage("SUCCESS");
+           }
+        } catch (Exception exception){
+                log.info("FAILED TO SAVE NEXT OF KIN, DATABASE ERROR " + exception);
+                policeStationResponse.setResponseCode(400);
+                policeStationResponse.setMessage("Failed to Save Information to Database");
+                policeStationResponse.setCode("DM-DB-001");
+                policeStationResponse.setDescription(exception.getMessage());
+            }
+
+        return policeStationResponse;
     }
+
 
     @Override
     public PoliceStationDTO updatePoliceStationDetails(PoliceStationDTO policeStationDTO) {

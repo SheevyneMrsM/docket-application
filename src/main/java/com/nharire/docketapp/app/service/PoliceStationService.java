@@ -3,6 +3,7 @@ package com.nharire.docketapp.app.service;
 import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.PoliceStation;
 import com.nharire.docketapp.app.model.dto.PoliceStationDTO;
+import com.nharire.docketapp.app.model.dto.response.PoliceStationResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Service
 public interface PoliceStationService {
 
-    PoliceStation savePoliceStationDetails(PoliceStationDTO policeStationDTO);
+    PoliceStationResponse savePoliceStationDetails(PoliceStationDTO policeStationDTO);
 
     PoliceStationDTO updatePoliceStationDetails(PoliceStationDTO policeStationDTO);
 

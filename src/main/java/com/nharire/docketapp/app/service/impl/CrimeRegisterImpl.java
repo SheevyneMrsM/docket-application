@@ -69,33 +69,39 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
                 if (crimeRegisterDTO.getHeadId() != null) {
                     // get details from dto
                     BeanUtils.copyProperties(crimeRegisterDTO.getHeadId(), officer);
+                    //save details in the db
+                    officer = officerRepo.saveAndFlush(officer);
+
                 }
             }
-            //creating new accused object
-            Accused accused = new Accused();
+//            //creating new accused object
+//            Accused accused = new Accused();
+//            //create an accused list
+//            List<Accused> accusedList = new ArrayList<>();
+//
+//            // check if crime register is not equal to null
+//            if (crimeRegisterDTO != null){
+//                if (crimeRegisterDTO.getAccused() != null){
+//                    //get details from dto
+//                    BeanUtils.copyProperties(crimeRegisterDTO.getAccused(),accused);
+//
+//                    accused = accusedRepo.saveAndFlush(accused);
+//                    //adding accused to accused list
+//                    accusedList.add(accused);
+//
+//
+//
+//                }
+//            }
 
-            // check if crime register is not equal to null
-            if (crimeRegisterDTO != null){
-                if (crimeRegisterDTO.getAccused() != null){
-                    //get details from dto
-                    BeanUtils.copyProperties(crimeRegisterDTO.getAccused(),accused);
-                    accused = accusedRepo.saveAndFlush(accused);
-                }
-            }
-            //create an accused list
-            List<Accused> accusedList = new ArrayList<>();
-            //adding accused to accused list
-            accusedList.add(accused);
 
-            //save details in the db
-            Officer officer1 = officerRepo.saveAndFlush(officer);
 
             //create new crime register object
             CrimeRegister crimeRegister = new CrimeRegister();
             //set officer to crime register
-            crimeRegister.setHeadId(officer1);
+            crimeRegister.setHeadId(officer);
             //set accused list to crime register
-            crimeRegister.setAccused(accusedList);
+            //crimeRegister.setAccused(accusedList);
 
             // copy properties from dto to crime register
             BeanUtils.copyProperties(crimeRegisterDTO, crimeRegister);
@@ -168,15 +174,16 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
     }
 
     @Override
+
     public CrimeRegister addAccused(Accused accused) {
         //created a field named crimeId
         Long crimeId = 0L;
         //check if crime is not equals to null
-        if (accused.getCrime() != null) {
+        if (accused!= null) {
             //check if crimeId  is not equal to null
-            if (accused.getCrime().getCrimeId() != null) {
+            if (accused.getCrimeId() != null) {
                 //if its not null assign to crimeId
-                crimeId = accused.getCrime().getCrimeId();
+                crimeId = accused.getCrimeId();
                 //get crime register from db
                 //assign crime register from db to obj
                 CrimeRegister crimeRegister = crimeRegisterRepo.getById(crimeId);
@@ -204,8 +211,8 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
 
     @Override
     public CrimeRegister addComplainant(Complainant complainant) {
-        CrimeRegister crimeRegister = crimeRegisterRepo.getById(complainant.getCrime().getCrimeId());
-        crimeRegister.getComplainer().getCrime();
+        CrimeRegister crimeRegister = crimeRegisterRepo.getById(complainant.getCrimeId());
+        crimeRegister.getComplainer().getCrimeId();
         return crimeRegisterRepo.save(crimeRegister);
     }
 

@@ -37,9 +37,8 @@ public class Complainant {
     @JoinColumn(name = "next_of_kin_phone_number")
     private NextOfKin nextOfKin;
 
-    @ManyToOne
-    @JoinColumn(name = "crime_crime_id")
-    private CrimeRegister crime;
+    @Column(name = "crime_crime_id")
+    private Long crimeId;
 
     @OneToMany
     @JoinColumn(name = "report")

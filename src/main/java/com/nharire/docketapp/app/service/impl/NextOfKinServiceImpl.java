@@ -47,6 +47,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
                     nextOfKinResponse.setCode("DM-ADD-001");
                     return nextOfKinResponse;
                 }
+
             }
             //save address to db
             Address address1 = addressRepo.saveAndFlush(address);
@@ -54,7 +55,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
             Address address2= new Address();
         if (nextOfKinDTO!= null) {
             if (nextOfKinDTO.getAccused()!= null) {
-                if (nextOfKinDTO.getAccused().getAddress() != null)
+                if (nextOfKinDTO.getAccused().getAddress() != null){
                     //get address details from dto
                     BeanUtils.copyProperties(nextOfKinDTO.getAccused().getAddress(), address2);
                     address = addressRepo.saveAndFlush(address2);
@@ -73,7 +74,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
             nextOfKinResponse.setCode("DM-ACC-001");
             return  nextOfKinResponse;
 
-        }
+        }}
         Accused accused = new Accused();
         accused.setAddress(address);
 
@@ -102,6 +103,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
         NextOfKin nextOfKin = new NextOfKin();
          nextOfKin.setAccused(accused1);
          nextOfKin.setAddress(address1);
+         BeanUtils.copyProperties(nextOfKinDTO, nextOfKin);
         log.info("Saving accused details: {}", nextOfKin);
         try {
             nextOfKin  = nextOfKinRepo.saveAndFlush(nextOfKin);

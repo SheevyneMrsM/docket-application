@@ -2,9 +2,12 @@ package com.nharire.docketapp.app.model.dto;
 
 import com.nharire.docketapp.app.model.Accused;
 import com.nharire.docketapp.app.model.Address;
+import com.nharire.docketapp.app.model.Complainant;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
+
 @Data
 public class NextOfKinDTO implements Serializable {
 
@@ -16,6 +19,8 @@ public class NextOfKinDTO implements Serializable {
     private AddressDTO address;
     private String relationship;
     private Accused accused;
+    private List<Complainant> complainant;
+    private String addAddressDetails;
 
 
 
