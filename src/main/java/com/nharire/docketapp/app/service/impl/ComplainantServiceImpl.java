@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class ComplainantServiceImpl implements ComplainantService {
     private final AddressRepo addressRepo;
     private final CrimeRegisterRepo crimeRegisterRepo;
     @Override
+
     public ComplainantResponse saveComplainantDetails(ComplainantDTO complainantDTO) {
 
         ComplainantResponse complainantResponse = new ComplainantResponse();
@@ -105,10 +107,10 @@ public class ComplainantServiceImpl implements ComplainantService {
             if (crimeRegister.isPresent()){
                CrimeRegister crimeRegister1= crimeRegister.get();
 
-               if (crimeRegister1.getComplainer()!= null){
-                   BeanUtils.copyProperties(crimeRegister1.getComplainer(),crimeRegister1);
+               if (crimeRegister1.getComplainantNationalId()!= null){
+                   BeanUtils.copyProperties(crimeRegister1.getComplainantNationalId(),crimeRegister1);
                }
-               crimeRegister1.setComplainer(complainant1);
+               crimeRegister1.setComplainantNationalId(String.valueOf(complainant1));
                 try {
                     //save crime register in db
                     crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister1);

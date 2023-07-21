@@ -17,22 +17,22 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
-    @Column(name = "street_address")
+    @Column(name = "street_address", nullable = false)
      private String streetAddress;
 
-    @Column(name = "suburb")
+    @Column(name = "suburb", nullable = false)
      private String suburb;
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
      private String city;
 
-    @Column(name = "province")
+    @Column(name = "province", nullable = false)
      private String province;
 
-    @Column(name = "latitude")
+    @Column(name = "latitude", nullable = false)
      private String latitude;
 
-    @Column(name = "longitude")
+    @Column(name = "longitude", nullable = false)
      private String longitude;
 
 }

@@ -21,10 +21,10 @@ public class Report {
     @Column(name = "crime_id", nullable = false)
     private Long crimeId;
 
-    @Column(name = "report_Description")
+    @Column(name = "report_Description", nullable = false)
     private String reportDescription;
 
-    @Column(name = "reported")
+    @Column(name = "reported", nullable = false)
     private LocalDateTime reported;
 
 }

@@ -16,6 +16,8 @@ public interface AddressRepo extends JpaRepository<Address,Long> {
     @Query("select a from Address a where upper(a.streetAddress) = upper(?1)")
     List<Address> findByStreetAddressEqualsIgnoreCase(String streetAddress);
 
+    Optional<Address> findByIdEquals(Long id);
+
 
 
     List<AddressDTO> findAllById(Long id);

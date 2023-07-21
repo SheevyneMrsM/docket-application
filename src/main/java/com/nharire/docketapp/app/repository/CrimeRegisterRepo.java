@@ -15,5 +15,6 @@ public interface CrimeRegisterRepo extends JpaRepository<CrimeRegister,Long> {
     Optional<CrimeRegister> findByCrimeIdEquals(Long crimeId);
 
 
+
     void deleteById(Long crimeId);
 }
