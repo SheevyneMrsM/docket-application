@@ -42,7 +42,7 @@ public class Officer {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "police_station_id", nullable = false)
+    @JoinColumn(name = "police_station_id")
     private PoliceStation policeStation;
 
     @OneToOne

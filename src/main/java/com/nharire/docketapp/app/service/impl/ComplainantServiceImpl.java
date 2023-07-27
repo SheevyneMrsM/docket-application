@@ -92,29 +92,33 @@ public class ComplainantServiceImpl implements ComplainantService {
     public ComplainantResponse updateComplainantDetails(ComplainantDTO complainantDTO) {
         //create new response object
         ComplainantResponse complainantResponse = new ComplainantResponse();
-        //check if complainant is in the db
-        Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(complainantDTO.getNationalId());
-        //create new complainant object
-        Complainant complainant1 = new Complainant() ;
-        //check if complainant is present
-        if (complainant.isPresent()) {
-            //get complainant
-            complainant1 = complainant.get();
-            //copy dto properties to complainant1
-            BeanUtils.copyProperties(complainantDTO, complainant1);
-        }
-            Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(Long.valueOf(complainantDTO.getCrimeId()));
-            if (crimeRegister.isPresent()){
-               CrimeRegister crimeRegister1= crimeRegister.get();
+        try {
 
-               if (crimeRegister1.getComplainantNationalId()!= null){
-                   BeanUtils.copyProperties(crimeRegister1.getComplainantNationalId(),crimeRegister1);
-               }
-               crimeRegister1.setComplainantNationalId(String.valueOf(complainant1));
+
+            log.info("UPDATING COMPLAINANT DETAILS:{}", complainantDTO.toString());
+            //check if complainant is in the db
+            Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(complainantDTO.getNationalId());
+            //create new complainant object
+            Complainant complainant1 = new Complainant();
+            //check if complainant is present
+            if (complainant.isPresent()) {
+                //get complainant
+                complainant1 = complainant.get();
+                //copy dto properties to complainant1
+                BeanUtils.copyProperties(complainantDTO, complainant1);
+            }
+            Optional<CrimeRegister> crimeRegister = crimeRegisterRepo.findById(complainantDTO.getCrimeId());
+            if (crimeRegister.isPresent()) {
+                CrimeRegister crimeRegister1 = crimeRegister.get();
+
+                if (crimeRegister1.getComplainantNationalId() != null) {
+                    BeanUtils.copyProperties(crimeRegister1.getComplainantNationalId(), crimeRegister1);
+                }
+                crimeRegister1.setComplainantNationalId(String.valueOf(complainant1));
                 try {
                     //save crime register in db
                     crimeRegister1 = crimeRegisterRepo.saveAndFlush(crimeRegister1);
-                }catch (Exception exception){
+                } catch (Exception exception) {
                     //send response
                     complainantResponse.setMessage("Failed to Save Crime register database issues");
                 }
@@ -127,17 +131,24 @@ public class ComplainantServiceImpl implements ComplainantService {
                 complainantResponse.setResponseCode(200);
                 return complainantResponse;
 
-            }else {
+            } else {
+                complainantResponse.setResponseCode(400);
+                complainantResponse.setMessage("No complainant with this Id is registered");
+                complainantResponse.setCode("DB-COMP-002");
+                complainantResponse.setDescription("Failed to update complainant to crime register");
+                BeanUtils.copyProperties(complainant1, complainantResponse);
+                return complainantResponse;
+
+            }
+
+        }catch (Exception exception){
+            log.info("FAILED TO SAVE COMPLAINANT, DATABASE ERROR " + exception);
             complainantResponse.setResponseCode(400);
-            complainantResponse.setMessage("No complainant with this Id is registered");
-            complainantResponse.setCode("DB-COMP-002");
-            complainantResponse.setDescription("Failed to update complainant to crime register");
-            BeanUtils.copyProperties(complainant1, complainantResponse);
-            return complainantResponse;
-
+            complainantResponse.setMessage("Failed to Save Information to Database");
+            complainantResponse.setCode("DM-DB-001");
+            complainantResponse.setDescription(exception.getMessage());
         }
-
-
+        return complainantResponse;
 
     }
 

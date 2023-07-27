@@ -54,75 +54,77 @@ public class NextOfKinServiceImpl implements NextOfKinService {
                 //create Accused  object
             Address address2= new Address();
        if (nextOfKinDTO!= null) {
-           if (nextOfKinDTO.getAccused()!= null) {
+           if (nextOfKinDTO.getAccused() != null) {
                if (nextOfKinDTO.getAccused().getAddress() != null) {
-                    //get address details from dto
-                    BeanUtils.copyProperties(nextOfKinDTO.getAccused().getAddress(), address2);
-                    address2 = addressRepo.saveAndFlush(address2);
-                }else {nextOfKinResponse.setResponseCode(400);
-                    nextOfKinResponse.setDescription("No Address Details Found!!!");
-                    nextOfKinResponse.setMessage("Please kindly add Address details");
-                    nextOfKinResponse.setCode("DM-ADD-001");
-                    return nextOfKinResponse;
-                }
-           }else{
-              nextOfKinResponse.setResponseCode(400);
-                nextOfKinResponse.setDescription(" Please Add Address Details ");
-                nextOfKinResponse.setMessage("Please kindly add Address Details");
-                nextOfKinResponse.setCode("DM-ADD-001");
-                return  nextOfKinResponse;
-            }
+                   //get address details from dto
+                   BeanUtils.copyProperties(nextOfKinDTO.getAccused().getAddress(), address2);
+                   address2 = addressRepo.saveAndFlush(address2);
+               } else {
+                   nextOfKinResponse.setResponseCode(400);
+                   nextOfKinResponse.setDescription("No Address Details Found!!!");
+                   nextOfKinResponse.setMessage("Please kindly add Address details");
+                   nextOfKinResponse.setCode("DM-ADD-001");
+                   return nextOfKinResponse;
+               }
+           } else {
+               nextOfKinResponse.setResponseCode(400);
+               nextOfKinResponse.setDescription("Request Failed on Accused Details Missing ");
+               nextOfKinResponse.setMessage(" Please kindly include Accused details");
+               nextOfKinResponse.setCode("DM-ACC-001");
+               return nextOfKinResponse;
 
-           }else {
-           nextOfKinResponse.setResponseCode(400);
-           nextOfKinResponse.setDescription("Request Failed on Accused Details Missing ");
-            nextOfKinResponse.setMessage(" Please kindly include Accused details");
-            nextOfKinResponse.setCode("DM-ACC-001");
-           return  nextOfKinResponse;
-
-       }
-        Accused accused = new Accused();
-        accused.setAddress(address2);
-
-        if (nextOfKinDTO != null){
-           if (nextOfKinDTO.getAccused()!= null){
-               BeanUtils.copyProperties(nextOfKinDTO.getAccused(),accused);
            }
-        }
-          Accused accused1 = accusedRepo.saveAndFlush(accused);
+           Accused accused = new Accused();
+           accused.setAddress(address2);
 
-        List<Complainant> complainantList = new ArrayList<>();
-            Address address3 = new Address();
-               for (Complainant complainant:complainantList) {
-                   if(complainant != null){
-                        if (complainant.getNextOfKin()!= null){
-                           if (complainant.getNextOfKin().getAddress() != null){
-                                BeanUtils.copyProperties(complainant.getNextOfKin().getAddress(),address3);
-                              address3= addressRepo.saveAndFlush(address3);
+           if (nextOfKinDTO != null) {
+               if (nextOfKinDTO.getAccused() != null) {
+                   BeanUtils.copyProperties(nextOfKinDTO.getAccused(), accused);
+                   accused = accusedRepo.saveAndFlush(accused);
+               }
+           }
+
+
+           List<Complainant> complainantList = new ArrayList<>();
+           Address address3 = new Address();
+           for (Complainant complainant : complainantList) {
+               if (complainant != null) {
+                   complainantList.add(complainant);
+                   if (complainant.getNextOfKin() != null) {
+                       if (complainant.getNextOfKin().getAddress() != null) {
+                           BeanUtils.copyProperties(complainant.getNextOfKin().getAddress(), address3);
+                           address3 = addressRepo.saveAndFlush(address3);
 
                        }
-                       }
-                    }
+                   }
+               }
 
            }
 
-                NextOfKin nextOfKin = new NextOfKin();
-                //nextOfKin.setAccused(accused1);
-                nextOfKin.setAddress(address);
-                //nextOfKin.setComplainant(address3);
-                log.info("Saving accused details: {}", nextOfKin);
-                try {
-                    nextOfKin = nextOfKinRepo.saveAndFlush(nextOfKin);
-                } catch (Exception ex) {
-                    nextOfKinResponse.setDescription("FAILED TO SAVE NEXT OF KIN");
-                    nextOfKinResponse.setResponseCode(500);
-                    nextOfKinResponse.setMessage("failed to next of kin");
-                    nextOfKinResponse.setCode("DM-NOK-001");
-                }
-                BeanUtils.copyProperties(nextOfKin, nextOfKinResponse);
-                nextOfKinResponse.setResponseCode(200);
-                nextOfKinResponse.setMessage("SUCCESS");
+           NextOfKin nextOfKin = new NextOfKin();
+           nextOfKin.setAccused(accused);
+           nextOfKin.setAddress(address);
+           BeanUtils.copyProperties(nextOfKinDTO, nextOfKin);
+
+           //nextOfKin.setAddress(address3);
+           log.info("Saving accused details: {}", nextOfKin);
+         try {
+
+
+           nextOfKin = nextOfKinRepo.saveAndFlush(nextOfKin);
+
+
+
+         } catch (Exception ex) {
+                nextOfKinResponse.setDescription("FAILED TO SAVE NEXT OF KIN");
+                nextOfKinResponse.setResponseCode(500);
+                nextOfKinResponse.setMessage("failed to next of kin");
+                nextOfKinResponse.setCode("DM-NOK-001");
             }
+           BeanUtils.copyProperties(nextOfKin, nextOfKinResponse);
+           nextOfKinResponse.setResponseCode(200);
+           nextOfKinResponse.setMessage("SUCCESS");
+       }}
         }catch (Exception exception){
             log.info("FAILED TO SAVE NEXT OF KIN, DATABASE ERROR " + exception);
             nextOfKinResponse.setResponseCode(400);

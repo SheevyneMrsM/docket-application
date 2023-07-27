@@ -5,6 +5,8 @@ import com.nharire.docketapp.app.model.CrimeRegister;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Data
 public class ReportResponse extends Response {
 
@@ -13,5 +15,6 @@ public class ReportResponse extends Response {
     private CrimeRegister crimeRegister;
 
     private String reportDescription;
+
 
 }

@@ -18,13 +18,13 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "crime_id", nullable = false)
+    @Column(name = "crime_id")
     private Long crimeId;
 
-    @Column(name = "report_Description", nullable = false)
+    @Column(name = "report_Description")
     private String reportDescription;
 
-    @Column(name = "reported", nullable = false)
-    private LocalDateTime reported;
+//    @Column(name = "reported")
+//    private LocalDateTime reported;
 
 }

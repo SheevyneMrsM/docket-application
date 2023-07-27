@@ -17,25 +17,25 @@ public class PoliceStation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "police_station_name", nullable = false)
+    @Column(name = "police_station_name")
     private String policeStationName;
 
     @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
     @OneToOne
-    @JoinColumn(name = "officer_in_charge_id", nullable = false)
+    @JoinColumn(name = "officer_in_charge_id")
     private Officer officerInCharge;
 
     @OneToMany
-    @JoinColumn(name = "reviews", nullable = false)
+    @JoinColumn(name = "reviews")
     private List<Review> addReview;
 
 

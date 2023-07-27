@@ -61,6 +61,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressResponse updateAddressDetails(AddressDTO addressDTO) {
         AddressResponse addressResponse = new AddressResponse();
+
         //print address detail to the console
         try {
 
@@ -81,42 +82,47 @@ public class AddressServiceImpl implements AddressService {
                     if (complainant.isPresent()){
                         Complainant complainant1 = complainant.get();
                         complainant1.setAddress(address1);
-                        complainant1=complainantRepo.saveAndFlush(complainant1);
+                        try {
+                            complainant1 = complainantRepo.saveAndFlush(complainant1);
+                        }catch (Exception e){
+                            addressResponse.setMessage("could not save complainant");
+                        }
+                        addressResponse.setComplainant(complainant1);
                         BeanUtils.copyProperties(complainant1,addressResponse);
                         BeanUtils.copyProperties(address1,addressResponse);
                         addressResponse.setMessage("SUCCESS");
                         addressResponse.setResponseCode(200);
                     }else{
-                        BeanUtils.copyProperties(address1, addressResponse);
+                        //BeanUtils.copyProperties(address1, addressResponse);
                         addressResponse.setMessage("Error, failed to get complainant with national id "+ addressDTO.getNationalId());
                         addressResponse.setResponseCode(400);
                         addressResponse.setDescription("Please kindly provide a valid national id");
                         return addressResponse;
                     }
-                }else {
-
-                    BeanUtils.copyProperties(addressDTO,address1);
-                    address1 = addressRepo.saveAndFlush(address1);
-                    BeanUtils.copyProperties(address1,addressResponse);
-                    Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(addressDTO.getNationalId());
-                    if (complainant.isPresent()) {
-                        Complainant complainant1 = complainant.get();
-                        complainant1.setAddress(address1);
-                        complainant1 = complainantRepo.saveAndFlush(complainant1);
-                        BeanUtils.copyProperties(complainant1, addressResponse);
-                        BeanUtils.copyProperties(address1, addressResponse);
-                        addressResponse.setMessage("SUCCESS");
-                        addressResponse.setResponseCode(200);
-                        addressResponse.setMessage("SUCCESS");
-                        addressResponse.setResponseCode(200);
-                        return addressResponse;
-                    }
+//                }else {
+//
+//                    BeanUtils.copyProperties(addressDTO,address1);
+//                    address1 = addressRepo.saveAndFlush(address1);
+//                    BeanUtils.copyProperties(address1,addressResponse);
+//                    Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(addressDTO.getNationalId());
+//                    if (complainant.isPresent()) {
+//                        Complainant complainant1 = complainant.get();
+//                        complainant1.setAddress(address1);
+//                        complainant1 = complainantRepo.saveAndFlush(complainant1);
+//                        BeanUtils.copyProperties(complainant1, addressResponse);
+//                        //BeanUtils.copyProperties(address1, addressResponse);
+//                        addressResponse.setMessage("SUCCESS");
+//                        addressResponse.setResponseCode(200);
+////                        addressResponse.setMessage("SUCCESS");
+////                        addressResponse.setResponseCode(200);
+//                        return addressResponse;
+//                    }
                 }
             }
         }catch (Exception exception){
             log.info("Failed to connect to db" + exception.getMessage());
             addressResponse.setResponseCode(400);
-            addressResponse.setMessage("No adress with this street address is registered");
+            addressResponse.setMessage("No address with this street address is registered");
             addressResponse.setCode("DB-Add-002");
             addressResponse.setDescription("Failed to update address to complainant");
             BeanUtils.copyProperties(addressDTO, addressResponse);
@@ -124,7 +130,7 @@ public class AddressServiceImpl implements AddressService {
 
         }
 
-        return null;
+        return addressResponse;
     }
 
 }

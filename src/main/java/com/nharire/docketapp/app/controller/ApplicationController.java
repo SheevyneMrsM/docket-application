@@ -96,9 +96,9 @@ public class ApplicationController {
         return new ResponseEntity(report, HttpStatus.OK);
     }
     @PostMapping("save/reviews")
-    public ResponseEntity<Review>  saveReviewDetails(@RequestBody ReviewDTO reviewDTO){
+    public ResponseEntity<ReviewResponse>  saveReviewDetails(@RequestBody ReviewDTO reviewDTO){
         log.info("SAVE REVIEWS: {}", reviewDTO.toString());
-        Review review = reviewService.saveReviews(reviewDTO);
+        ReviewResponse review = reviewService.saveReviews(reviewDTO);
         log.info("Saving reviews: {}", review.toString());
         return new ResponseEntity(review, HttpStatus.OK);
     }
@@ -315,7 +315,7 @@ public class ApplicationController {
     public ResponseEntity<AddressResponse> updateAddressDetails(@RequestBody @Validated AddressDTO addressDTO) {
         log.info("UPDATE ADDRESS DETAILS : {}", addressDTO.toString());
         AddressResponse address = addressService.updateAddressDetails(addressDTO);
-        log.info("UPDATING ACCUSED DETAILS: {}", address.toString());
+        log.info("UPDATING ADDRESS DETAILS: {}", address.toString());
         return new ResponseEntity(address, HttpStatus.OK);
 
     }

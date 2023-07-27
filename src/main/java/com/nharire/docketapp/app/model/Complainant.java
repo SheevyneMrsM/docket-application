@@ -17,36 +17,36 @@ public class Complainant {
     @Id
     private String nationalId;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name ="last_name", nullable = false)
+    @Column(name ="last_name")
     private String lastName;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "address_id",nullable = false)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @ManyToOne
-    @JoinColumn(name = "next_of_kin_phone_number", nullable = false)
+    @JoinColumn(name = "next_of_kin_phone_number")
     private NextOfKin nextOfKin;
 
 
-    @Column(name = "crime_crime_id", nullable = false)
+    @Column(name = "crime_crime_id")
     private Long crimeId;
 
     @OneToMany
-    @JoinColumn(name = "report", nullable = false)
+    @JoinColumn(name = "report")
     private List<Report> reports;
 
     @OneToMany
-    @JoinColumn(name = "witness_id", nullable = false)
+    @JoinColumn(name = "witness_id")
     private List<Witness> witness;
 
     private String getDateOfComplaint;

@@ -33,7 +33,9 @@ public class AccusedServiceImpl implements AccusedService {
 
     @Override
     public AccusedResponse saveAccusedDetails(AccusedDTO accusedDTO) {
+
         AccusedResponse accusedResponse = new AccusedResponse();
+
         try {
             // printing accused details to the console
             log.info("ACCUSED DETAILS: {}", accusedDTO.toString());
@@ -41,7 +43,9 @@ public class AccusedServiceImpl implements AccusedService {
             Address address = new Address();
             //check if accused is not equal to null
             if (accusedDTO != null) {
+
                 //check if we get address from accused is not equal to null
+
                 if (accusedDTO.getAddress() != null) {
                     //now copy properties from dto to address
                     BeanUtils.copyProperties(accusedDTO.getAddress(), address);
@@ -158,6 +162,7 @@ public class AccusedServiceImpl implements AccusedService {
 
             //add existing accused to array
             if(crimeRegister1.getAccused()!=null){
+
                 accusedList.addAll(crimeRegister1.getAccused());
             }
             //add accused to list
@@ -177,6 +182,7 @@ public class AccusedServiceImpl implements AccusedService {
             accusedResponse.setCrimeRegister(crimeRegister1);
             //copy properties from accused to response
             BeanUtils.copyProperties(accused1, accusedResponse);
+
             accusedResponse.setMessage("SUCCESS");
             accusedResponse.setResponseCode(200);
             return accusedResponse;

@@ -49,7 +49,7 @@ public class ReportServiceImpl implements ReportService {
                         //set crime id from crime register to report
                         report.setCrimeId(crimeRegister.getCrimeId());
                         //also sate date and time of report in report
-                        report.setReported(LocalDateTime.now());
+                        //report.setReported(LocalDateTime.now());
                         //now copy properties from dto to report
                         BeanUtils.copyProperties(reportDTO, report);
                         //print report details on the console

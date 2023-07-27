@@ -4,6 +4,8 @@ import com.nharire.docketapp.app.common.Response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Time;
@@ -44,7 +46,7 @@ public class CrimeRegister  {
     @Column(name = "description")
     private String  descriptions;
 
-    @OneToMany
+    @OneToMany(fetch =  FetchType.EAGER)
     @JoinColumn(name = "accused_national_id")
     private List<Accused> accused;
 
@@ -56,10 +58,12 @@ public class CrimeRegister  {
     private PoliceStation  policeStations;
 
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn (name = "report_id")
     private List<Report> reports;
 
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "witness")
     private List<Witness> witness;
 

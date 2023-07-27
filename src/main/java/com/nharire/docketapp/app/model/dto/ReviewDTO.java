@@ -9,7 +9,7 @@ public class ReviewDTO implements Serializable {
 
     private Long id;
     private String body;
-    private String policeStation;
+    private Long policeStationId;
 
 
 }
