@@ -75,9 +75,9 @@ public class ApplicationController {
         return new ResponseEntity(nextOfKin,HttpStatus.OK);
      }
      @PostMapping("/save/police/officer")
-     public  ResponseEntity<Officer> saveOfficerDetails(@RequestBody OfficerDTO officerDTO ){
+     public  ResponseEntity<OfficerResponse> saveOfficerDetails(@RequestBody OfficerDTO officerDTO ){
         log.info("SAVE OFFICER DETAILS: {}", officerDTO.toString());
-        Officer officer = officerService.saveOfficerDetails(officerDTO);
+        OfficerResponse officer = officerService.saveOfficerDetails(officerDTO);
         log.info("Saving officer details: {}", officer.toString());
         return new ResponseEntity(officer, HttpStatus.OK);
      }
@@ -116,6 +116,8 @@ public class ApplicationController {
         log.info("Saving witness details: {}", witness.toString());
         return new ResponseEntity(witness, HttpStatus.OK);
     }
+
+
 
     @GetMapping("get/accused")
     public ResponseEntity<List<Accused>>  getAllAccusedDetails(){
@@ -198,9 +200,9 @@ public class ApplicationController {
         return new ResponseEntity(nextOfKin1,HttpStatus.OK);
     }
        @GetMapping("/get/officer/{id}")
-        public ResponseEntity<Officer> getOfficerDetails(@PathVariable Long id){
-        log.info("SEARCHING OFFICER DETAILS USING ID: {}", id);
-        Optional<Officer> officer = officerService.getOfficerDetails(id);
+        public ResponseEntity<Officer> getOfficerDetails(@PathVariable String nationalId){
+        log.info("SEARCHING OFFICER DETAILS USING ID: {}", nationalId);
+        Optional<Officer> officer = officerService.getOfficerDetails(nationalId);
         Officer officer1;
         if (officer.isPresent()){
             officer1 = officer.get();
@@ -342,6 +344,62 @@ public class ApplicationController {
         log.info("UPDATING NEXT OF KIN DETAILS : {}", nextOfKin.toString());
         return new ResponseEntity(nextOfKin, HttpStatus.OK);
     }
+    @PutMapping("put/police/officer")
+    public ResponseEntity<OfficerResponse> updateOfficerDetails(@RequestBody @Validated OfficerDTO officerDTO){
+        log.info("UPDATE OFFICER DETAILS : {}", officerDTO.toString() );
+        OfficerResponse officer = officerService.updateOfficerDetails(officerDTO);
+        log.info("UPDATING OFFICER DETAILS : {}", officer.toString());
+        return new ResponseEntity(officer, HttpStatus.OK);
+
+    }
+
+    @PutMapping("put/report")
+    public ResponseEntity<Report> updateReportDetails(@RequestBody @Validated ReportDTO reportDTO){
+        log.info("UPDATE REPORT DETAILS : {}", reportDTO.toString() );
+        ReportDTO report = reportService.updateReportDetails(reportDTO);
+        log.info("UPDATING REPORT DETAILS : {}", report.toString());
+        return new ResponseEntity(report, HttpStatus.OK);
+
+    }
+
+    @PutMapping("put/review")
+    public ResponseEntity<Review> updateReviews(@RequestBody @Validated ReviewDTO reviewDTO){
+        log.info("UPDATE REVIEW DETAILS : {}", reviewDTO.toString() );
+        ReviewDTO reviews = reviewService.updateReviews(reviewDTO);
+        log.info("UPDATING REVIEW DETAILS : {}", reviews.toString());
+        return new ResponseEntity(reviews, HttpStatus.OK);
+
+    }
+
+
+    @PutMapping("put/user")
+    public ResponseEntity<User> updateUserDetails(@RequestBody @Validated UserDTO userDTO){
+        log.info("UPDATE USER DETAILS : {}", userDTO.toString() );
+        UserDTO user= userService.updateUserDetails(userDTO);
+        log.info("UPDATING USER DETAILS : {}", user.toString());
+        return new ResponseEntity(user, HttpStatus.OK);
+
+    }
+    @PutMapping("put/witness")
+    public ResponseEntity<Witness> updateReviews(@RequestBody @Validated WitnessDTO witnessDTO){
+        log.info("UPDATE WITNESS DETAILS : {}", witnessDTO.toString() );
+        WitnessDTO witness = witnessService.updateWitnessDetails(witnessDTO);
+        log.info("UPDATING WITNESS DETAILS : {}", witness.toString());
+        return new ResponseEntity(witness, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("delete/accused")
+    public ResponseEntity<Accused> deleteAccusedById(@RequestBody @Validated AccusedDTO accusedDTO){
+        log.info("DELETE ACCUSED DETAILS : {}", accusedDTO.toString() );
+        Accused accused= accusedService.deleteById(accusedDTO.getNationalId());
+        log.info("DELETING ACCUSED DETAILS BY ID : {}", accused.toString());
+        return new ResponseEntity(accused, HttpStatus.OK);
+
+    }
+
+
+
 
 
 

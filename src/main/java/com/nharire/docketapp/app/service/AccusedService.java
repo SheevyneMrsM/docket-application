@@ -19,7 +19,7 @@ public interface AccusedService {
 
      List<AccusedDTO> getAccusedByDateReported(String dateReported);
 
-     void deleteById(String nationalId);
+     Accused deleteById(String nationalId);
 
     AccusedResponse updateAccusedDetails(AccusedDTO accusedDTO);
 

@@ -13,32 +13,33 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Officer {
 
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "rank", nullable = false)
+    @Column(name = "rank")
     private String rank;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Column(name ="office_land_line", nullable = false)
+    @Column(name ="office_land_line")
     private String officeLandLine;
 
-    @Column(name = "national_id", nullable = false)
+    @Id
+    @Column(name = "national_id")
     private String nationalId;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
     @ManyToOne
@@ -46,7 +47,7 @@ public class Officer {
     private PoliceStation policeStation;
 
     @OneToOne
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id")
     private Address address;
 
 

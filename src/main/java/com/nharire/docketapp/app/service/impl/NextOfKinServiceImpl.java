@@ -147,7 +147,7 @@ public class NextOfKinServiceImpl implements NextOfKinService {
             NextOfKin nextOfKin1 = new NextOfKin();
             if (nextOfKin.isPresent()) {
                 nextOfKin1 = nextOfKin.get();
-                BeanUtils.copyProperties(nextOfKinDTO, nextOfKin1);
+                BeanUtils.copyProperties(nextOfKin1,nextOfKinDTO);
            }
 
             Optional<Address> address = addressRepo.findByIdEquals(nextOfKinDTO.getAddress().getId());

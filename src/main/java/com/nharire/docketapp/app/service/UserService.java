@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface UserService {
      UserResponse saveUserDetails(UserDTO userDTO);
 
-     UserDTO updateUserService(UserDTO userDTO);
+     UserDTO updateUserDetails(UserDTO userDTO);
 
      void deleteUser(String nationalId);
 

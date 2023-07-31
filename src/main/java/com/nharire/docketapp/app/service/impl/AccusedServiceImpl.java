@@ -122,9 +122,10 @@ public class AccusedServiceImpl implements AccusedService {
     }
 
     @Override
-    public void deleteById(String nationalId) {
+    public Accused deleteById(String nationalId) {
         accusedRepo.deleteById(nationalId);
 
+        return null;
     }
 
     @Override

@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUserService(UserDTO userDTO){
+    public UserDTO updateUserDetails(UserDTO userDTO){
         Optional<User> user = userRepo.findById(userDTO.getNationalId());
         User user1;
         if (user.isPresent()){

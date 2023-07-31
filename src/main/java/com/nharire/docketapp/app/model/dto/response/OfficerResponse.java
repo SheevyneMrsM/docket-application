@@ -1,12 +1,12 @@
-package com.nharire.docketapp.app.model.dto;
+package com.nharire.docketapp.app.model.dto.response;
 
+import com.nharire.docketapp.app.common.Response;
 import com.nharire.docketapp.app.model.Address;
 import com.nharire.docketapp.app.model.PoliceStation;
 import lombok.Data;
 
-import java.io.Serializable;
 @Data
-public class OfficerDTO implements Serializable {
+public class OfficerResponse extends Response {
     private String nationalId;
     private Long id;
     private String firstName;
@@ -16,13 +16,6 @@ public class OfficerDTO implements Serializable {
     private String email;
     private String officeLandLine;
     private String description;
+    private PoliceStation policeStation;
     private Address address;
-    private String policeStationId;
-
-
-
-
-
-
-
 }
