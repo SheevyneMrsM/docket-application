@@ -30,9 +30,9 @@ public class PoliceStation {
     @Column(name = "email")
     private String email;
 
-    @OneToOne
-    @JoinColumn(name = "officer_in_charge_id")
-    private Officer officerInCharge;
+
+    @Column(name = "officer_in_charge_id")
+    private String officerNationalId;
 
     @OneToMany
     @JoinColumn(name = "reviews")

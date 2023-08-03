@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Officer {
 
-
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
@@ -35,16 +35,15 @@ public class Officer {
     @Column(name ="office_land_line")
     private String officeLandLine;
 
-    @Id
+
     @Column(name = "national_id")
     private String nationalId;
 
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "police_station_id")
-    private PoliceStation policeStation;
+    @Column(name = "police_station_id")
+    private String policeStationId;
 
     @OneToOne
     @JoinColumn(name = "address_id")

@@ -352,6 +352,14 @@ public class ApplicationController {
         return new ResponseEntity(officer, HttpStatus.OK);
 
     }
+    @PutMapping("put/police/station")
+    public ResponseEntity<PoliceStationResponse> updatePoliceStationDetails(@RequestBody @Validated PoliceStationDTO policeStationDTO){
+        log.info("UPDATE POLICE STATION DETAILS : {}", policeStationDTO.toString() );
+        PoliceStationResponse policeStation = policeStationService.updatePoliceStationDetails(policeStationDTO);
+        log.info("UPDATING POLICE STATION DETAILS : {}", policeStation.toString());
+        return new ResponseEntity(policeStation, HttpStatus.OK);
+
+    }
 
     @PutMapping("put/report")
     public ResponseEntity<Report> updateReportDetails(@RequestBody @Validated ReportDTO reportDTO){
@@ -373,17 +381,17 @@ public class ApplicationController {
 
 
     @PutMapping("put/user")
-    public ResponseEntity<User> updateUserDetails(@RequestBody @Validated UserDTO userDTO){
+    public ResponseEntity<UserResponse> updateUserDetails(@RequestBody @Validated UserDTO userDTO){
         log.info("UPDATE USER DETAILS : {}", userDTO.toString() );
-        UserDTO user= userService.updateUserDetails(userDTO);
+        UserResponse user= userService.updateUserDetails(userDTO);
         log.info("UPDATING USER DETAILS : {}", user.toString());
         return new ResponseEntity(user, HttpStatus.OK);
 
     }
     @PutMapping("put/witness")
-    public ResponseEntity<Witness> updateReviews(@RequestBody @Validated WitnessDTO witnessDTO){
+    public ResponseEntity<WitnessResponse> updateReviews(@RequestBody @Validated WitnessDTO witnessDTO){
         log.info("UPDATE WITNESS DETAILS : {}", witnessDTO.toString() );
-        WitnessDTO witness = witnessService.updateWitnessDetails(witnessDTO);
+        WitnessResponse witness = witnessService.updateWitnessDetails(witnessDTO);
         log.info("UPDATING WITNESS DETAILS : {}", witness.toString());
         return new ResponseEntity(witness, HttpStatus.OK);
 
@@ -398,29 +406,66 @@ public class ApplicationController {
 
     }
 
+    @DeleteMapping("delete/address")
+    public ResponseEntity<Address> deleteAddressById(@RequestBody @Validated AddressDTO addressDTO){
+        log.info("DELETE ADDRESS DETAILS : {}", addressDTO.toString() );
+        Address address= addressService.deleteAddressById(addressDTO.getId());
+        log.info("DELETING ADDRESS DETAILS BY ID : {}", address.toString());
+        return new ResponseEntity(address, HttpStatus.OK);
 
+    }
 
+    @DeleteMapping("delete/complainant")
+    public ResponseEntity<Complainant> deleteComplainantById(@RequestBody @Validated ComplainantDTO complainantDTO){
+        log.info("DELETE COMPLAINANT DETAILS : {}", complainantDTO.toString() );
+        Complainant complainant= complainantService.deleteComplainantById(complainantDTO.getNationalId());
+        log.info("DELETING COMPLAINANT DETAILS BY ID : {}", complainant.toString());
+        return new ResponseEntity(complainant, HttpStatus.OK);
 
+    }
 
+    @DeleteMapping("delete/crime/register")
+    public ResponseEntity<CrimeRegister> deleteAccusedById(@RequestBody @Validated CrimeRegisterDTO crimeRegisterDTO){
+        log.info("DELETE CRIME REGISTER DETAILS : {}", crimeRegisterDTO.toString() );
+        CrimeRegister crimeRegister= crimeRegisterService.deleteCrimeRegisterById(crimeRegisterDTO.getCrimeId());
+        log.info("DELETING CRIME REGISTER DETAILS BY ID : {}", crimeRegister.toString());
+        return new ResponseEntity(crimeRegister, HttpStatus.OK);
 
+    }
 
+    @DeleteMapping("delete/next/of/kin")
+    public ResponseEntity<NextOfKin> deleteAccusedById(@RequestBody @Validated NextOfKinDTO nextOfKinDTO){
+        log.info("DELETE NEXT OF KIN DETAILS : {}", nextOfKinDTO.toString() );
+        NextOfKin nextOfKin= nextOfKinService.deleteNextOfKinById(nextOfKinDTO.getNationalId());
+        log.info("DELETING NEXT OF KIN DETAILS BY ID : {}", nextOfKin.toString());
+        return new ResponseEntity(nextOfKin, HttpStatus.OK);
 
+    }
 
+    @DeleteMapping("delete/officer")
+    public ResponseEntity<Officer> deleteOfficerDetails(@RequestBody @Validated OfficerDTO officerDTO){
+        log.info("DELETE OFFICER DETAILS : {}", officerDTO.toString() );
+        Officer officer= officerService.deleteOfficerById(officerDTO.getNationalId());
+        log.info("DELETING OFFICER DETAILS BY ID : {}", officer.toString());
+        return new ResponseEntity(officer, HttpStatus.OK);
 
+    }
 
+    @DeleteMapping("delete/user")
+    public ResponseEntity<User> deleteUserDetails(@RequestBody @Validated UserDTO userDTO){
+        log.info("DELETE USER DETAILS : {}", userDTO.toString() );
+        User user= userService.deleteUser(userDTO.getNationalId());
+        log.info("DELETING ACCUSED DETAILS BY ID : {}", user.toString());
+        return new ResponseEntity(user, HttpStatus.OK);
 
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+    @DeleteMapping("delete/witness")
+    public ResponseEntity<Witness> deleteWitness(@RequestBody @Validated WitnessDTO witnessDTO){
+        log.info("DELETE WITNESS DETAILS : {}", witnessDTO.toString() );
+        Witness witness= witnessService.deleteWitnessById(witnessDTO.getNationalId());
+        log.info("DELETING ACCUSED DETAILS BY ID : {}", witness.toString());
+        return new ResponseEntity(witness, HttpStatus.OK);
 
 
     }
+}

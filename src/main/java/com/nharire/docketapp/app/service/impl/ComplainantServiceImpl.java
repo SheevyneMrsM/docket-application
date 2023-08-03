@@ -3,7 +3,6 @@ package com.nharire.docketapp.app.service.impl;
 import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.ComplainantDTO;
 import com.nharire.docketapp.app.model.dto.response.ComplainantResponse;
-import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.ComplainantRepo;
 import com.nharire.docketapp.app.repository.CrimeRegisterRepo;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -160,9 +158,10 @@ public class ComplainantServiceImpl implements ComplainantService {
     }
 
     @Override
-    public void deleteComplainantById(String nationalId) {
+    public Complainant deleteComplainantById(String nationalId) {
         complainantRepo.deleteById(nationalId);
 
+        return null;
     }
 
     @Override

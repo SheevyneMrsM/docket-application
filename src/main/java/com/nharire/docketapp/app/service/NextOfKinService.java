@@ -16,7 +16,7 @@ public interface NextOfKinService {
 
     NextOfKinResponse updateNextOfKinDetails(NextOfKinDTO nextOfKinDTO);
 
-    void deleteNextOfKinById(String nationalId);
+    NextOfKin deleteNextOfKinById(String nationalId);
 
     void deleteAddressDetails(Long id );
 

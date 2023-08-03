@@ -2,7 +2,6 @@ package com.nharire.docketapp.app.service.impl;
 
 import com.nharire.docketapp.app.model.*;
 import com.nharire.docketapp.app.model.dto.CrimeRegisterDTO;
-import com.nharire.docketapp.app.model.dto.response.AccusedResponse;
 import com.nharire.docketapp.app.model.dto.response.CrimeRegisterResponse;
 import com.nharire.docketapp.app.repository.*;
 import com.nharire.docketapp.app.service.CrimeRegisterService;
@@ -163,9 +162,10 @@ public class CrimeRegisterImpl implements CrimeRegisterService {
         }
 
     @Override
-    public void deleteCrimeRegisterById(Long crimeId) {
+    public CrimeRegister deleteCrimeRegisterById(Long crimeId) {
         crimeRegisterRepo.deleteById(crimeId);
 
+        return null;
     }
 
     @Override

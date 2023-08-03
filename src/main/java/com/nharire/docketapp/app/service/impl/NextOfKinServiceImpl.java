@@ -10,7 +10,6 @@ import com.nharire.docketapp.app.repository.AccusedRepo;
 import com.nharire.docketapp.app.repository.AddressRepo;
 import com.nharire.docketapp.app.repository.NextOfKinRepo;
 import com.nharire.docketapp.app.service.NextOfKinService;
-import com.nharire.docketapp.exceptions.AccusedNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -177,9 +176,10 @@ public class NextOfKinServiceImpl implements NextOfKinService {
     }
 
     @Override
-    public void deleteNextOfKinById(String nationalId) {
+    public NextOfKin deleteNextOfKinById(String nationalId) {
         nextOfKinRepo.deleteById(nationalId);
 
+        return null;
     }
 
     @Override

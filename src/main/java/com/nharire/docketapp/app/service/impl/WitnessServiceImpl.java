@@ -65,23 +65,45 @@ public class WitnessServiceImpl implements WitnessService {
     }
 
     @Override
-    public WitnessDTO updateWitnessDetails(WitnessDTO witnessDTO) {
+    public WitnessResponse updateWitnessDetails(WitnessDTO witnessDTO) {
+
+        WitnessResponse witnessResponse = new WitnessResponse();
+        try{
+      log.info("UPDATING WITNESS DETAILS: {}",witnessDTO.toString());
       Optional <Witness> witness = witnessRepo.findById(witnessDTO.getNationalId());
-      Witness witness1;
+      Witness witness1 = new Witness();
       if (witness.isPresent()){
           witness1 = witness.get();
           BeanUtils.copyProperties(witnessDTO,witness1);
-      }else{
-          throw new RuntimeException("No derails found, cant update!!");
       }
-        BeanUtils.copyProperties(witness1,witnessDTO);
-        return witnessDTO;
+      Optional<Address> address = addressRepo.findByIdEquals(witnessDTO.getAddress().getId());
+      if (address.isPresent()){
+          Address address1 = address.get();
+          witness1.setAddress(address1);
+          try{
+              witness1 = witnessRepo.saveAndFlush(witness1);
+          }catch (Exception exception){
+           witnessResponse.setMessage("failed to save user database issues");
+          }
+          BeanUtils.copyProperties(witness1, witnessResponse);
+          witnessResponse.setResponseCode(200);
+          witnessResponse.setMessage("SUCCESS");
+      }}catch (Exception e){
+                log.info("FAILED TO SAVE WITNESS" + e);
+                witnessResponse.setResponseCode(500);
+                witnessResponse.setMessage("failed to save witness information to database ");
+                witnessResponse.setCode("DM-DB-001");
+                witnessResponse.setDescription(e.getMessage());
+        }
+
+        return witnessResponse;
     }
 
     @Override
-    public void deleteWitnessById(String id) {
+    public Witness deleteWitnessById(String id) {
         witnessRepo.deleteById(id);
 
+        return null;
     }
 
 

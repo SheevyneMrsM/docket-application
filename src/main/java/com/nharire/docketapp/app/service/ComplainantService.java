@@ -18,7 +18,7 @@ public interface ComplainantService {
 
     Complainant addNextOfKin(NextOfKin nextOfKin);
 
-    void deleteComplainantById(String nationalId);
+    Complainant deleteComplainantById(String nationalId);
 
     Optional<Complainant> getComplainantDetails(String nationalId);
 

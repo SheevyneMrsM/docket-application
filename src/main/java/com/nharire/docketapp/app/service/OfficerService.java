@@ -15,7 +15,7 @@ public interface OfficerService {
 
     OfficerResponse updateOfficerDetails(OfficerDTO officerDTO);
 
-    void deleteOfficerById(String nationalId);
+    Officer deleteOfficerById(String nationalId);
 
     List<Officer> getAllOfficers();
 

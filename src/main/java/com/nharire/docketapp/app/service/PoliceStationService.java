@@ -14,7 +14,7 @@ public interface PoliceStationService {
 
     PoliceStationResponse savePoliceStationDetails(PoliceStationDTO policeStationDTO);
 
-    PoliceStationDTO updatePoliceStationDetails(PoliceStationDTO policeStationDTO);
+    PoliceStationResponse updatePoliceStationDetails(PoliceStationDTO policeStationDTO);
 
     void deletePoliceStationDetailsById(Long id);
 

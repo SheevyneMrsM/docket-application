@@ -13,9 +13,9 @@ public interface WitnessService {
 
     WitnessResponse saveWitnessDetails(WitnessDTO witnessDTO);
 
-    WitnessDTO updateWitnessDetails(WitnessDTO witnessDTO);
+    WitnessResponse updateWitnessDetails(WitnessDTO witnessDTO);
 
-    void deleteWitnessById(String id);
+    Witness deleteWitnessById(String id);
     List<Witness> getAllWitnessDetails();
 
     Optional<Witness> getWitness(String nationalId);

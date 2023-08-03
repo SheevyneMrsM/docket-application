@@ -111,9 +111,10 @@ public class OfficerServiceImpl implements OfficerService {
     }
 
     @Override
-    public void deleteOfficerById(String nationalId) {
+    public Officer deleteOfficerById(String nationalId) {
         officerRepo.deleteById(nationalId);
 
+        return null;
     }
 
     @Override

@@ -68,23 +68,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUserDetails(UserDTO userDTO){
-        Optional<User> user = userRepo.findById(userDTO.getNationalId());
-        User user1;
-        if (user.isPresent()){
-            user1 = user.get();
-            BeanUtils.copyProperties(userDTO,user1);
-        }else {
-            throw new RuntimeException("No user details found, cant update!!!");
-        }
-        BeanUtils.copyProperties(user1,userDTO);
-        return userDTO;
+    public
+    UserResponse updateUserDetails(UserDTO userDTO){
+        UserResponse userResponse = new UserResponse();
+       try {
+           log.info("UPDATING USER DETAILS : {}", userDTO.toString());
+
+           Optional<User> user = userRepo.findById(userDTO.getNationalId());
+           User user1 = new User();
+           if (user.isPresent()) {
+               user1 = user.get();
+               BeanUtils.copyProperties(userDTO, user1);
+           }
+           Optional<Address> address = addressRepo.findByIdEquals(userDTO.getAddress().getId());
+           if (address.isPresent()) {
+               Address address1 = address.get();
+               user1.setAddress(address1);
+               try {
+                   user1 = userRepo.saveAndFlush(user1);
+               } catch (Exception exception) {
+                   userResponse.setMessage("failed to save user database issues");
+               }
+               BeanUtils.copyProperties(user1, userResponse);
+               userResponse.setResponseCode(200);
+               userResponse.setMessage("SUCCESS");
+           }
+
+       }catch (Exception e){
+           log.info("FAILED TO SAVE NEXT OF KIN" + e);
+           userResponse.setResponseCode(500);
+           userResponse.setMessage("failed to save next of kin information to database ");
+           userResponse.setCode("DM-DB-001");
+           userResponse.setDescription(e.getMessage());
+       }
+
+        return userResponse;
     }
 
     @Override
-    public void deleteUser(String nationalId) {
+    public User deleteUser(String nationalId) {
         userRepo.deleteById(nationalId);
 
+        return null;
     }
 
     @Override

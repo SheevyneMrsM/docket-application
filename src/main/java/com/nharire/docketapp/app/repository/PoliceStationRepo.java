@@ -12,7 +12,9 @@ import java.util.Optional;
 public interface PoliceStationRepo extends JpaRepository<PoliceStation,Long> {
 
     Optional<PoliceStation> findByPoliceStationNameEqualsIgnoreCase(String policeStationName);
-    //PoliceStation getById(Long id);
+
+    Optional<PoliceStation> findByIdEquals(Long id);
+
 
 
     List<PoliceStationDTO> addReview(PoliceStation policeStation);

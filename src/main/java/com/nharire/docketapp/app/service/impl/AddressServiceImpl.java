@@ -53,9 +53,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void deleteAddressById(Long id) {
+    public Address deleteAddressById(Long id) {
         addressRepo.deleteById(id);
 
+        return null;
     }
 
     @Override

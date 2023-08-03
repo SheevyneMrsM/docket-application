@@ -51,41 +51,41 @@ public class PoliceStationServiceImpl implements PoliceStationService {
                 }
             }
 
-            Address address1 = new Address();
-            if (policeStationDTO != null) {
-                if (policeStationDTO.getOfficerInCharge() != null) {
-                    if (policeStationDTO.getOfficerInCharge().getAddress() != null) {
-                        BeanUtils.copyProperties(policeStationDTO.getOfficerInCharge().getAddress(), address1);
-                        address1 = addressRepo.saveAndFlush(address1);
-                    } else {
-                        policeStationResponse.setResponseCode(400);
-                        policeStationResponse.setDescription(" Please Add Address Details ");
-                        policeStationResponse.setMessage("Please kindly add Address Details");
-                        policeStationResponse.setCode("DM-ADD-001");
-                        return policeStationResponse;
-                    }
-                } else {
-                    policeStationResponse.setResponseCode(400);
-                    policeStationResponse.setDescription("Request Failed on Officer Details Missing ");
-                    policeStationResponse.setMessage(" Please kindly include Officer details");
-                    policeStationResponse.setCode("DM-OFF-001");
-                    return policeStationResponse;
-                }
+//            Address address1 = new Address();
+//            if (policeStationDTO != null) {
+//                if (policeStationDTO.getOfficerNationalId() != null) {
+//
+//                        BeanUtils.copyProperties(policeStationDTO.getOfficerNationalId(), address1);
+//                        address1 = addressRepo.saveAndFlush(address1);
+//                    } else {
+//                        policeStationResponse.setResponseCode(400);
+//                        policeStationResponse.setDescription(" Please Add Address Details ");
+//                        policeStationResponse.setMessage("Please kindly add Address Details");
+//                        policeStationResponse.setCode("DM-ADD-001");
+//                        return policeStationResponse;
+//                    }
+//                } else {
+//                    policeStationResponse.setResponseCode(400);
+//                    policeStationResponse.setDescription("Request Failed on Officer Details Missing ");
+//                    policeStationResponse.setMessage(" Please kindly include Officer details");
+//                    policeStationResponse.setCode("DM-OFF-001");
+//                    return policeStationResponse;
+//                }
 
 
                 //create officer in charge obj
                 Officer officer = new Officer();
 
-                officer.setAddress(address1);
+               // officer.setAddress(address1);
                 if (policeStationDTO!= null){
-                    if (policeStationDTO.getOfficerInCharge()!= null){
-                        BeanUtils.copyProperties(policeStationDTO.getOfficerInCharge(),officer);
+                    if (policeStationDTO.getOfficerNationalId()!= null){
+                        BeanUtils.copyProperties(policeStationDTO.getOfficerNationalId(),officer);
                         officer = officerRepo.saveAndFlush(officer);
                     }
                 }
                 PoliceStation policeStation = new PoliceStation();
 
-                policeStation.setOfficerInCharge(officer);
+                policeStation.setOfficerNationalId(String.valueOf(officer));
                 policeStation.setAddress(address);
                 BeanUtils.copyProperties(policeStationDTO, policeStation);
 
@@ -103,7 +103,7 @@ public class PoliceStationServiceImpl implements PoliceStationService {
                 policeStationResponse.setResponseCode(200);
                 policeStationResponse.setMessage("SUCCESS");
            }
-        } catch (Exception exception){
+         catch (Exception exception){
                 log.info("FAILED TO SAVE NEXT OF KIN, DATABASE ERROR " + exception);
                 policeStationResponse.setResponseCode(400);
                 policeStationResponse.setMessage("Failed to Save Information to Database");
@@ -116,17 +116,57 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 
 
     @Override
-    public PoliceStationDTO updatePoliceStationDetails(PoliceStationDTO policeStationDTO) {
-        Optional<PoliceStation> policeStation = policeStationRepo.findByPoliceStationNameEqualsIgnoreCase(policeStationDTO.getPoliceStationName());
-        PoliceStation policeStation1;
-        if (policeStation.isPresent()){
+    public PoliceStationResponse updatePoliceStationDetails(PoliceStationDTO policeStationDTO) {
+        PoliceStationResponse policeStationResponse = new PoliceStationResponse();
+try{
+        log.info("UPDATING POLICE STATION DETAILS : {}", policeStationDTO.toString());
+
+        Optional<PoliceStation> policeStation = policeStationRepo.findByIdEquals(policeStationDTO.getId()   );
+        PoliceStation policeStation1 = new PoliceStation();
+
+        if (policeStation.isPresent()) {
             policeStation1 = policeStation.get();
             BeanUtils.copyProperties(policeStationDTO, policeStation1);
-        }else {
-            throw new RuntimeException("No details found, cant update!!!");
         }
-        BeanUtils.copyProperties(policeStation1,policeStationDTO);
-        return policeStationDTO;
+        Optional<Officer> officer = officerRepo.findByNationalIdEqualsIgnoreCase(policeStationDTO.getOfficerNationalId());
+        if (officer.isPresent()){
+            Officer officer1 =officer.get();
+            if (officer1.getPoliceStationId()!= null){
+                BeanUtils.copyProperties(officer1.getPoliceStationId(),officer1);
+            }
+            officer1.setPoliceStationId(String.valueOf(policeStation1));
+
+        try {
+            officer1 = officerRepo.saveAndFlush(officer1);
+        }catch (Exception exception){
+            policeStationResponse.setMessage("failed to save officer database issues!!!");
+          }
+            policeStationResponse.setOfficerInCharge(officer1);
+            //copy properties from accused to response
+            BeanUtils.copyProperties(officer1, policeStationResponse);
+            policeStationResponse.setMessage("SUCCESS");
+            policeStationResponse.setResponseCode(200);
+            return policeStationResponse;
+
+        }
+        else {
+            policeStationResponse.setResponseCode(400);
+            policeStationResponse.setMessage("No police stations with this Id is registered");
+            policeStationResponse.setCode("DB-POL-002");
+            policeStationResponse.setDescription("Failed to update police station to crime register");
+            BeanUtils.copyProperties(policeStation1, policeStationResponse);
+            return policeStationResponse;
+        }
+       }catch (Exception exception){
+       log.info("FAILED TO SAVE COMPLAINANT, DATABASE ERROR " + exception);
+         policeStationResponse.setResponseCode(400);
+        policeStationResponse.setMessage("Failed to Save Information to Database");
+        policeStationResponse.setCode("DM-DB-001");
+        policeStationResponse.setDescription(exception.getMessage());
+}
+
+
+        return policeStationResponse;
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.nharire.docketapp.app.service;
 import com.nharire.docketapp.app.model.User;
 import com.nharire.docketapp.app.model.dto.UserDTO;
 import com.nharire.docketapp.app.model.dto.response.UserResponse;
-import net.bytebuddy.dynamic.DynamicType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.Optional;
 public interface UserService {
      UserResponse saveUserDetails(UserDTO userDTO);
 
-     UserDTO updateUserDetails(UserDTO userDTO);
+     UserResponse updateUserDetails(UserDTO userDTO);
 
-     void deleteUser(String nationalId);
+     User deleteUser(String nationalId);
 
      void deleteReport(Long id);
 
