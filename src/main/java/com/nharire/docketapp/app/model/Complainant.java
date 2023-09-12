@@ -33,9 +33,9 @@ public class Complainant {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
-    @JoinColumn(name = "next_of_kin_phone_number")
-    private NextOfKin nextOfKin;
+
+    @Column(name = "next_of_kin_nationalId")
+    private String nextOfKinNationalId;
 
 
     @Column(name = "crime_crime_id")

@@ -82,12 +82,12 @@ public class OfficerServiceImpl implements OfficerService {
                 officer1 = officer.get();
                 BeanUtils.copyProperties(officerDTO, officer1);
             }
-            List<Address> address = addressRepo.findByStreetAddressEqualsIgnoreCase(officerDTO.getAddress().getStreetAddress());
+            Optional<Address> address = addressRepo.findByIdEquals(officerDTO.getAddress().getId());
 
 
             if (address != null) {
-                if (!address.isEmpty()) {
-                    Address address1 = address.get(0);
+                //if (!address.isEmpty()) {
+                    Address address1 = address.get();
                     officer1.setAddress(address1);
                     try {
                         officer1 = officerRepo.saveAndFlush(officer1);
@@ -98,7 +98,7 @@ public class OfficerServiceImpl implements OfficerService {
                     officerResponse.setResponseCode(200);
                     officerResponse.setMessage("SUCCESS");
                 }
-            }
+            //}
         }catch (Exception exception){
             log.info("FAILED TO SAVE OFFICER" + exception);
             officerResponse.setResponseCode(500);

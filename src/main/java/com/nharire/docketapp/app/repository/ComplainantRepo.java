@@ -17,6 +17,8 @@ public interface ComplainantRepo extends JpaRepository<Complainant,String> {
 
     Optional<Complainant> findByNationalIdEqualsIgnoreCase(String nationalId);
 
+    List<Complainant> findByNationalIdEquals(String nationalId);
+
 
 
     List<Complainant> getDateOfComplaint(String dateReported);

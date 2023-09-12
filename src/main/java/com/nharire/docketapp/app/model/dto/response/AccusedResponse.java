@@ -28,5 +28,7 @@ public class AccusedResponse extends Response {
 
     private CrimeRegister crimeRegister;
 
+    private String dateReported;
+
 
 }

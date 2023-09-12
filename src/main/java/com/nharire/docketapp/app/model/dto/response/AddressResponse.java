@@ -25,7 +25,7 @@ public class AddressResponse extends Response {
 
     private String longitude;
 
-    private Complainant complainant;
+
 
 }
 

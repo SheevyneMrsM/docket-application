@@ -3,6 +3,8 @@ package com.nharire.docketapp.app.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,6 +44,7 @@ public class NextOfKin {
     private Accused accused;
 
     @OneToMany
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "complainant_national_id")
     private List<Complainant> complainant;
 

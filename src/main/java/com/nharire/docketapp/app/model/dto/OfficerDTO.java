@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 @Data
 public class OfficerDTO implements Serializable {
+
     private String nationalId;
     private Long id;
     private String firstName;

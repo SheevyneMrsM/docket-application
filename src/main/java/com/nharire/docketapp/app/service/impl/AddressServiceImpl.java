@@ -79,27 +79,27 @@ public class AddressServiceImpl implements AddressService {
                     BeanUtils.copyProperties(addressDTO, address1);
                     //save address to db
 
-                    Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(addressDTO.getNationalId());
-                    if (complainant.isPresent()){
-                        Complainant complainant1 = complainant.get();
-                        complainant1.setAddress(address1);
-                        try {
-                            complainant1 = complainantRepo.saveAndFlush(complainant1);
-                        }catch (Exception e){
-                            addressResponse.setMessage("could not save complainant");
-                        }
-                        addressResponse.setComplainant(complainant1);
-                        BeanUtils.copyProperties(complainant1,addressResponse);
-                        BeanUtils.copyProperties(address1,addressResponse);
-                        addressResponse.setMessage("SUCCESS");
-                        addressResponse.setResponseCode(200);
-                    }else{
-                        //BeanUtils.copyProperties(address1, addressResponse);
-                        addressResponse.setMessage("Error, failed to get complainant with national id "+ addressDTO.getNationalId());
-                        addressResponse.setResponseCode(400);
-                        addressResponse.setDescription("Please kindly provide a valid national id");
-                        return addressResponse;
-                    }
+//                    Optional<Complainant> complainant = complainantRepo.findByNationalIdEqualsIgnoreCase(String.valueOf(addressDTO.getId()));
+//                    if (complainant.isPresent()){
+//                        Complainant complainant1 = complainant.get();
+//                        complainant1.setAddress(address1);
+//                        try {
+//                            complainant1 = complainantRepo.saveAndFlush(complainant1);
+//                        }catch (Exception e){
+//                            addressResponse.setMessage("could not save complainant");
+//                        }
+//                        addressResponse.setComplainant(complainant1);
+//                        BeanUtils.copyProperties(complainant1,addressResponse);
+//                        BeanUtils.copyProperties(address1,addressResponse);
+//                        addressResponse.setMessage("SUCCESS");
+//                        addressResponse.setResponseCode(200);
+//                    }else{
+//                        //BeanUtils.copyProperties(address1, addressResponse);
+//                        addressResponse.setMessage("Error, failed to get complainant with national id "+ addressDTO.getId());
+//                        addressResponse.setResponseCode(400);
+//                        addressResponse.setDescription("Please kindly provide a valid national id");
+//                        return addressResponse;
+//                    }
 //                }else {
 //
 //                    BeanUtils.copyProperties(addressDTO,address1);
@@ -113,10 +113,10 @@ public class AddressServiceImpl implements AddressService {
 //                        BeanUtils.copyProperties(complainant1, addressResponse);
 //                        //BeanUtils.copyProperties(address1, addressResponse);
 //                        addressResponse.setMessage("SUCCESS");
-//                        addressResponse.setResponseCode(200);
-////                        addressResponse.setMessage("SUCCESS");
-////                        addressResponse.setResponseCode(200);
-//                        return addressResponse;
+                        addressResponse.setResponseCode(200);
+                       addressResponse.setMessage("SUCCESS");
+                        addressResponse.setResponseCode(200);
+                        return addressResponse;
 //                    }
                 }
             }

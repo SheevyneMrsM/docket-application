@@ -19,6 +19,7 @@ public class AccusedDTO implements Serializable  {
     private String email;
     private AddressDTO address;
     private NextOfKinDTO nextOfKin;
+    private String dateReported;
 
 
 

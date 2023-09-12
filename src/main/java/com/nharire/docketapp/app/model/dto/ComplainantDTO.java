@@ -19,7 +19,7 @@ public class ComplainantDTO implements Serializable {
     private String phoneNumber;
     private String email;
     private Address address;
-    private NextOfKinDTO nextOfKin;
+    private String nextOfKinNationalId;
     private List<ReportDTO> reports;
     private List<Witness> witness;
     private String getDateOfComplaint;

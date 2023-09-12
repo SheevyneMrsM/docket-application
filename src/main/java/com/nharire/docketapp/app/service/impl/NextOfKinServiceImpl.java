@@ -8,6 +8,7 @@ import com.nharire.docketapp.app.model.dto.NextOfKinDTO;
 import com.nharire.docketapp.app.model.dto.response.NextOfKinResponse;
 import com.nharire.docketapp.app.repository.AccusedRepo;
 import com.nharire.docketapp.app.repository.AddressRepo;
+import com.nharire.docketapp.app.repository.ComplainantRepo;
 import com.nharire.docketapp.app.repository.NextOfKinRepo;
 import com.nharire.docketapp.app.service.NextOfKinService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class NextOfKinServiceImpl implements NextOfKinService {
     private final AccusedRepo accusedRepo;
 
     private final AddressRepo addressRepo;
+
+    private final ComplainantRepo complainantRepo;
 
     @Override
     public NextOfKinResponse saveNextOfKinDetails(NextOfKinDTO nextOfKinDTO) {
@@ -84,21 +87,28 @@ public class NextOfKinServiceImpl implements NextOfKinService {
            }
 
 
-           List<Complainant> complainantList = new ArrayList<>();
-           Address address3 = new Address();
-           for (Complainant complainant : complainantList) {
-               if (complainant != null) {
-                   complainantList.add(complainant);
-                   if (complainant.getNextOfKin() != null) {
-                       if (complainant.getNextOfKin().getAddress() != null) {
-                           BeanUtils.copyProperties(complainant.getNextOfKin().getAddress(), address3);
-                           address3 = addressRepo.saveAndFlush(address3);
+//           List<Complainant> complainantList = complainantRepo.findByNationalIdEquals(nextOfKinDTO.getNationalId());
+//           Address address3 = new Address();
 
-                       }
-                   }
-               }
+//           for (Complainant complainant : complainantList) {
+//               if (complainantList.isEmpty()){
+//
+//
+//               }else{
+//                   complainantList.get(0);
+//               }
+//               if (complainant != null) {
+//                   complainantList.add(complainant);
+//                   //if (complainant.getNextOfKin() != null) {
+//                       if (complainant.getAddress() != null) {
+//                           BeanUtils.copyProperties(complainant.getAddress(), address3);
+//                           address3 = addressRepo.saveAndFlush(address3);
+//
+//                       }
 
-           }
+               //}
+
+           //}
 
            NextOfKin nextOfKin = new NextOfKin();
            nextOfKin.setAccused(accused);
